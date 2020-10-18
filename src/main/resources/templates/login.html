@@ -3,21 +3,13 @@
     <title>테스트페이지</title>
 </head>
 <body>
-<!--
-    private int bno;
-    private String title;
-    private String content;
-    private String writer;
-    private Date regdate;
-    private String remvstatus;
--->
 <table>
-        <tr th:each="city : ${cityList}">
-            <td th:text="${city.id}"></td>
-            <td th:text="${city.name}"></td>
-            <td th:text="${city.country}"></td>
-            <td th:text="${city.population}"></td>
-        </tr>
+    <tr th:each="city : ${cityList}">
+        <td th:text="${city.id}"></td>
+        <td th:text="${city.name}"></td>
+        <td th:text="${city.country}"></td>
+        <td th:text="${city.population}"></td>
+    </tr>
 </table>
 </body>
 </html>
