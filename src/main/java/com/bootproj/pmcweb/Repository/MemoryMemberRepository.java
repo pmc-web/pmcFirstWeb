@@ -1,8 +1,6 @@
 package com.bootproj.pmcweb.Repository;
 
 import com.bootproj.pmcweb.Domain.Member;
-import com.bootproj.pmcweb.Mapper.TestMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
