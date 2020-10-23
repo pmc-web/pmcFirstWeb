@@ -1,7 +1,7 @@
 package com.bootproj.pmcweb.Controller;
 
-import com.bootproj.pmcweb.Domain.City;
-import com.bootproj.pmcweb.Service.CityService;
+import com.bootproj.pmcweb.Domain.Study;
+import com.bootproj.pmcweb.Service.StudyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,12 +12,12 @@ import java.util.List;
 @Controller
 public class HomeController {
     @Autowired
-    private CityService cityService;
+    private StudyService studyService;
 
     @GetMapping("/test")
     public String Home(Model model){
-        List<City> cityList = cityService.selectCityList();
-        model.addAttribute("cityList", cityList);
+        List<Study> studyList = studyService.selectStudyList();
+        model.addAttribute("studyList", studyList);
 
         return "login";
     }
