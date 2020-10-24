@@ -1,5 +1,4 @@
 package com.bootproj.pmcweb.Service;
 
-public interface UserService {
-
+public class UserServiceTest {
 }
