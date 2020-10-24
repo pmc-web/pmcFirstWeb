@@ -1,59 +1,57 @@
 package com.bootproj.pmcweb.Service;
 
-import com.bootproj.pmcweb.Domain.Member;
-import com.bootproj.pmcweb.Repository.MemoryMemberRepository;
-import org.assertj.core.api.Assertions;
+import com.bootproj.pmcweb.Domain.User;
+import com.bootproj.pmcweb.Repository.MemoryUserRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-class MemberServiceTest {
+class UserServiceTest {
 
-    MemberService memberService;
-    MemoryMemberRepository memberRepository;
+    UserService userService;
+    MemoryUserRepository userRepository;
 
     @BeforeEach
     public void beforeEach(){
-        memberRepository = new MemoryMemberRepository();
-        memberService = new MemberService(memberRepository);
+        userRepository = new MemoryUserRepository();
+        userService = new UserService(userRepository);
     }
 
     @AfterEach
     public void afterEach(){
-        memberRepository.clearStore();
+        userRepository.clearStore();
     }
 
     @Test
     void 회원가입() {
         //given
-        Member member = new Member();
+        User member = new User();
         member.setName("hello");
 
         //when
-        Long saveId = memberService.join(member);
+        Long saveId = userService.join(member);
 
         //then
-        Member findMember = memberService.findOne(saveId).get();
+        User findMember = userService.findOne(saveId).get();
         assertThat(member.getName()).isEqualTo(findMember.getName());
     }
 
     @Test
     public void 중복_회원_예외() {
         //given
-        Member member1 = new Member();
-        member1.setName("spring");
+        User member1 = new User();
+        member1.setEmail("spring@naver.com");
 
-        Member member2 = new Member();
-        member2.setName("spring");
+        User member2 = new User();
+        member2.setEmail("spring@naver.com");
 
         //when
-        memberService.join(member1);
-        IllegalStateException e = assertThrows(IllegalStateException.class, () -> memberService.join(member2));
+        userService.join(member1);
+        IllegalStateException e = assertThrows(IllegalStateException.class, () -> userService.join(member2));
 
         assertThat(e.getMessage()).isEqualTo("이미 존재하는 회원입니다.");
 
