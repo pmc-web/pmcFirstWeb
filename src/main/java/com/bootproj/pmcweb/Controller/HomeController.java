@@ -19,7 +19,7 @@ public class HomeController {
         List<Study> studyList = studyService.selectStudyList();
         model.addAttribute("studyList", studyList);
 
-        return "login";
+        return "test";
     }
 
     @GetMapping("/")
@@ -27,5 +27,4 @@ public class HomeController {
 
         return "main";
     }
-
 }
