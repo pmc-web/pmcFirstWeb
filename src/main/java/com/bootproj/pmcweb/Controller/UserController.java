@@ -9,6 +9,7 @@ public class UserController {
 
     @GetMapping("/page/{name}")
     public String getPage(@PathVariable String name){
-        return "views/user/" + name;
+
+        return "user/" + name;
     }
 }
