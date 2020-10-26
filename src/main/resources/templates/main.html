@@ -1,59 +1,135 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="/views/meta.html :: fragment-meta"></head>
-<body class="hold-transition sidebar-mini">
-<div class="wrapper">
+<head th:replace="/layout/common.html :: fragment-common"></head>
+<body>
     <!-- Navbar -->
-    <nav th:replace="/views/navbar.html :: fragment-navbar"></nav>
-    <!-- Sidebar -->
-    <aside th:replace="/views/sidebar.html :: fragment-sidebar"></aside>
+    <nav th:replace="/layout/navbar.html :: fragment-navbar"></nav>
+    <!-- header -->
+    <header th:replace="/layout/header.html :: fragment-header"></header>
+<!-- main -->
+<div class="container">
 
-    <div class="content-wrapper">
-        <section class="content-header">
-            <div class="container-fluid">
-                <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <h1>Moim Main Page</h1>
-                    </div>
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="/">Home</a></li>
-                            <li class="breadcrumb-item active">Moim Main Page</li>
-                        </ol>
-                    </div>
-                </div>
-            </div><!-- /.container-fluid -->
-        </section>
+    <h2 class="my-4">환영합니다! PMC Moim 페이지 입니다.</h2>
+    <h3>Popular Study</h3>
 
-        <!-- Main content -->
-        <section class="content">
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Title</h3>
-
-                    <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
-                            <i class="fas fa-minus"></i></button>
-                        <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
-                            <i class="fas fa-times"></i></button>
-                    </div>
-                </div>
+    <!-- popular study Section -->
+    <div class="row">
+        <div class="col-lg-4 mb-4">
+            <div class="card h-100">
+                <h4 class="card-header">인기 스터디 모임1</h4>
                 <div class="card-body">
-                    Start creating your amazing application!
+                    <p class="card-text">서울시 광진구에서 스프링 스터디 진행 중입니다. 인기 있는 스터디 입니다.</p>
                 </div>
                 <div class="card-footer">
-                    Footer
+                    <a href="#" class="btn btn-primary">자세히</a>
                 </div>
             </div>
-        </section>
+        </div>
+        <div class="col-lg-4 mb-4">
+            <div class="card h-100">
+                <h4 class="card-header">인기 스터디 모임2</h4>
+                <div class="card-body">
+                    <p class="card-text">왕십리에서 진행하는 리액트 스터디 입니다. 2기까지 진행했어요!!</p>
+                </div>
+                <div class="card-footer">
+                    <a href="#" class="btn btn-primary">자세히</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 mb-4">
+            <div class="card h-100">
+                <h4 class="card-header">인기 스터디 모임3</h4>
+                <div class="card-body">
+                    <p class="card-text">강남에서 진행하는 면접대비 취업스터디 입니다. 최근들어 많은 관심을 주시고 계십니다.</p>
+                </div>
+                <div class="card-footer">
+                    <a href="#" class="btn btn-primary">자세히</a>
+                </div>
+            </div>
+        </div>
     </div>
-    <!-- footer -->
-    <footer th:replace="/views/footer.html :: fragment-footer"></footer>
-</div>
 
-<script src="../../plugins/jquery/jquery.min.js"></script>
-<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="../../dist/js/adminlte.min.js"></script>
-<script src="../../dist/js/demo.js"></script>
+    <!-- new study Section -->
+    <h3>New Study</h3>
+
+    <div class="row">
+        <div class="col-lg-4 col-sm-6 portfolio-item">
+            <div class="card h-100">
+                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+                <div class="card-body">
+                    <h4 class="card-title">
+                        <a href="#">새로운 스터디1</a>
+                    </h4>
+                    <p class="card-text">새로운 스터디1 입니다. 많은 관심 주세요</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-6 portfolio-item">
+            <div class="card h-100">
+                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+                <div class="card-body">
+                    <h4 class="card-title">
+                        <a href="#">새로운 스터디2</a>
+                    </h4>
+                    <p class="card-text">새로운 스터디2 입니다. 많은 관심 주세요</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-6 portfolio-item">
+            <div class="card h-100">
+                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+                <div class="card-body">
+                    <h4 class="card-title">
+                        <a href="#">새로운 스터디3</a>
+                    </h4>
+                    <p class="card-text">새로운 스터디3 입니다. 많은 관심 주세요</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-6 portfolio-item">
+            <div class="card h-100">
+                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+                <div class="card-body">
+                    <h4 class="card-title">
+                        <a href="#">새로운 스터디4</a>
+                    </h4>
+                    <p class="card-text">새로운 스터디4 입니다. 많은 관심 주세요</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-6 portfolio-item">
+            <div class="card h-100">
+                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+                <div class="card-body">
+                    <h4 class="card-title">
+                        <a href="#">새로운 스터디5</a>
+                    </h4>
+                    <p class="card-text">새로운 스터디5 입니다. 많은 관심 주세요</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-6 portfolio-item">
+            <div class="card h-100">
+                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+                <div class="card-body">
+                    <h4 class="card-title">
+                        <a href="#">새로운 스터디6</a>
+                    </h4>
+                    <p class="card-text">새로운 스터디6 입니다. 많은 관심 주세요</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+</div>
+<!-- footer -->
+<footer th:replace="/layout/footer.html :: fragment-footer"></footer>
+
+<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+<script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+
 </body>
+
 </html>
