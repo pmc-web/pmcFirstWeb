@@ -36,6 +36,21 @@ COMMENT = '주제 테이블';
 
 
 -- -----------------------------------------------------
+-- Table `study`.`region`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `study`.`region` (
+  `id` BIGINT NOT NULL,
+  `region_depth1` VARCHAR(50) NULL DEFAULT NULL COMMENT '시',
+  `region_depth2` VARCHAR(50) NULL DEFAULT NULL COMMENT '군',
+  `region_depth3` VARCHAR(50) NULL DEFAULT NULL COMMENT '구',
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci
+COMMENT = '지역 테이블';
+
+
+-- -----------------------------------------------------
 -- Table `study`.`study`
 -- -----------------------------------------------------
 
@@ -75,22 +90,6 @@ CREATE TABLE IF NOT EXISTS `study`.`study_material` (
   )
 ENGINE = InnoDB
 COMMENT = '스터디 자료 매핑 테이블';
-
-
--- -----------------------------------------------------
--- Table `study`.`region`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `study`.`region` (
-  `id` BIGINT NOT NULL,
-  `region_depth1` VARCHAR(50) NULL DEFAULT NULL COMMENT '시',
-  `region_depth2` VARCHAR(50) NULL DEFAULT NULL COMMENT '군',
-  `region_depth3` VARCHAR(50) NULL DEFAULT NULL COMMENT '구',
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci
-COMMENT = '지역 테이블';
-
 
 -- -----------------------------------------------------
 -- Table `study`.`user`
@@ -211,7 +210,3 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci
 COMMENT = '스터디와 유저의 매핑 테이블';
-
-SET SQL_MODE=@OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
