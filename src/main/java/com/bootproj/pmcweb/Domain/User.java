@@ -6,6 +6,7 @@ import java.util.Date;
 @Setter
 @Getter
 //@Data
+@NoArgsConstructor
 public class User {
     private Long id;
     private String email;
