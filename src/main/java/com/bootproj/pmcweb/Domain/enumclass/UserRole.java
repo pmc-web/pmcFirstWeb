@@ -5,9 +5,9 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum UserStatus {
-    REGISTERED(0, "REGISTERED", "사용자 등록상태"),
-    UNREGISTERED(1, "UNREGISTERED", "사용자 해지상태")
+public enum UserRole {
+    ADMIN(0, "ADMIN", "관리자"),
+    NORMAL(1, "NORMAL", "일반 유저")
     ;
 
     private Integer id;
