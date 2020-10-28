@@ -1,75 +1,53 @@
 package com.bootproj.pmcweb.Service;
 
+
 import com.bootproj.pmcweb.Domain.User;
-import com.bootproj.pmcweb.Repository.MemoryUserRepository;
+import com.bootproj.pmcweb.Domain.enumclass.UserRole;
+import com.bootproj.pmcweb.Domain.enumclass.UserStatus;
+import com.bootproj.pmcweb.Mapper.UserMapper;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-
+import org.springframework.beans.factory.annotation.Autowired;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-class UserServiceTest {
-
+public class UserServiceTest {
     UserService userService;
-    MemoryUserRepository userRepository;
+
+    @Autowired
+    UserMapper userMapper;
 
     @BeforeEach
     public void beforeEach(){
-        userRepository = new MemoryUserRepository();
-        userService = new UserService(userRepository);
+        userService = new UserServiceImpl();
+//        userMapper = new UserMapper();
     }
 
     @AfterEach
     public void afterEach(){
-        userRepository.clearStore();
     }
 
     @Test
-    void 회원가입() {
-        //given
-        User member = new User();
-        member.setName("hello");
-
-        //when
-        Long saveId = userService.join(member);
-
-        //then
-        User findMember = userService.findOne(saveId).get();
-        assertThat(member.getName()).isEqualTo(findMember.getName());
+    void createUser() {
+        Long id = 1000L;
+        User user = new User(id, "test@naver.com", "1234", UserStatus.REGISTERED.getTitle(), "test", UserRole.NORMAL.getTitle());
+        userService.createUser(user);
+        User findUser = userService.getUser(id);
+        assertThat(user.getEmail()).isEqualTo(findUser.getEmail());
     }
 
     @Test
-    public void 중복_회원_예외() {
-        //given
-        User member1 = new User();
-        member1.setEmail("spring@naver.com");
-
-        User member2 = new User();
-        member2.setEmail("spring@naver.com");
-
-        //when
-        userService.join(member1);
-        IllegalStateException e = assertThrows(IllegalStateException.class, () -> userService.join(member2));
-
-        assertThat(e.getMessage()).isEqualTo("이미 존재하는 회원입니다.");
-
-//        try{
-//            memberService.join(member2);
-//            fail();
-//        }catch(IllegalStateException e) {
-//            assertThat(e.getMessage()).isEqualTo("이미 존재하는 회원입니다.");
-//        }
-
-        //then
+    void getUser() {
     }
 
     @Test
-    void findMembers() {
+    void getUsers() {
     }
 
+
+
     @Test
-    void findOne() {
+    void deleteUser() {
     }
 }
