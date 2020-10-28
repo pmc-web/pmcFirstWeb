@@ -12,6 +12,7 @@ public class User {
     private String password;
     private Date instTime;
     private Date updtTime;
+    private int grade;
     private String status;
     private String name;
     private String role;

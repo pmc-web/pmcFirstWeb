@@ -9,5 +9,7 @@ public interface UserMapper {
 
     public User getUserById(Long id);
 
-    public User setUser(User user);
+    public void createUser(User user);
+
+    public void deleteUser(Long id);
 }

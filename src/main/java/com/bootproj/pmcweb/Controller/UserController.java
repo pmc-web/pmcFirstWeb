@@ -27,9 +27,15 @@ public class UserController {
     }
 
     @PostMapping("/user")
-    public User post(@RequestBody User user){
-        User newUser = userService.addUser(user);
-        return newUser;
+    public void postUser(@RequestBody User user){
+        userService.createUser(user);
+        return;
+    }
+
+    @DeleteMapping("/user/{id}")
+    public void deleteUser(@PathVariable Long id){
+        userService.deleteUser(id);
+        return;
     }
 
     @GetMapping("/user/{id}") //localhost:8080/api/getParameter?id=1234&password=abcd
