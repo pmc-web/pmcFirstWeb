@@ -1,9 +1,6 @@
 package com.bootproj.pmcweb.Domain;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-
+import lombok.*;
 import java.util.Date;
 
 @Setter
@@ -20,4 +17,14 @@ public class User {
     private String role;
     private Long regionId;
     private Long attachmentId;
+
+    public User(Long id, String email, String password, String status, String name, String role){
+        this.id = id;
+        this.email = email;
+        this.password = password;
+        this.instTime = new Date(System.currentTimeMillis());
+        this.status = status;
+        this.name = name;
+        this.role = role;
+    }
 }
