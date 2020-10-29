@@ -10,12 +10,16 @@
         select * from User
         where id = #{id}
     </select>
-    <insert id="createUser" useGeneratedKeys="true" keyProperty="id" >
-<!--        <selectKey keyProperty="id" resultType="long" order="BEFORE">-->
-<!--            select CAST(RANDOM()*1000000 as BIGINT) a from SYSIBM.SYSDUMMY1-->
-<!--        </selectKey>-->
-        insert into User (id,email,password,inst_time,status,name,role)
-        values (#{id},#{email},#{password},NOW(),#{status},#{name},#{role})
+    <select id="getUserByEmail" resultType="com.bootproj.pmcweb.Domain.User">
+        select * from User
+        where email = #{email}
+    </select>
+    <insert id="createUser" useGeneratedKeys="true" keyProperty="id">
+        <!--        <selectKey keyProperty="id" resultType="long" order="BEFORE">-->
+        <!--            select CAST(RANDOM()*1000000 as BIGINT) a from SYSIBM.SYSDUMMY1-->
+        <!--        </selectKey>-->
+        insert into User (email,password,inst_time,status,name,role)
+        values (#{email},#{password},NOW(),#{status},#{name},#{role})
     </insert>
     <delete id="deleteUser">
         delete from User where id = #{id}

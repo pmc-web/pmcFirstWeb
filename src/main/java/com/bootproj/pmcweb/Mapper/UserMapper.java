@@ -9,7 +9,10 @@ public interface UserMapper {
 
     public User getUserById(Long id);
 
+    public User getUserByEmail(String email);
+
     public void createUser(User user);
 
     public void deleteUser(Long id);
+
 }

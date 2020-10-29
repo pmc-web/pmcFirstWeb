@@ -18,14 +18,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User getUserByEmail(String email) {
+        User user = userMapper.getUserByEmail(email);
+        return user;
+    }
+
+    @Override
     public List<User> getUsers() {
         List<User> users = userMapper.getUserList();
         return users;
     }
 
-    public void createUser(User user){
+    public User createUser(User user){
         userMapper.createUser(user);
-        return;
+        return user;
     }
 
     @Override

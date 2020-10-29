@@ -18,32 +18,32 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = PmcwebApplication.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class UserServiceTest {
-    private Long id = 1000L;
 
     @Autowired
     private UserServiceImpl userServiceImpl;
+    private static final String testEmail = "test@naver.com";
 
     @Test
     @Order(1)
     void createUser() {
-        User user = new User(id, "test@naver.com", "1234", UserStatus.REGISTERED.getTitle(), "test", UserRole.NORMAL.getTitle());
+        User user = new User(testEmail, "1234", UserStatus.REGISTERED.getTitle(), "test", UserRole.NORMAL.getTitle());
         userServiceImpl.createUser(user);
-        User findUser = userServiceImpl.getUser(id);
+        User findUser = userServiceImpl.getUserByEmail(user.getEmail());
         assertThat(user.getEmail()).isEqualTo(findUser.getEmail());
     }
 
     @Test
     @Order(2)
     void getUser() {
-        User user = new User(id, "test@naver.com", "1234", UserStatus.REGISTERED.getTitle(), "test", UserRole.NORMAL.getTitle());
-        User getUser = userServiceImpl.getUser(id);
-        assertThat(user.getEmail().equals(getUser.getEmail()));
+        User user = new User(testEmail, "1234", UserStatus.REGISTERED.getTitle(), "test", UserRole.NORMAL.getTitle());
+        User getUser = userServiceImpl.getUserByEmail(testEmail);
+        assertThat(testEmail.equals(getUser.getEmail()));
+        assertThat(user.getName().equals(getUser.getName()));
     }
 
     @Test
@@ -56,10 +56,10 @@ public class UserServiceTest {
     @Test
     @Order(4)
     void deleteUser() {
-        User getUser = userServiceImpl.getUser(id);
-        assertThat(userServiceImpl.getUser(id)!=null);
-        userServiceImpl.deleteUser(id);
-        assertThat(userServiceImpl.getUser(id)==null);
+        User getUser = userServiceImpl.getUserByEmail(testEmail);
+        assertThat(userServiceImpl.getUserByEmail(testEmail)!=null);
+        userServiceImpl.deleteUser(getUser.getId());
+        assertThat(userServiceImpl.getUserByEmail(testEmail)==null);
     }
 
 }

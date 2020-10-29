@@ -20,8 +20,7 @@ public class User {
     private Long regionId;
     private Long attachmentId;
 
-    public User(Long id, String email, String password, String status, String name, String role){
-        this.id = id;
+    public User(String email, String password, String status, String name, String role){
         this.email = email;
         this.password = password;
         this.instTime = new Date(System.currentTimeMillis());

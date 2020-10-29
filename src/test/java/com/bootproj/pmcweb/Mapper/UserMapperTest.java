@@ -19,27 +19,26 @@ import java.util.List;
 @SpringBootTest(classes = PmcwebApplication.class) // Junit5 기준 Application Context사용할 때 사용
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class) // Order를 붙일 때 사용
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE) // 진짜 데이터베이스에 테스트
-
 public class UserMapperTest {
     @Autowired
     private UserMapper userMapper;
-    private long testId = 2001L;
+    private static final String testEmail = "test@naver.com";
 
     @Test
     @Order(1)
     void createUser() {
-        User testUser = new User(testId, "test@naver.com", "1234", UserStatus.REGISTERED.getTitle(), "test", UserRole.NORMAL.getTitle());
+        User testUser = new User(testEmail, "1234", UserStatus.REGISTERED.getTitle(), "test", UserRole.NORMAL.getTitle());
         userMapper.createUser(testUser);
-        User createdUser = userMapper.getUserById(testId);
+        User createdUser = userMapper.getUserById(testUser.getId());
         assertThat(createdUser.getEmail().equals(testUser.getEmail()));
     }
 
     @Test
     @Order(2)
     void getUserById() {
-        User testUser = new User(testId, "test@naver.com", "1234", UserStatus.REGISTERED.getTitle(), "test", UserRole.NORMAL.getTitle());
-        User getUser = userMapper.getUserById(testId);
-        assertThat(testUser.getEmail().equals(getUser.getEmail()));
+        User testUser = new User(testEmail, "1234", UserStatus.REGISTERED.getTitle(), "test", UserRole.NORMAL.getTitle());
+        User getUser = userMapper.getUserByEmail(testUser.getEmail());
+        assertThat(testUser.getName().equals(getUser.getName()));
     }
 
     @Test
@@ -52,7 +51,10 @@ public class UserMapperTest {
     @Test
     @Order(4)
     void deleteUser() {
-        userMapper.deleteUser(testId);
-        assertThat(userMapper.getUserById(testId)==null);
+        User getUser = userMapper.getUserByEmail(testEmail);
+        assertThat(userMapper.getUserById(getUser.getId())!=null);
+        userMapper.deleteUser(getUser.getId());
+        assertThat(userMapper.getUserById(getUser.getId())==null);
     }
+
 }
