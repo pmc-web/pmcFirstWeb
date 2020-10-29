@@ -21,8 +21,9 @@ public class User {
     private Long attachmentId;
 
     public User(String email, String password, String status, String name, String role){
+        PasswordEncoding passwordEncoding = new PasswordEncoding();
         this.email = email;
-        this.password = password;
+        this.password = passwordEncoding.encode(password);
         this.instTime = new Date(System.currentTimeMillis());
         this.status = status;
         this.name = name;

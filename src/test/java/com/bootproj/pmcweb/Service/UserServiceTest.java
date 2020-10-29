@@ -4,14 +4,10 @@ package com.bootproj.pmcweb.Service;
 import com.bootproj.pmcweb.Domain.User;
 import com.bootproj.pmcweb.Domain.enumclass.UserRole;
 import com.bootproj.pmcweb.Domain.enumclass.UserStatus;
-import com.bootproj.pmcweb.Mapper.UserMapper;
 import com.bootproj.pmcweb.PmcwebApplication;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
