@@ -8,7 +8,7 @@ CREATE SCHEMA IF NOT EXISTS `study` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb
 -- -----------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `study`.`attachment` (
-  `id` BIGINT NOT NULL,
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
   `path` VARCHAR(50) NOT NULL COMMENT '자료 위치',
   `name` VARCHAR(100) NULL DEFAULT NULL COMMENT '자료 이름',
   `inst_time` DATETIME NULL DEFAULT NULL COMMENT '생성 시간',
@@ -25,7 +25,7 @@ COMMENT = '자료 테이블';
 -- -----------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `study`.`subject` (
-  `id` BIGINT NOT NULL,
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
   `subject_depth1` VARCHAR(50) NULL DEFAULT NULL,
   `subject_depth2` VARCHAR(50) NULL DEFAULT NULL,
   PRIMARY KEY (`id`))
@@ -39,7 +39,7 @@ COMMENT = '주제 테이블';
 -- Table `study`.`region`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `study`.`region` (
-  `id` BIGINT NOT NULL,
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
   `region_depth1` VARCHAR(50) NULL DEFAULT NULL COMMENT '시',
   `region_depth2` VARCHAR(50) NULL DEFAULT NULL COMMENT '군',
   `region_depth3` VARCHAR(50) NULL DEFAULT NULL COMMENT '구',
@@ -55,7 +55,7 @@ COMMENT = '지역 테이블';
 -- -----------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `study`.`study` (
-  `id` BIGINT NOT NULL,
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(100) NOT NULL COMMENT '제목',
   `inst_time` DATETIME NOT NULL COMMENT '생성 날짜',
   `updt_time` DATETIME NULL DEFAULT NULL COMMENT '업데이트 시간',
@@ -81,7 +81,7 @@ COMMENT = '스터디 테이블';
 -- -----------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `study`.`study_material` (
-  `id` BIGINT NOT NULL,
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
   `attachment_id` BIGINT NOT NULL,
   `study_id` BIGINT NOT NULL,
   PRIMARY KEY (`id`),
@@ -96,7 +96,7 @@ COMMENT = '스터디 자료 매핑 테이블';
 -- -----------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `study`.`user` (
-  `id` BIGINT NOT NULL,
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
   `email` VARCHAR(100) NOT NULL COMMENT '유저 이메일 (아이디)',
   `password` VARCHAR(100) NOT NULL COMMENT '비밀번호',
   `grade` INT NULL DEFAULT NULL COMMENT '개인 평점',
@@ -121,7 +121,7 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- -----------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `study`.`date` (
-  `id` BIGINT NOT NULL,
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
   `date` DATETIME NOT NULL COMMENT '일정',
   `description` VARCHAR(1000) NULL DEFAULT NULL COMMENT '일정 설명',
   `study_id` BIGINT NOT NULL,
@@ -139,7 +139,7 @@ COMMENT = '일정 테이블';
 -- -----------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `study`.`alarm` (
-  `id` BIGINT NOT NULL,
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
   `type` VARCHAR(50) NOT NULL COMMENT '알람의 타입 (Study 관련 일정 알람 등)',
   `alarm_time` DATETIME NOT NULL COMMENT '알람이 울리는 시간',
   `status` VARCHAR(50) NOT NULL COMMENT '알람 확인 상태',
@@ -161,7 +161,7 @@ COMMENT = '알람 테이블 (오른쪽 상단에 뜨는 알람을 저장하는 �
 -- -----------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `study`.`favorite` (
-  `id` BIGINT NOT NULL,
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
   `user_id` BIGINT NOT NULL,
   `study_id` BIGINT NOT NULL,
   PRIMARY KEY (`id`),
@@ -179,7 +179,7 @@ COMMENT = '즐겨찾기 테이블';
 -- -----------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `study`.`message` (
-  `id` BIGINT NOT NULL COMMENT '아이디',
+  `id` BIGINT NOT NULL COMMENT '아이디' AUTO_INCREMENT,
   `contents` VARCHAR(1000) NULL DEFAULT NULL COMMENT '내용',
   `time` DATETIME NOT NULL COMMENT '메세지 보낸 시간',
   `status` VARCHAR(50) NOT NULL COMMENT '메세지 확인 상태',
@@ -198,7 +198,7 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- -----------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `study`.`study_member` (
-  `id` BIGINT NOT NULL,
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
   `role` VARCHAR(50) NOT NULL COMMENT '스터디 역할 (스터디장, 스터디원 등)',
   `user_id` BIGINT NOT NULL,
   `study_id` BIGINT NOT NULL,
