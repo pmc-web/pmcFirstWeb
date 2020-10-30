@@ -1,9 +1,11 @@
 package com.bootproj.pmcweb.Mapper;
 
 import com.bootproj.pmcweb.Domain.User;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface UserMapper {
     public List<User> getUserList();
 

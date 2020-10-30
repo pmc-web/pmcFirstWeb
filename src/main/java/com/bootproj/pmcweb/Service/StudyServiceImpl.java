@@ -11,8 +11,8 @@ import java.util.List;
 @Service
 public class StudyServiceImpl implements StudyService {
 
-    //    @Autowired
-    @Resource
+    @Autowired
+//    @Resource
     private StudyMapper studyMapper;
 
     public List<Study> selectStudyList() {
