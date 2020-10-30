@@ -3,7 +3,33 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bootproj.pmcweb.Mapper.StudyMapper">
-    <select id="getStudyList" resultType="com.bootproj.pmcweb.Domain.Study">
-        select * from Study
-    </select>
+<!--    <resultMap type="Study" id="studyMap">-->
+<!--        <id column="id" property="id" />-->
+<!--        <result column="title" property="title" />-->
+<!--        <result column="status" property="status" />-->
+<!--        <result column="inst_date" property="inst_date" javaType="java.sql.Date" />-->
+<!--        <result column="updt_date" property="updt_date" javaType="java.sql.Date" />-->
+<!--        <result column="description" property="description" />-->
+<!--        <result column="start_date" property="start_date" javaType="java.sql.Date" />-->
+<!--        <result column="end_date" property="end_date" javaType="java.sql.Date" />-->
+<!--        <result column="evaluation" property="evaluation" />-->
+<!--        <result column="type" property="type" />-->
+<!--        <result column="region_id" property="region_id" />-->
+<!--        <result column="subject_id" property="subject_id" />-->
+<!--    </resultMap>-->
+<!--    <select id="getStudyList" resultType="studyMap">-->
+<!--        select * from Study-->
+<!--    </select>-->
+
+<!--    <insert id="insertStudy" parameterType="study" useGeneratedKeys="true" keyProperty="id">-->
+<!--        INSERT INTO study-->
+<!--        (title, inst_date, updt_date, status, description, start_date, end_date, evaluation, type, region_id, subject_id)-->
+<!--        values (#{title}, now(), now(), 0, #{description}, #{start_date}, #{end_date}, #{evaluation}, #{type},-->
+<!--        #{region_id}, #{subject_id})-->
+<!--        <selectKey keyProperty="id" resultType="Integer">-->
+<!--            SELECT LAST_INSERT_ID()-->
+<!--        </selectKey>-->
+<!--    </insert>-->
+
+
 </mapper>

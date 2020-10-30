@@ -11,13 +11,13 @@ import java.util.List;
 
 @Controller
 public class HomeController {
-    @Autowired
-    private StudyService studyService;
+//    @Autowired
+//    private StudyService studyService;
 
     @GetMapping("/test")
     public String Home(Model model){
-        List<Study> studyList = studyService.selectStudyList();
-        model.addAttribute("studyList", studyList);
+//        List<Study> studyList = studyService.selectStudyList();
+//        model.addAttribute("studyList", studyList);
 
         return "test";
     }

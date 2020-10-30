@@ -2,20 +2,24 @@ package com.bootproj.pmcweb.Service;
 
 import com.bootproj.pmcweb.Domain.Study;
 import com.bootproj.pmcweb.Mapper.StudyMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.List;
 
+//@RequiredArgsConstructor // 생성자를 통해 DI
 @Service
 public class StudyServiceImpl implements StudyService {
-
-    //    @Autowired
-    @Resource
-    private StudyMapper studyMapper;
+//    final private StudyMapper studyMapper; //final : 생성될때 초기화
 
     public List<Study> selectStudyList() {
-        return studyMapper.getStudyList();
+        return null;
+//        return studyMapper.getStudyList();
+    }
+
+    @Override
+    public Study createStudy(Study study) {
+        return null;
+//        return studyMapper.insertStudy(study);
     }
 }
