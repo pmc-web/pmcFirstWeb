@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController // Rest Controller는 response 바디를 가지고, Controller는 가지지 않음.
+@Controller // Rest Controller는 response 바디를 가지고, Controller는 가지지 않음.
 public class UserController {
 
     @Autowired
@@ -21,18 +21,21 @@ public class UserController {
     }
 
     @GetMapping("/users")
+    @ResponseBody
     public List<User> list(){
         List<User> users = userService.getUsers();
         return users;
     }
 
     @PostMapping("/user")
+    @ResponseBody
     public void postUser(@RequestBody User user){
         userService.createUser(user);
         return;
     }
 
     @DeleteMapping("/user/{id}")
+    @ResponseBody
     public void deleteUser(@PathVariable Long id){
         userService.deleteUser(id);
         return;
