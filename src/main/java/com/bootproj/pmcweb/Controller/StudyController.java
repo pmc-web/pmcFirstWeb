@@ -5,6 +5,9 @@ import com.bootproj.pmcweb.Service.StudyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RequestMapping("/study")
 @RestController
 @RequiredArgsConstructor
@@ -13,12 +16,11 @@ public class StudyController {
     private final StudyService studyService;
 
     @PostMapping
-    public Study createStudy(@ModelAttribute Study study)throws Exception{
-//        return studyService.createStudy(study);
-        String title = study.getTitle();
-
+    public HashMap createStudy(@ModelAttribute Study study)throws Exception{
         System.out.println(study.toString());
+        HashMap<String, Long> resultMap = new HashMap<>();
+        resultMap.put("insertId", studyService.createStudy(study));
 
-        return study;
+        return resultMap;
     }
 }

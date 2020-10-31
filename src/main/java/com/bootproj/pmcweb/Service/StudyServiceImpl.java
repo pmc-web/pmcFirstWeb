@@ -7,19 +7,23 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-//@RequiredArgsConstructor // 생성자를 통해 DI
+@RequiredArgsConstructor // 생성자를 통해 DI
 @Service
 public class StudyServiceImpl implements StudyService {
-//    final private StudyMapper studyMapper; //final : 생성될때 초기화
+    final private StudyMapper studyMapper; //final : 생성될때 초기화
 
     public List<Study> selectStudyList() {
-        return null;
-//        return studyMapper.getStudyList();
+        return studyMapper.getStudyList();
     }
 
     @Override
-    public Study createStudy(Study study) {
-        return null;
-//        return studyMapper.insertStudy(study);
+    public Long createStudy(Study study) {
+        int result =  studyMapper.insertStudy(study);
+        System.out.println(study.toString());
+        if(result == 1){
+            return study.getId();
+        }else {
+            return 0L;
+        }
     }
 }

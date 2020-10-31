@@ -10,5 +10,6 @@ public interface StudyMapper {
     // 조회
     public List<Study> getStudyList();
     // 생성 by songi
-    public Study insertStudy(Study study);
+    public Integer insertStudy(Study study);
+    public Integer getCreateStudyId();
 }
