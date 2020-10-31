@@ -1,13 +1,17 @@
 package com.bootproj.pmcweb.Controller;
 
 import com.bootproj.pmcweb.Domain.User;
+import com.bootproj.pmcweb.Domain.enumclass.UserRole;
+import com.bootproj.pmcweb.Domain.enumclass.UserStatus;
 import com.bootproj.pmcweb.Service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @Controller // Rest Controller는 response 바디를 가지고, Controller는 가지지 않음.
 public class UserController {
 
@@ -29,9 +33,16 @@ public class UserController {
 
     @PostMapping("/user")
     @ResponseBody
-    public void postUser(@RequestBody User user){
-        userService.createUser(user);
-        return;
+//    public void postUser(@RequestBody User user){
+    public User postUser(@ModelAttribute User user){
+        user.setStatus(UserStatus.REGISTERED.getTitle());
+        user.setRole(UserRole.NORMAL.getTitle());
+        User savedUser = userService.createUser(user);
+
+        log.info("user value :"+user);
+        System.out.println("user value :"+user);
+
+        return savedUser;
     }
 
     @DeleteMapping("/user/{id}")
