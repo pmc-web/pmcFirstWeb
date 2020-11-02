@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.http.HttpStatus;
 
 import java.time.LocalDateTime;
 
@@ -26,29 +27,29 @@ public class Header<T> {
 
     // OK , No Data (200)
     public static <T> Header<T> OK() {
-        return (Header.<T>builder()
+        return (Header<T>)Header.builder()
                 .transactionTime(LocalDateTime.now())
                 .resultCode(ResultCode.RESULT_OK)
                 .description("OK")
-                .build());
+                .build();
     }
 
     // OK , Data (200)
     public static <T> Header<T> OK(T data) {
-        return (Header.<T>builder()
+        return (Header<T>)Header.builder()
                 .transactionTime(LocalDateTime.now())
                 .resultCode(ResultCode.RESULT_OK)
                 .description("OK")
                 .data(data)
-                .build());
+                .build();
     }
 
     // ERROR
     public static <T> Header<T> Error(String description) {
-        return (Header.<T>builder()
+        return (Header<T>)Header.builder()
                 .transactionTime(LocalDateTime.now())
                 .resultCode(ResultCode.RESULT_ERROR)
                 .description(description)
-                .build());
+                .build();
     }
 }
