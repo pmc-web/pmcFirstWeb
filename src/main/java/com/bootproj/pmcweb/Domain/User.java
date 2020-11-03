@@ -21,6 +21,7 @@ public class User {
     private String role;
     private Long regionId;
     private Long attachmentId;
+    private String authKey;
 
     public User(String email, String password, String status, String name, String role){
         PasswordEncoding passwordEncoding = new PasswordEncoding();

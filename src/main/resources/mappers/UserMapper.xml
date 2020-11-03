@@ -24,4 +24,8 @@
     <delete id="deleteUser">
         delete from User where id = #{id}
     </delete>
+    <update id="updateUserAuthKey" parameterType="map">
+        update User set auth_key = #{authKey}
+        where email = #{email};
+    </update>
 </mapper>
