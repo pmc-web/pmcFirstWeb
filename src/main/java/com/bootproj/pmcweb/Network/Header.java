@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
 
+import javax.xml.transform.Result;
 import java.time.LocalDateTime;
 
 @Builder
@@ -29,8 +30,17 @@ public class Header<T> {
     public static <T> Header<T> OK() {
         return (Header<T>)Header.builder()
                 .transactionTime(LocalDateTime.now())
-                .resultCode(ResultCode.RESULT_OK)
-                .description("OK")
+                .resultCode(ResultCode.OK.getCode())
+                .description(ResultCode.OK.getMessage())
+                .build();
+    }
+
+    // OK , No Data (200)
+    public static <T> Header<T> OK(ResultCode resultCode) {
+        return (Header<T>)Header.builder()
+                .transactionTime(LocalDateTime.now())
+                .resultCode(resultCode.getCode())
+                .description(resultCode.getMessage())
                 .build();
     }
 
@@ -38,18 +48,28 @@ public class Header<T> {
     public static <T> Header<T> OK(T data) {
         return (Header<T>)Header.builder()
                 .transactionTime(LocalDateTime.now())
-                .resultCode(ResultCode.RESULT_OK)
-                .description("OK")
+                .resultCode(ResultCode.OK.getCode())
+                .description(ResultCode.OK.getMessage())
+                .data(data)
+                .build();
+    }
+
+    // OK , Data (200)
+    public static <T> Header<T> OK(ResultCode resultCode, T data) {
+        return (Header<T>)Header.builder()
+                .transactionTime(LocalDateTime.now())
+                .resultCode(resultCode.getCode())
+                .description(resultCode.getMessage())
                 .data(data)
                 .build();
     }
 
     // ERROR
-    public static <T> Header<T> Error(String description) {
+    public static <T> Header<T> Error(ResultCode resultCode) {
         return (Header<T>)Header.builder()
                 .transactionTime(LocalDateTime.now())
-                .resultCode(ResultCode.RESULT_ERROR)
-                .description(description)
+                .resultCode(resultCode.getCode())
+                .description(resultCode.getMessage())
                 .build();
     }
 }
