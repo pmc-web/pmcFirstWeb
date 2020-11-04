@@ -1,8 +1,9 @@
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="/layout/common.html :: fragment-common"></head>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
-    <link th:href="@{/css/register.css}" rel="stylesheet">
+    <th:block th:replace="/layout/common.html :: fragment-common"></th:block>
+    <th:block layout:fragment="css"><link th:href="@{/css/register.css}" rel="stylesheet"></th:block>
 </head>
 <body>
 <script>
