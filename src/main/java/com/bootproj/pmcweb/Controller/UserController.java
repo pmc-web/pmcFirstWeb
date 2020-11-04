@@ -42,12 +42,10 @@ public class UserController {
     @ResponseBody
 //    public void postUser(@RequestBody User user){
     public Header<User> postUser(@ModelAttribute User user){
-        user.setStatus(UserStatus.UNREGISTERED.getTitle());
-        user.setRole(UserRole.NORMAL.getTitle());
-        User savedUser = userService.createUser(user);
+        User insertUser = new User(user.getEmail(), user.getPassword(), user.getName());
+        User savedUser = userService.createUser(insertUser);
 
-        log.info("user value :"+user);
-        System.out.println("user value :"+user);
+        log.info("user value :"+savedUser);
 
         return Header.OK(savedUser);
     }
@@ -67,12 +65,10 @@ public class UserController {
 
     @PostMapping("/user/signUp")
     @ResponseBody
-    public Header signUp(@ModelAttribute User user){
+    public Header<User> signUp(@ModelAttribute User user){
         // DB에 정보 insert
-        user.setStatus(UserStatus.UNREGISTERED.getTitle());
-        user.setRole(UserRole.NORMAL.getTitle());
-        User savedUser = userService.createUser(user);
-
+        User insertUser = new User(user.getEmail(), user.getPassword(), user.getName());
+        User savedUser = userService.createUser(insertUser);
         // TODO: 메일 전송 실패 시 데이터 롤백 필요
         // 임의의 authKey 생성 & 이메일 발송
         String authKey = mailSendService.sendAuthMail(user.getEmail());
@@ -80,6 +76,6 @@ public class UserController {
         map.put("email", user.getEmail());
         map.put("authKey", authKey);
         userService.updateUserAuthKey(map);
-        return Header.OK();
+        return Header.OK(savedUser);
     }
 }
