@@ -24,7 +24,7 @@ public class MailUtil {
     }
 
     public void setText(String text) throws MessagingException {
-        messageHelper.setText(text);
+        messageHelper.setText(text, true);
     }
 
     public void setFrom(String email, String name) throws UnsupportedEncodingException, MessagingException {

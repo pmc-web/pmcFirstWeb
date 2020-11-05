@@ -101,4 +101,15 @@ public class UserController {
         }
         return new ResponseEntity(Header.OK(savedUser), HttpStatus.CREATED);
     }
+
+    @GetMapping("/user/signUpConfirm")
+    @ResponseBody
+    public Header signUpConfirm(@RequestParam(value="email") String email, @RequestParam(value="authKey") String authKey){
+        // TODO: Email 값으로 유저를 찾아서 시크릿키가 같은지 확인하기
+
+        // TODO: 시크릿키가 일치할 경우 유저의 status를 REGISTERED로 변경하기
+
+        // TODO: 로그인 페이지로 이동시키기
+        return Header.OK();
+    }
 }
