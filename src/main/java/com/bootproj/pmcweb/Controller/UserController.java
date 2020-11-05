@@ -3,13 +3,20 @@ package com.bootproj.pmcweb.Controller;
 import com.bootproj.pmcweb.Domain.User;
 import com.bootproj.pmcweb.Domain.enumclass.UserRole;
 import com.bootproj.pmcweb.Domain.enumclass.UserStatus;
+import com.bootproj.pmcweb.Network.Exception.DuplicateEmailException;
+import com.bootproj.pmcweb.Network.Exception.GlobalExceptionHandler;
+import com.bootproj.pmcweb.Network.Exception.SendEmailException;
 import com.bootproj.pmcweb.Network.Header;
+import com.bootproj.pmcweb.Network.ResultCode;
 import com.bootproj.pmcweb.Service.MailSendService;
 import com.bootproj.pmcweb.Service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashMap;
 import java.util.List;
@@ -41,11 +48,15 @@ public class UserController {
     @PostMapping("/user")
     @ResponseBody
 //    public void postUser(@RequestBody User user){
-    public Header<User> postUser(@ModelAttribute User user){
-        User insertUser = new User(user.getEmail(), user.getPassword(), user.getName());
-        User savedUser = userService.createUser(insertUser);
-
-        log.info("user value :"+savedUser);
+    public Header<User> postUser(@ModelAttribute User user) throws DuplicateEmailException{
+        User savedUser;
+        try {
+            User insertUser = new User(user.getEmail(), user.getPassword(), user.getName());
+            savedUser = userService.createUser(insertUser);
+            log.info("user value :"+savedUser);
+        } catch (Exception e){
+            throw new DuplicateEmailException(e.getMessage());
+        }
 
         return Header.OK(savedUser);
     }
@@ -65,17 +76,29 @@ public class UserController {
 
     @PostMapping("/user/signUp")
     @ResponseBody
-    public Header<User> signUp(@ModelAttribute User user){
-        // DB에 정보 insert
-        User insertUser = new User(user.getEmail(), user.getPassword(), user.getName());
-        User savedUser = userService.createUser(insertUser);
-        // TODO: 메일 전송 실패 시 데이터 롤백 필요
-        // 임의의 authKey 생성 & 이메일 발송
-        String authKey = mailSendService.sendAuthMail(user.getEmail());
-        Map<String, String> map = new HashMap<String, String>();
-        map.put("email", user.getEmail());
-        map.put("authKey", authKey);
-        userService.updateUserAuthKey(map);
-        return Header.OK(savedUser);
+    public ResponseEntity<Header<User>> signUp(@ModelAttribute User user) throws DuplicateEmailException, SendEmailException{
+        User savedUser;
+        try {
+            // DB에 정보 insert
+            User insertUser = new User(user.getEmail(), user.getPassword(), user.getName());
+            savedUser = userService.createUser(insertUser);
+            log.info("user value :"+savedUser);
+        } catch (Exception e){
+            throw new DuplicateEmailException(e.getMessage());
+        }
+
+        try {
+            // 임의의 authKey 생성 & 이메일 발송
+            String authKey = mailSendService.sendAuthMail(user.getEmail());
+            Map<String, String> map = new HashMap<String, String>();
+            map.put("email", user.getEmail());
+            map.put("authKey", authKey);
+            userService.updateUserAuthKey(map);
+        } catch (Exception e){
+            // 메일 전송 실패 시 데이터 롤백
+            userService.deleteUser(savedUser.getId());
+            throw new SendEmailException(e.getMessage());
+        }
+        return new ResponseEntity(Header.OK(savedUser), HttpStatus.CREATED);
     }
 }

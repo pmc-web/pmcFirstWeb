@@ -14,8 +14,9 @@
             url : '/user/signUp',
             data : formData,
             dataType : 'json',
-            error: function(xhr, status, error){
-                alert(error);
+            error: function(response){
+                var r = jQuery.parseJSON(response.responseText);
+                alert(r.description);
             },
             success : function(json){
                 // alert(json);
