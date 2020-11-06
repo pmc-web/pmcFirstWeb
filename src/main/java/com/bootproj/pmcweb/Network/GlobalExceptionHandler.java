@@ -1,6 +1,7 @@
 package com.bootproj.pmcweb.Network;
 
 import com.bootproj.pmcweb.Network.Exception.DuplicateEmailException;
+import com.bootproj.pmcweb.Network.Exception.NoMatchingAcountException;
 import com.bootproj.pmcweb.Network.Exception.SendEmailException;
 import com.bootproj.pmcweb.Network.Header;
 import com.bootproj.pmcweb.Network.ResultCode;
@@ -68,5 +69,14 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Header> handlerSendEmailException(SendEmailException e) {
         log.error("SendEmailException");
         return new ResponseEntity(Header.Error(ResultCode.ERROR_SEND_EMAIL), ResultCode.ERROR_SEND_EMAIL.getStatus());
+    }
+
+    /**
+     * 유저 이메일이나 아이디로 검색했을 때 존재하지 않는 경우 발생
+     */
+    @ExceptionHandler(NoMatchingAcountException.class)
+    public ResponseEntity<Header> handlerNoMatchingAcountException(NoMatchingAcountException e){
+        log.error("NoMatchingAcountException");
+        return new ResponseEntity(Header.Error(ResultCode.ERROR_USER_NOT_FOUND), ResultCode.ERROR_USER_NOT_FOUND.getStatus());
     }
 }

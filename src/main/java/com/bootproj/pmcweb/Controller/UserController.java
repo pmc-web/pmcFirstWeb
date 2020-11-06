@@ -1,10 +1,9 @@
 package com.bootproj.pmcweb.Controller;
 
 import com.bootproj.pmcweb.Domain.User;
-import com.bootproj.pmcweb.Domain.enumclass.UserRole;
 import com.bootproj.pmcweb.Domain.enumclass.UserStatus;
 import com.bootproj.pmcweb.Network.Exception.DuplicateEmailException;
-import com.bootproj.pmcweb.Network.Exception.GlobalExceptionHandler;
+import com.bootproj.pmcweb.Network.Exception.NoMatchingAcountException;
 import com.bootproj.pmcweb.Network.Exception.SendEmailException;
 import com.bootproj.pmcweb.Network.Header;
 import com.bootproj.pmcweb.Network.ResultCode;
@@ -15,8 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashMap;
 import java.util.List;
@@ -104,12 +103,25 @@ public class UserController {
 
     @GetMapping("/user/signUpConfirm")
     @ResponseBody
-    public Header signUpConfirm(@RequestParam(value="email") String email, @RequestParam(value="authKey") String authKey){
-        // TODO: Email 값으로 유저를 찾아서 시크릿키가 같은지 확인하기
+    public ResponseEntity<Header> signUpConfirm(@RequestParam(value="email") String email, @RequestParam(value="authKey") String authKey) throws NoMatchingAcountException {
+        // Email 값으로 유저를 찾아서 시크릿키가 같은지 확인하기
+        if (authKey==null || email == null) return new ResponseEntity(Header.Error(ResultCode.REQUEST_ERROR_INVALID_INPUT_VALUE), HttpStatus.BAD_REQUEST);
+        User user = userService.getUserByEmail(email);
+        if (user==null) throw new NoMatchingAcountException(email + "은 존재하지 않는 유저입니다.");
 
-        // TODO: 시크릿키가 일치할 경우 유저의 status를 REGISTERED로 변경하기
+        // 시크릿키가 일치할 경우 유저의 status를 REGISTERED로 변경하기
+        log.info("authKey: " + authKey);
+        log.info("user.authKey: " + user.getAuthKey());
+        log.info(user.toString());
+        if (authKey.equals(user.getAuthKey())){
+            Map<String, String> map = new HashMap<String, String>();
+            map.put("email", user.getEmail());
+            map.put("status", UserStatus.REGISTERED.getTitle());
+            userService.updateUserStatus(map);
+        }
+        User changedUser = userService.getUserByEmail(email);
 
         // TODO: 로그인 페이지로 이동시키기
-        return Header.OK();
+        return new ResponseEntity(Header.OK(changedUser), HttpStatus.OK);
     }
 }

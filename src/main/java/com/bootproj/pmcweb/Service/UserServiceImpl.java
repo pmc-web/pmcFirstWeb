@@ -48,4 +48,10 @@ public class UserServiceImpl implements UserService {
         userMapper.updateUserAuthKey(map);
         return;
     }
+
+    @Override
+    public void updateUserStatus(Map<String, String> map) {
+        userMapper.updateUserStatus(map);
+        return;
+    }
 }

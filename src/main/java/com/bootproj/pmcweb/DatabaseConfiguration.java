@@ -49,6 +49,7 @@ public class DatabaseConfiguration {
 
     @Bean
     public SqlSessionTemplate sqlSessionTemplate(SqlSessionFactory sqlSessionFactory) {
+        sqlSessionFactory.getConfiguration().setMapUnderscoreToCamelCase(true);
         return new SqlSessionTemplate(sqlSessionFactory);
     }
 

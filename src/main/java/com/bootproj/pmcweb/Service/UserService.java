@@ -12,4 +12,5 @@ public interface UserService{
     public User createUser(User user);
     public void deleteUser(Long id);
     public void updateUserAuthKey(Map<String, String> map);
+    public void updateUserStatus(Map<String, String> map);
 }
