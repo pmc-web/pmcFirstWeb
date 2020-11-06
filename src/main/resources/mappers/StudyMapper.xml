@@ -3,27 +3,9 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bootproj.pmcweb.Mapper.StudyMapper">
-<!--    <resultMap type="" id="studyMap">-->
-<!--        <id column="id" property="id" />-->
-<!--        <result column="title" property="title" />-->
-<!--        <result column="status" property="status" />-->
-<!--        <result column="inst_date" property="inst_date" javaType="java.sql.Date" />-->
-<!--        <result column="updt_date" property="updt_date" javaType="java.sql.Date" />-->
-<!--        <result column="description" property="description" />-->
-<!--        <result column="start_date" property="start_date" javaType="java.sql.Date" />-->
-<!--        <result column="end_date" property="end_date" javaType="java.sql.Date" />-->
-<!--        <result column="evaluation" property="evaluation" />-->
-<!--        <result column="type" property="type" />-->
-<!--        <result column="region_id" property="region_id" />-->
-<!--        <result column="subject_id" property="subject_id" />-->
-<!--    </resultMap>-->
-<!--    <select id="getStudyList" resultType="studyMap">-->
-<!--        select * from Study-->
-<!--    </select>-->
-
     <insert id="insertStudy" parameterType="com.bootproj.pmcweb.Domain.Study" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO study
-        (title, inst_date, updt_date, status, description, start_date, end_date, evaluation, type, region_id, subject_id)
+        (title, inst_time, updt_time, status, description, start_date, end_date, evaluation, type, region_id, subject_id)
         values (#{title}, now(), now(), 0, #{description}, #{startDate}, #{endDate}, #{evaluation}, #{type},
         #{regionId}, #{subjectId})
         <selectKey keyProperty="id" resultType="long">
@@ -31,5 +13,12 @@
         </selectKey>
     </insert>
 
+    <select id="getStudyDetail" parameterType="long" resultType="com.bootproj.pmcweb.Domain.Study">
+        SELECT * FROM study where id=#{studyId};
+    </select>
+
+    <select id="joinStudy" parameterType="long" resultType="com.bootproj.pmcweb.Domain.Study">
+
+    </select>
 
 </mapper>

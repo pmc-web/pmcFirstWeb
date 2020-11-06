@@ -26,4 +26,24 @@ public class StudyServiceImpl implements StudyService {
             return 0L;
         }
     }
+
+    @Override
+    public Study getStudyDetail(Long studyId) {
+        return studyMapper.getStudyDetail(studyId);
+    }
+
+    @Override
+    public Study joinStudy(Long studyId, Long userId) {
+        return studyMapper.joinStudy(studyId, userId);
+    }
+
+    @Override
+    public Study putStudyStatus(Long studyId) {
+        return studyMapper.putStudyStatus(studyId);
+    }
+
+    @Override
+    public Integer removeStudy(Long studyId) {
+        return null;
+    }
 }
