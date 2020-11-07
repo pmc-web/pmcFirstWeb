@@ -3,15 +3,17 @@ package com.bootproj.pmcweb.Domain;
 import com.bootproj.pmcweb.Domain.enumclass.UserRole;
 import com.bootproj.pmcweb.Domain.enumclass.UserStatus;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
 import java.util.Date;
 
 @Setter
 @Getter
 //@Data
-@Builder
 @NoArgsConstructor
-@AllArgsConstructor
-public class User {
+public class User implements UserDetails {
     private Long id;
     private String email;
     private String password;
@@ -24,6 +26,41 @@ public class User {
     private Long regionId;
     private Long attachmentId;
     private String authKey;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.getEmail();
+    }
+
+    @Override
+    public String getPassword() {
+        return this.getPassword();
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return this.isAccountNonExpired();
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return this.isAccountNonLocked();
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return this.isCredentialsNonExpired();
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return this.isEnabled();
+    }
 
     public User(String email, String password, String name){
         PasswordEncoding passwordEncoding = new PasswordEncoding();

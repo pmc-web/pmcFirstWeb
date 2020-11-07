@@ -1,30 +1,11 @@
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="/layout/common.html :: fragment-common"></head>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
-    <link th:href="@{/css/register.css}" rel="stylesheet">
+    <th:block th:replace="/layout/common.html :: fragment-common"/>
+    <th:block layout:fragment="css"><link th:href="@{/css/register.css}" rel="stylesheet"></th:block>
 </head>
 <body>
-<script>
-    function regFun(){
-        var formData = $("form[name=regForm]").serialize();
-
-        $.ajax({
-            type : 'post',
-            url : '/user/signUp',
-            data : formData,
-            dataType : 'json',
-            error: function(response){
-                var r = jQuery.parseJSON(response.responseText);
-                alert(r.description);
-            },
-            success : function(json){
-                // alert(json);
-                alert('이메일로 인증을 완료해주세요.');
-            }
-        });
-    }
-</script>
     <div class="container d-flex justify-content-center">
         <div class="row my-5">
             <div class="col-md-6 text-left text-white lcol">
@@ -40,7 +21,8 @@
                 </div>
             </div>
             <div class="col-md-6 rcol">
-                <form class="sign-up" id="regForm" name="regForm">
+<!--                <form class="sign-up" id="regForm" name="regForm">-->
+                <form class="sign-up" th:action="@{/user/signup}" method="post">
                     <h2 class="heading mb-4">회원가입</h2>
                     <div class="form-group fone mt-2"> <i class="fas fa-user"></i> <input type="name" name="name" class="form-control" placeholder="Name"> </div>
                     <div class="form-group fone mt-2"> <i class="fas fa-envelope"></i> <input type="email" name="email" class="form-control" placeholder="Email"> </div>
@@ -48,7 +30,8 @@
                         <div class="image"><i class="fas fa-eye"></i></div>
                     </div>
                     <div class="form-group fone mt-2"> <i class="fas fa-lock"></i> <input type="password" name="confirm" class="form-control" placeholder="Confirm Password"></div>
-                    <button type="button" class="btn btn-block btn-bold btn-primary mt-2" onclick="regFun()">Sign up now!</button>
+<!--                    <button type="button" class="btn btn-block btn-bold btn-primary mt-2" onclick="regFun()">Sign up now!</button>-->
+                    <button type="submit" class="btn btn-block btn-bold btn-primary mt-2" onclick="regFun()">Sign up now!</button>
                 </form>
                 <p class="exist mt-4">Existing user? <span>Log in</span></p>
             </div>
