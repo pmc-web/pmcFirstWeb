@@ -14,7 +14,7 @@ public interface UserMapper {
 
     public User getUserByEmail(String email);
 
-    public void createUser(User user);
+    public User createUser(User user);
 
     public void deleteUser(Long id);
 

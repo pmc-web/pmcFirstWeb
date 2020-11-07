@@ -37,6 +37,36 @@ public class UserController {
         return "user/" + name;
     }
 
+    /**
+     * Go to Page include Security
+     * made by kym
+     */
+
+    // 회원가입
+//    @PostMapping("/user/signup")
+    @GetMapping("/user/signup")
+    public String getSignUp(){
+//        return "redirect:/user/login";
+        return "user/register";
+    }
+
+    // 로그인
+    @GetMapping("/user/login")
+    public String getLogin(){
+        return "user/login";
+    }
+
+    // 로그아웃
+    @GetMapping("/user/logout")
+    public String getLogout(){
+        return "user/login";
+    }
+
+    /**
+     * REST API
+     * made by jiae
+     */
+
     @GetMapping("/users")
     @ResponseBody
     public Header<List<User>> list(){
@@ -44,21 +74,6 @@ public class UserController {
         return Header.OK(users);
     }
 
-    @PostMapping("/user")
-    @ResponseBody
-//    public void postUser(@RequestBody User user){
-    public Header<User> postUser(@ModelAttribute User user) throws DuplicateEmailException{
-        User savedUser;
-        try {
-            User insertUser = new User(user.getEmail(), user.getPassword(), user.getName());
-            savedUser = userService.createUser(insertUser);
-            log.info("user value :"+savedUser);
-        } catch (Exception e){
-            throw new DuplicateEmailException(e.getMessage());
-        }
-
-        return Header.OK(savedUser);
-    }
 
     @DeleteMapping("/user/{id}")
     @ResponseBody
@@ -73,10 +88,11 @@ public class UserController {
         return Header.OK(user);
     }
 
-    @PostMapping("/user/signUp")
+    @PostMapping("/user/sendSignUpEmail")
     @ResponseBody
-    public ResponseEntity<Header<User>> signUp(@ModelAttribute User user) throws DuplicateEmailException, SendEmailException{
+    public ResponseEntity<Header<User>> postUser(@ModelAttribute User user) throws DuplicateEmailException, SendEmailException{
         User savedUser;
+
         try {
             // DB에 정보 insert
             User insertUser = new User(user.getEmail(), user.getPassword(), user.getName());

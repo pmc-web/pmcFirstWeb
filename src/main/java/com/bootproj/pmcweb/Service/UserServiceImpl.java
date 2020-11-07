@@ -42,14 +42,14 @@ public class UserServiceImpl implements UserService {
         return users;
     }
 
-    public void createUser(User user){
+    public User createUser(User user){
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         user.setStatus(UserStatus.REGISTERED.getTitle());
         user.setRole(UserRole.NORMAL.getTitle());
 
-        userMapper.createUser(user);
+        return userMapper.createUser(user);
     }
 
     @Override
