@@ -11,9 +11,8 @@ import java.util.Date;
 
 @Setter
 @Getter
-//@Data
 @NoArgsConstructor
-public class User implements UserDetails {
+public class User {
     private Long id;
     private String email;
     private String password;
@@ -26,41 +25,6 @@ public class User implements UserDetails {
     private Long regionId;
     private Long attachmentId;
     private String authKey;
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
-    }
-
-    @Override
-    public String getUsername() {
-        return this.getEmail();
-    }
-
-    @Override
-    public String getPassword() {
-        return this.getPassword();
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return this.isAccountNonExpired();
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return this.isAccountNonLocked();
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return this.isCredentialsNonExpired();
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return this.isEnabled();
-    }
 
     public User(String email, String password, String name){
         PasswordEncoding passwordEncoding = new PasswordEncoding();
