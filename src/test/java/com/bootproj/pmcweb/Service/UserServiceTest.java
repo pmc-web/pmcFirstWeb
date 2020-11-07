@@ -1,75 +1,61 @@
-//package com.bootproj.pmcweb.Service;
-//
-//import com.bootproj.pmcweb.Domain.User;
-//import com.bootproj.pmcweb.Repository.MemoryUserRepository;
-//import org.junit.jupiter.api.AfterEach;
-//import org.junit.jupiter.api.BeforeEach;
-//import org.junit.jupiter.api.Test;
-//
-//
-//import static org.assertj.core.api.Assertions.*;
-//import static org.junit.jupiter.api.Assertions.*;
-//
-//class UserServiceTest {
-//
-//    UserService userService;
-//    MemoryUserRepository userRepository;
-//
-//    @BeforeEach
-//    public void beforeEach(){
-//        userRepository = new MemoryUserRepository();
-//        userService = new UserService(userRepository);
-//    }
-//
-//    @AfterEach
-//    public void afterEach(){
-//        userRepository.clearStore();
-//    }
-//
-//    @Test
-//    void 회원가입() {
-//        //given
-//        User member = new User();
-//        member.setName("hello");
-//
-//        //when
-//        Long saveId = userService.join(member);
-//
-//        //then
-//        User findMember = userService.findOne(saveId).get();
-//        assertThat(member.getName()).isEqualTo(findMember.getName());
-//    }
-//
-//    @Test
-//    public void 중복_회원_예외() {
-//        //given
-//        User member1 = new User();
-//        member1.setEmail("spring@naver.com");
-//
-//        User member2 = new User();
-//        member2.setEmail("spring@naver.com");
-//
-//        //when
-//        userService.join(member1);
-//        IllegalStateException e = assertThrows(IllegalStateException.class, () -> userService.join(member2));
-//
-//        assertThat(e.getMessage()).isEqualTo("이미 존재하는 회원입니다.");
-//
-////        try{
-////            memberService.join(member2);
-////            fail();
-////        }catch(IllegalStateException e) {
-////            assertThat(e.getMessage()).isEqualTo("이미 존재하는 회원입니다.");
-////        }
-//
-//        //then
-//    }
-//
-//    @Test
-//    void findMembers() {
-//    }
-//
-//    @Test
-//    void findOne() {
-//    }
-//}
+package com.bootproj.pmcweb.Service;
+
+
+import com.bootproj.pmcweb.Domain.User;
+import com.bootproj.pmcweb.Domain.enumclass.UserRole;
+import com.bootproj.pmcweb.Domain.enumclass.UserStatus;
+import com.bootproj.pmcweb.PmcwebApplication;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.*;
+
+@ExtendWith(SpringExtension.class)
+@SpringBootTest(classes = PmcwebApplication.class)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+public class UserServiceTest {
+
+    @Autowired
+    private UserServiceImpl userServiceImpl;
+    private static final String testEmail = "test@naver.com";
+
+    @Test
+    @Order(1)
+    void createUser() {
+        User user = new User(testEmail, "1234", UserStatus.REGISTERED.getTitle(), "test", UserRole.NORMAL.getTitle());
+        userServiceImpl.createUser(user);
+        User findUser = userServiceImpl.getUserByEmail(user.getEmail());
+        assertThat(user.getEmail()).isEqualTo(findUser.getEmail());
+    }
+
+    @Test
+    @Order(2)
+    void getUser() {
+        User user = new User(testEmail, "1234", UserStatus.REGISTERED.getTitle(), "test", UserRole.NORMAL.getTitle());
+        User getUser = userServiceImpl.getUserByEmail(testEmail);
+        assertThat(testEmail.equals(getUser.getEmail()));
+        assertThat(user.getName().equals(getUser.getName()));
+    }
+
+    @Test
+    @Order(3)
+    void getUsers() {
+        List<User> userList = userServiceImpl.getUsers();
+        assertThat(userList.size() > 0);
+    }
+
+    @Test
+    @Order(4)
+    void deleteUser() {
+        User getUser = userServiceImpl.getUserByEmail(testEmail);
+        assertThat(userServiceImpl.getUserByEmail(testEmail)!=null);
+        userServiceImpl.deleteUser(getUser.getId());
+        assertThat(userServiceImpl.getUserByEmail(testEmail)==null);
+    }
+
+}
