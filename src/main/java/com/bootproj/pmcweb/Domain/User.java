@@ -4,6 +4,7 @@ import com.bootproj.pmcweb.Domain.enumclass.UserRole;
 import com.bootproj.pmcweb.Domain.enumclass.UserStatus;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Date;
@@ -12,7 +13,7 @@ import java.util.Date;
 @Getter
 //@Data
 @NoArgsConstructor
-public class User {
+public class User implements UserDetails {
     private Long id;
     private String email;
     private String password;
