@@ -4,6 +4,7 @@ import com.bootproj.pmcweb.Domain.User;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface UserMapper {
@@ -17,4 +18,7 @@ public interface UserMapper {
 
     public void deleteUser(Long id);
 
+    public void updateUserAuthKey(Map<String, String> map);
+
+    public void updateUserStatus(Map<String, String> map);
 }
