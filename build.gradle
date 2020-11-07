@@ -34,6 +34,10 @@ dependencies {
 	testCompile("org.mybatis.spring.boot:mybatis-spring-boot-starter-test:2.1.3")
 	compile group: 'com.googlecode.log4jdbc', name: 'log4jdbc', version: '1.2'
 	compile group: 'org.springframework.security', name: 'spring-security-crypto', version: '5.4.0'
+	// email 인증
+	compile group: 'javax.mail', name: 'mail', version: '1.4.7'
+		compile group: 'org.springframework', name: 'spring-context-support', version: '5.2.10.RELEASE'
+
 }
 
 test {

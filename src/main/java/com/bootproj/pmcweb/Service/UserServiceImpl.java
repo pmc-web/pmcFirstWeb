@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -39,6 +40,18 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(Long id) {
         userMapper.deleteUser(id);
+        return;
+    }
+
+    @Override
+    public void updateUserAuthKey(Map<String, String> map) {
+        userMapper.updateUserAuthKey(map);
+        return;
+    }
+
+    @Override
+    public void updateUserStatus(Map<String, String> map) {
+        userMapper.updateUserStatus(map);
         return;
     }
 }
