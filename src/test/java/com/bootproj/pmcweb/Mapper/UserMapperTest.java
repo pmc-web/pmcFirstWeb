@@ -27,7 +27,7 @@ public class UserMapperTest {
     @Test
     @Order(1)
     void createUser() {
-        User testUser = new User(testEmail, "1234", UserStatus.REGISTERED.getTitle(), "test", UserRole.NORMAL.getTitle());
+        User testUser = new User(testEmail, "password", "name");
         userMapper.createUser(testUser);
         User createdUser = userMapper.getUserById(testUser.getId());
         assertThat(createdUser.getEmail().equals(testUser.getEmail()));
@@ -36,7 +36,7 @@ public class UserMapperTest {
     @Test
     @Order(2)
     void getUserById() {
-        User testUser = new User(testEmail, "1234", UserStatus.REGISTERED.getTitle(), "test", UserRole.NORMAL.getTitle());
+        User testUser = new User(testEmail, "password", "name");
         User getUser = userMapper.getUserByEmail(testUser.getEmail());
         assertThat(testUser.getName().equals(getUser.getName()));
     }
