@@ -28,14 +28,41 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private MailSendService mailSendService;
-
     @GetMapping("/page/{name}")
     public String getPage(@PathVariable String name){
 
         return "user/" + name;
     }
+
+    /**
+     * Go to Page include Security
+     * made by kym
+     */
+
+    // 회원가입
+//    @PostMapping("/user/signup")
+    @GetMapping("/user/signup")
+    public String getSignUp(){
+//        return "redirect:/user/login";
+        return "user/register";
+    }
+
+    // 로그인
+    @GetMapping("/user/login")
+    public String getLogin(){
+        return "user/login";
+    }
+
+    // 로그아웃
+    @GetMapping("/user/logout")
+    public String getLogout(){
+        return "user/login";
+    }
+
+    /**
+     * REST API
+     * made by jiae
+     */
 
     @GetMapping("/users")
     @ResponseBody
@@ -44,21 +71,6 @@ public class UserController {
         return Header.OK(users);
     }
 
-    @PostMapping("/user")
-    @ResponseBody
-//    public void postUser(@RequestBody User user){
-    public Header<User> postUser(@ModelAttribute User user) throws DuplicateEmailException{
-        User savedUser;
-        try {
-            User insertUser = new User(user.getEmail(), user.getPassword(), user.getName());
-            savedUser = userService.createUser(insertUser);
-            log.info("user value :"+savedUser);
-        } catch (Exception e){
-            throw new DuplicateEmailException(e.getMessage());
-        }
-
-        return Header.OK(savedUser);
-    }
 
     @DeleteMapping("/user/{id}")
     @ResponseBody
@@ -73,54 +85,17 @@ public class UserController {
         return Header.OK(user);
     }
 
-    @PostMapping("/user/signUp")
+    @PostMapping("/user/sendSignUpEmail")
     @ResponseBody
-    public ResponseEntity<Header<User>> signUp(@ModelAttribute User user) throws DuplicateEmailException, SendEmailException{
-        User savedUser;
-        try {
-            // DB에 정보 insert
-            User insertUser = new User(user.getEmail(), user.getPassword(), user.getName());
-            savedUser = userService.createUser(insertUser);
-            log.info("user value :"+savedUser);
-        } catch (Exception e){
-            throw new DuplicateEmailException(e.getMessage());
-        }
-
-        try {
-            // 임의의 authKey 생성 & 이메일 발송
-            String authKey = mailSendService.sendAuthMail(user.getEmail());
-            Map<String, String> map = new HashMap<String, String>();
-            map.put("email", user.getEmail());
-            map.put("authKey", authKey);
-            userService.updateUserAuthKey(map);
-        } catch (Exception e){
-            // 메일 전송 실패 시 데이터 롤백
-            userService.deleteUser(savedUser.getId());
-            throw new SendEmailException(e.getMessage());
-        }
+    public ResponseEntity<Header<User>> sendSignUpEmail(@ModelAttribute User user) throws DuplicateEmailException, SendEmailException{
+        User savedUser = userService.sendSignUpEmail(user);
         return new ResponseEntity(Header.OK(savedUser), HttpStatus.CREATED);
     }
 
     @GetMapping("/user/signUpConfirm")
     @ResponseBody
-    public ResponseEntity<Header> signUpConfirm(@RequestParam(value="email") String email, @RequestParam(value="authKey") String authKey) throws NoMatchingAcountException {
-        // Email 값으로 유저를 찾아서 시크릿키가 같은지 확인하기
-        if (authKey==null || email == null) return new ResponseEntity(Header.Error(ResultCode.REQUEST_ERROR_INVALID_INPUT_VALUE), HttpStatus.BAD_REQUEST);
-        User user = userService.getUserByEmail(email);
-        if (user==null) throw new NoMatchingAcountException(email + "은 존재하지 않는 유저입니다.");
-
-        // 시크릿키가 일치할 경우 유저의 status를 REGISTERED로 변경하기
-        log.info("authKey: " + authKey);
-        log.info("user.authKey: " + user.getAuthKey());
-        log.info(user.toString());
-        if (authKey.equals(user.getAuthKey())){
-            Map<String, String> map = new HashMap<String, String>();
-            map.put("email", user.getEmail());
-            map.put("status", UserStatus.REGISTERED.getTitle());
-            userService.updateUserStatus(map);
-        }
-        User changedUser = userService.getUserByEmail(email);
-
+    public ResponseEntity<Header> signUpConfirm(@RequestParam(value="email") String email, @RequestParam(value="authKey") String authKey) throws NoMatchingAcountException, NoSuchFieldException {
+        User changedUser = userService.signUpConfirm(authKey, email);
         // TODO: 로그인 페이지로 이동시키기
         return new ResponseEntity(Header.OK(changedUser), HttpStatus.OK);
     }
