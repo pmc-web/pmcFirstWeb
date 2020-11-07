@@ -6,6 +6,7 @@ import com.bootproj.pmcweb.Domain.enumclass.UserStatus;
 import com.bootproj.pmcweb.Service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,20 +31,28 @@ public class UserController {
         List<User> users = userService.getUsers();
         return users;
     }
-
-    @PostMapping("/user")
+    // 회원가입
+    @PostMapping("/user/signup")
     @ResponseBody
 //    public void postUser(@RequestBody User user){
-    public User postUser(@ModelAttribute User user){
-        user.setStatus(UserStatus.REGISTERED.getTitle());
-        user.setRole(UserRole.NORMAL.getTitle());
-        User savedUser = userService.createUser(user);
+    public String postUser(@ModelAttribute User user){
+        userService.createUser(user);
 
-        log.info("user value :"+user);
-        System.out.println("user value :"+user);
-
-        return savedUser;
+        return "redirect:/user/login";
     }
+
+    // 로그인
+    @GetMapping("/user/login")
+    public String getLogin(){
+        return "user/login";
+    }
+
+    // 로그아웃
+    @GetMapping("/user/logout")
+    public String getLogout(){
+        return "user/login";
+    }
+
 
     @DeleteMapping("/user/{id}")
     @ResponseBody
