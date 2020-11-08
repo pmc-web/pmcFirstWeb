@@ -49,8 +49,6 @@ public class StudyControllerTest {
         Integer type = 0;
         Long region_id = 1L;
         Long subject_id = 2L;
-        final Study study = new Study(null, title,null,null, 0,description,start_date,end_date,evaluation,type,subject_id,region_id);
-
         //when
         final ResultActions actions = mvc.perform(post("/study").param(title, title));
 

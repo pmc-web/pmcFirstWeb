@@ -33,17 +33,8 @@ public class StudyServiceImpl implements StudyService {
     }
 
     @Override
-    public Study joinStudy(Long studyId, Long userId) {
-        return studyMapper.joinStudy(studyId, userId);
+    public Study putStudyStatus(Long studyId, String status) {
+        return studyMapper.putStudyStatus(studyId, status);
     }
 
-    @Override
-    public Study putStudyStatus(Long studyId) {
-        return studyMapper.putStudyStatus(studyId);
-    }
-
-    @Override
-    public Integer removeStudy(Long studyId) {
-        return null;
-    }
 }
