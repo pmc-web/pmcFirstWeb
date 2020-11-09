@@ -27,7 +27,7 @@ public class UserServiceTest {
     @Test
     @Order(1)
     void createUser() {
-        User user = new User(testEmail, "1234", UserStatus.REGISTERED.getTitle(), "test", UserRole.NORMAL.getTitle());
+        User user = new User(testEmail, "password", "name");
         userServiceImpl.createUser(user);
         User findUser = userServiceImpl.getUserByEmail(user.getEmail());
         assertThat(user.getEmail()).isEqualTo(findUser.getEmail());
@@ -36,7 +36,7 @@ public class UserServiceTest {
     @Test
     @Order(2)
     void getUser() {
-        User user = new User(testEmail, "1234", UserStatus.REGISTERED.getTitle(), "test", UserRole.NORMAL.getTitle());
+        User user = new User(testEmail, "password", "name");
         User getUser = userServiceImpl.getUserByEmail(testEmail);
         assertThat(testEmail.equals(getUser.getEmail()));
         assertThat(user.getName().equals(getUser.getName()));

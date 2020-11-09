@@ -3,14 +3,15 @@ package com.bootproj.pmcweb.Domain;
 import com.bootproj.pmcweb.Domain.enumclass.UserRole;
 import com.bootproj.pmcweb.Domain.enumclass.UserStatus;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
 import java.util.Date;
 
 @Setter
 @Getter
-//@Data
-@Builder
 @NoArgsConstructor
-@AllArgsConstructor
 public class User {
     private Long id;
     private String email;
