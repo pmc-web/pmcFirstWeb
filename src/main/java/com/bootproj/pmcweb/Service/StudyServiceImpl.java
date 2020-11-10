@@ -2,20 +2,48 @@ package com.bootproj.pmcweb.Service;
 
 import com.bootproj.pmcweb.Domain.Study;
 import com.bootproj.pmcweb.Mapper.StudyMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.List;
 
+@RequiredArgsConstructor // 생성자를 통해 DI
 @Service
 public class StudyServiceImpl implements StudyService {
-
-    //    @Autowired
-    @Resource
-    private StudyMapper studyMapper;
+    final private StudyMapper studyMapper; //final : 생성될때 초기화
 
     public List<Study> selectStudyList() {
         return studyMapper.getStudyList();
+    }
+
+    @Override
+    public Long createStudy(Study study) {
+        int result =  studyMapper.insertStudy(study);
+        System.out.println(study.toString());
+        if(result == 1){
+            return study.getId();
+        }else {
+            return 0L;
+        }
+    }
+
+    @Override
+    public Study getStudyDetail(Long studyId) {
+        return studyMapper.getStudyDetail(studyId);
+    }
+
+    @Override
+    public Study joinStudy(Long studyId, Long userId) {
+        return studyMapper.joinStudy(studyId, userId);
+    }
+
+    @Override
+    public Study putStudyStatus(Long studyId) {
+        return studyMapper.putStudyStatus(studyId);
+    }
+
+    @Override
+    public Integer removeStudy(Long studyId) {
+        return null;
     }
 }
