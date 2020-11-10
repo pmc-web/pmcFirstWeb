@@ -44,6 +44,9 @@ dependencies {
 	compile group: 'javax.mail', name: 'mail', version: '1.4.7'
 		compile group: 'org.springframework', name: 'spring-context-support', version: '5.2.10.RELEASE'
 
+	// swagger
+	compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
+	compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
 }
 
 test {
