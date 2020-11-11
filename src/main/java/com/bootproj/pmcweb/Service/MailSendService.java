@@ -53,7 +53,7 @@ public class MailSendService {
             .append("' target='_blenk'>이메일 인증확인</a></html>")
             .toString());
 
-            sendMail.setFrom("hirlawldo413@gmail.com","관리자");
+            sendMail.setFrom("email.admin.account","관리자");
             sendMail.setTo(email);
             sendMail.send();
         } catch (MessagingException e) {
