@@ -40,14 +40,14 @@ public class StudyControllerTest {
 
     Date startDate = new SimpleDateFormat("yyyy-mm-dd").parse("2020-10-11");
     Date endDate = new SimpleDateFormat("yyyy-mm-dd").parse("2021-04-10");
-    final Study study = Study.builder()
-            .title("title test !! ")
-            .description("스터디 생성 하기 controller. ")
-            .startDate(startDate)
-            .endDate(endDate)
-            .regionId(1L)
-            .subjectId(1L)
-            .build();
+//    final Study study = Study.builder()
+//            .title("title test !! ")
+//            .description("스터디 생성 하기 controller. ")
+//            .startDate(startDate)
+//            .endDate(endDate)
+//            .regionId(1L)
+//            .subjectId(1L)
+//            .build();
 
 
     public StudyControllerTest() throws ParseException {

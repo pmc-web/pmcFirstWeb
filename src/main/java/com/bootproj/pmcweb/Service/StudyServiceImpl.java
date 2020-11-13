@@ -12,8 +12,12 @@ import java.util.List;
 public class StudyServiceImpl implements StudyService {
     final private StudyMapper studyMapper; //final : 생성될때 초기화
 
-    public List<Study> selectStudyList() {
-        return studyMapper.getStudyList();
+    @Override
+    public List<Study> getStudyList(Integer page) {
+        Integer limit = 10;
+        Integer offset = limit*(page-1);
+        // TODO : pagination
+        return studyMapper.getStudyList(limit, offset);
     }
 
     @Override

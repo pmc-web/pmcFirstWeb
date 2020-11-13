@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 
 @Slf4j
 @RequestMapping("/study")
@@ -25,8 +26,9 @@ public class StudyController {
      */
 
     @GetMapping
-    public String getStudyList(){
-        return "getStudyList";
+    public ResponseEntity<Header> getStudyList(@RequestParam(value = "page")Integer page){
+        List<Study> list = studyService.getStudyList(page);
+        return new ResponseEntity(Header.OK(list),HttpStatus.OK);
     }
 
     @PostMapping
@@ -34,13 +36,13 @@ public class StudyController {
         HashMap<String, Long> resultMap = new HashMap<>();
         log.info("result > ", resultMap);
         resultMap.put("insertId", studyService.createStudy(study));
-        return new ResponseEntity(Header.OK(resultMap), HttpStatus.CREATED); // TODO : response 확인
+        return new ResponseEntity(Header.OK(resultMap), HttpStatus.CREATED);
     }
 
     @GetMapping("/{studyId}")
     public ResponseEntity<Header> getStudyDetail(@PathVariable(value = "studyId")Long studyId){
         Study result = studyService.getStudyDetail(studyId);
-        return new ResponseEntity(Header.OK(result), HttpStatus.OK); // TODO : response 확인
+        return new ResponseEntity(Header.OK(result), HttpStatus.OK);
     }
 
     // 스터디 상태 변경 -> 스터디 마감, 스터디 삭제

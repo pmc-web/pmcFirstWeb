@@ -9,12 +9,11 @@ import java.util.List;
 
 @Repository
 public interface StudyMapper {
-    // 조회
-    public List<Study> getStudyList();
-    // 생성 by songi
+    /**
+     * made by songi
+     * */
+    public List<Study> getStudyList(@Param("limit") Integer limit, @Param("offset") Integer offset);
     public Integer insertStudy(Study study);
-    // 스터디 detail by songi
     public Study getStudyDetail(Long studyId);
-    // 스터디 상태변경 by songi
     public void putStudyStatus(@Param("id")Long studyId, @Param("status")String status);
 }

@@ -14,6 +14,7 @@ import com.bootproj.pmcweb.Domain.Study;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 @ExtendWith(SpringExtension.class) //Junit4의 Runwith과 같은 기능을 하는 Junit5 어노테이션
 @SpringBootTest(classes = {Study.class, DatabaseConfiguration.class})
@@ -25,6 +26,14 @@ public class StudyMapperTest {
 
     @Autowired
     private StudyMapper studyMapper;
+
+    @Test
+    public void findAll(){
+        Integer limit = 10;
+        Integer page = 0;
+        List<Study> list = studyMapper.getStudyList(limit, page);
+        assertThat(list.size() > 0);
+    }
 
     @Test
     @Order(1)

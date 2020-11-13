@@ -3,6 +3,11 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bootproj.pmcweb.Mapper.StudyMapper">
+    <select id="getStudyList" resultType="com.bootproj.pmcweb.Domain.Study">
+        SELECT * FROM study
+        ORDER BY id DESC limit #{limit} offset #{offset}
+    </select>
+
     <insert id="insertStudy" parameterType="com.bootproj.pmcweb.Domain.Study" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO study
         (title, inst_time, updt_time, status, description, start_date, end_date, evaluation, type, region_id, subject_id)

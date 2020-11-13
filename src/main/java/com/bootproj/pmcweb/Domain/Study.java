@@ -11,7 +11,6 @@ import java.util.Date;
 @Getter
 @Setter
 @ToString
-@Builder
 public class Study{
     private Long id;
     private String title;

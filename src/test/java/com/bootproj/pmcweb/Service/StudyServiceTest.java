@@ -14,6 +14,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -22,7 +23,13 @@ import static org.assertj.core.api.Assertions.*;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class StudyServiceTest {
     @Autowired
-    private StudyServiceImpl studyServiceImple;
+    private StudyServiceImpl studyServiceImpl;
+
+    @Test
+    void getAllList(){
+        List<Study> list = studyServiceImpl.getStudyList(1);
+        assertThat(list.size()>0);
+    }
 
     @Test
     void createStudy() throws ParseException {
@@ -40,7 +47,7 @@ public class StudyServiceTest {
         testStudy.setSubjectId(subjectId);
         testStudy.setRegionId(regionId);
 
-        Long result = studyServiceImple.createStudy(testStudy);
+        Long result = studyServiceImpl.createStudy(testStudy);
         assertThat(result!=0L);
 
     }
@@ -48,7 +55,7 @@ public class StudyServiceTest {
     @Test
     void getStudyDetail(){
         Long findId = 3L;
-        Study test = studyServiceImple.getStudyDetail(findId);
+        Study test = studyServiceImpl.getStudyDetail(findId);
         assertThat(test.getId().equals(findId));
     }
 
@@ -59,7 +66,7 @@ public class StudyServiceTest {
         String open = StudyStatus.OPEN.getTitle();
         String close = StudyStatus.CLOSE.getTitle();
 
-        Study test = studyServiceImple.putStudyStatus(studyId, open);
+        Study test = studyServiceImpl.putStudyStatus(studyId, open);
         System.out.print(test);
         assertThat(test.equals(test));
     }
