@@ -34,7 +34,10 @@ public class StudyServiceImpl implements StudyService {
 
     @Override
     public Study putStudyStatus(Long studyId, String status) {
-        return studyMapper.putStudyStatus(studyId, status);
+        studyMapper.putStudyStatus(studyId, status);
+        Study study = studyMapper.getStudyDetail(studyId);
+        if(study.getStatus().equals(status)) return study;
+        return null; // TODO : Q.이렇게 해도 되나 ?
     }
 
 }

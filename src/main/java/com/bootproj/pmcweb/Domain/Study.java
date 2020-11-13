@@ -11,6 +11,7 @@ import java.util.Date;
 @Getter
 @Setter
 @ToString
+@Builder
 public class Study{
     private Long id;
     private String title;
@@ -28,5 +29,4 @@ public class Study{
     private String type = StudyType.FREE.getTitle();
     private Long subjectId;
     private Long regionId;
-
 }

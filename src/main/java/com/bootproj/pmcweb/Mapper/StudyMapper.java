@@ -2,6 +2,7 @@ package com.bootproj.pmcweb.Mapper;
 
 import com.bootproj.pmcweb.Domain.Study;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -15,5 +16,5 @@ public interface StudyMapper {
     // 스터디 detail by songi
     public Study getStudyDetail(Long studyId);
     // 스터디 상태변경 by songi
-    public Study putStudyStatus(Long studyId, String status);
+    public void putStudyStatus(@Param("id")Long studyId, @Param("status")String status);
 }

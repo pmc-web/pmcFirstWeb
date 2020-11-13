@@ -17,8 +17,8 @@
         SELECT * FROM study where id=#{studyId};
     </select>
 
-    <select id="joinStudy" parameterType="long" resultType="com.bootproj.pmcweb.Domain.Study">
-
-    </select>
+    <update id="putStudyStatus">
+        UPDATE study SET status=#{status} where id = #{id};
+    </update>
 
 </mapper>

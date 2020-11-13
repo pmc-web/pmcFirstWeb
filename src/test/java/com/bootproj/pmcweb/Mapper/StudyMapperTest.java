@@ -59,24 +59,18 @@ public class StudyMapperTest {
         assertThat(test.getId().equals(findId));
     }
 
-    public void joinStudy(){
-        Long studyId = 1L;
-        Long userId= 1L;
-//        Study test = studyMapper.joinStudy(studyId, userId);
-
-    }
-
     @Test
     public void putStatus(){
-        Long studyId = 1L;
+        Long studyId = 3L;
         String del = StudyStatus.DELETE.getTitle();
         String open = StudyStatus.OPEN.getTitle();
         String close = StudyStatus.CLOSE.getTitle();
-        Study test = studyMapper.putStudyStatus(studyId, del);
+        studyMapper.putStudyStatus(studyId, del);
+
+        Study test = studyMapper.getStudyDetail(studyId);
         assertThat(test.getStatus().equals(del));
-        test = studyMapper.putStudyStatus(studyId, open);
-        assertThat(test.getStatus().equals(open));
-        test = studyMapper.putStudyStatus(studyId, close);
-        assertThat(test.getStatus().equals(close));
+
+//      studyMapper.putStudyStatus(studyId, open);
+//      studyMapper.putStudyStatus(studyId, close);
     }
 }

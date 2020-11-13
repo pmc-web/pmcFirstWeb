@@ -52,10 +52,15 @@ public class StudyServiceTest {
         assertThat(test.getId().equals(findId));
     }
 
+    @Test
     void putStudyStatus(){
-        Long studyId = 1L;
+        Long studyId = 3L;
         String del = StudyStatus.DELETE.getTitle();
         String open = StudyStatus.OPEN.getTitle();
         String close = StudyStatus.CLOSE.getTitle();
+
+        Study test = studyServiceImple.putStudyStatus(studyId, open);
+        System.out.print(test);
+        assertThat(test.equals(test));
     }
 }
