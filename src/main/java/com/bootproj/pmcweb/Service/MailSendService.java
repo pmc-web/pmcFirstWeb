@@ -1,5 +1,6 @@
 package com.bootproj.pmcweb.Service;
 
+import com.bootproj.pmcweb.Domain.Account;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;

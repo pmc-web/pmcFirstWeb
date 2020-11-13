@@ -7,9 +7,9 @@ import com.bootproj.pmcweb.Mapper.AccountMapper;
 import com.bootproj.pmcweb.Network.Exception.DuplicateEmailException;
 import com.bootproj.pmcweb.Network.Exception.NoMatchingAcountException;
 import com.bootproj.pmcweb.Network.Exception.SendEmailException;
+import com.bootproj.pmcweb.Network.ResultCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -76,28 +76,27 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Account sendSignUpEmail(Account account) throws SendEmailException, DuplicateEmailException {
-//        Account insertUser = new Account(account.getEmail(), account.getPassword(), account.getName());;
+    public String sendSignUpEmail(Account account) throws SendEmailException, DuplicateEmailException {
+        String msg = ResultCode.OK.getMessage();
         try {
             // DB에 정보 insert
             createUser(account);
+            try {
+                // 임의의 authKey 생성 & 이메일 발송
+                String authKey = mailSendService.sendAuthMail(account.getEmail());
+                Map<String, String> map = new HashMap<String, String>();
+                map.put("email", account.getEmail());
+                map.put("authKey", authKey);
+                updateUserAuthKey(map);
+            } catch (Exception e){
+                // 메일 전송 실패 시 데이터 롤백
+                deleteUser(account.getId());
+                msg = ResultCode.ERROR_SEND_EMAIL.getMessage();
+            }
         } catch (Exception e){
-            throw new DuplicateEmailException(e.getMessage());
+            msg = ResultCode.ERROR_EMAIL_DUPLICATE.getMessage();
         }
-
-        try {
-            // 임의의 authKey 생성 & 이메일 발송
-            String authKey = mailSendService.sendAuthMail(account.getEmail());
-            Map<String, String> map = new HashMap<String, String>();
-            map.put("email", account.getEmail());
-            map.put("authKey", authKey);
-            updateUserAuthKey(map);
-        } catch (Exception e){
-            // 메일 전송 실패 시 데이터 롤백
-            deleteUser(account.getId());
-            throw new SendEmailException(e.getMessage());
-        }
-        return null;
+        return msg;
     }
 
     @Override

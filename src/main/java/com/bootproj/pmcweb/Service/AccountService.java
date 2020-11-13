@@ -16,6 +16,6 @@ public interface AccountService {
     public void deleteUser(Long id);
     public void updateUserAuthKey(Map<String, String> map);
     public void updateUserStatus(Map<String, String> map);
-    public Account sendSignUpEmail(Account account) throws SendEmailException, DuplicateEmailException;
+    public String sendSignUpEmail(Account account) throws SendEmailException, DuplicateEmailException;
     public Account signUpConfirm(String authKey, String email) throws NoMatchingAcountException, NoSuchFieldException;
 }

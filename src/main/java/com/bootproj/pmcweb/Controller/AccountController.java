@@ -14,10 +14,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Controller // Rest Controller는 response 바디를 가지고, Controller는 가지지 않음.
@@ -82,16 +86,27 @@ public class AccountController {
     }
 
     @PostMapping("/user/sendSignUpEmail")
-    @ResponseBody
-    public ResponseEntity<Header<Account>> sendSignUpEmail(@ModelAttribute Account account) throws DuplicateEmailException, SendEmailException{
-        Account savedUser = accountSecurityService.save(account);
-        return new ResponseEntity(Header.OK(savedUser), HttpStatus.CREATED);
+//    @ResponseBody
+    public String sendSignUpEmail(@ModelAttribute @Valid Account account, BindingResult errors, Model model) throws DuplicateEmailException, SendEmailException{
+        if (errors.hasErrors()) {
+            // 유효성 통과 못한 필드와 메시지를 핸들링
+            Map<String, String> validatorResult = accountSecurityService.validateHandling(errors);
+            for (String key : validatorResult.keySet()) {
+                model.addAttribute(key, validatorResult.get(key));
+            }
+            return "/user/register";
+        }
+        String result = accountSecurityService.save(account);
+        model.addAttribute("msg", result);
+
+        return "/user/registerConfirm";
     }
 
     @GetMapping("/user/signUpConfirm")
 //    @ResponseBody
     public String signUpConfirm(@RequestParam(value="email") String email, @RequestParam(value="authKey") String authKey) throws NoMatchingAcountException, NoSuchFieldException {
         Account changedUser = accountService.signUpConfirm(authKey, email);
+        accountService.signUpConfirm(authKey, email);
         // TODO: 로그인 페이지로 이동시키기
 //        return new ResponseEntity(Header.OK(changedUser), HttpStatus.OK);
         return "redirect:/user/login";

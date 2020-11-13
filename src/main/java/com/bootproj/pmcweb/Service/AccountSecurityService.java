@@ -17,10 +17,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.Errors;
+import org.springframework.validation.FieldError;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -34,19 +34,28 @@ public class AccountSecurityService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-            Account account = accountServiceimpl.getUserByEmail(username);
-            if (!account.getName().equals(username)) {
-                throw new UsernameNotFoundException(username + "이 등록되지 않았습니다.");
-            }
-            List<GrantedAuthority> authorities = new ArrayList<>();
-            authorities.add(new SimpleGrantedAuthority(account.getRole()));
+        Account account = accountServiceimpl.getUserByEmail(username);
 
-            return new User(account.getEmail(), account.getPassword(), authorities);
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority(account.getRole()));
+
+        return new User(account.getEmail(), account.getPassword(), authorities);
     }
 
-    public Account save(Account account) throws SendEmailException, DuplicateEmailException {
+    public String save(Account account) throws SendEmailException, DuplicateEmailException {
         account.setPassword(passwordEncoder.encode(account.getPassword()));
         return accountServiceimpl.sendSignUpEmail(account);
+    }
+
+    // 회원가입 시, 유효성 체크
+    public Map<String, String> validateHandling(Errors errors) {
+        Map<String, String> validatorResult = new HashMap<>();
+
+        for (FieldError error : errors.getFieldErrors()) {
+            String validKeyName = String.format("valid_%s", error.getField());
+            validatorResult.put(validKeyName, error.getDefaultMessage());
+        }
+        return validatorResult;
     }
 
 }
