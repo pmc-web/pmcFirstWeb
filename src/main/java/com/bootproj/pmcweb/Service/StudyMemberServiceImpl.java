@@ -1,15 +1,22 @@
 package com.bootproj.pmcweb.Service;
 
 import com.bootproj.pmcweb.Domain.StudyMember;
+import com.bootproj.pmcweb.Mapper.StudyMemberMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-@RequiredArgsConstructor // 생성자를 통해 DI
+@RequiredArgsConstructor
 @Service
 public class StudyMemberServiceImpl implements StudyMemberService {
+    final private StudyMemberMapper studyMemberMapper;
 
     @Override
-    public StudyMember joinStudy(Long studyId, Long userId) {
-        return null;
+    public Long joinStudy(StudyMember studyMember) {
+        Long result = studyMemberMapper.insertStudyMember(studyMember);
+        if(result == 1){
+            return studyMember.getId();
+        }else {
+            return 0L;
+        }
     }
 }

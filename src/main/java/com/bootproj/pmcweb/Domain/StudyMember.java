@@ -10,5 +10,8 @@ import lombok.ToString;
 @Setter
 @ToString
 public class StudyMember {
-    // TODO study member
+   private Long id;
+   private Long userId;
+   private Long studyId;
+   private String studyRole;
 }
