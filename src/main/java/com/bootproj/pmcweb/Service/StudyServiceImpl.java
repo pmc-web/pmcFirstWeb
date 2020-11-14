@@ -19,7 +19,6 @@ public class StudyServiceImpl implements StudyService {
     @Override
     public Long createStudy(Study study) {
         int result =  studyMapper.insertStudy(study);
-        System.out.println(study.toString());
         if(result == 1){
             return study.getId();
         }else {
