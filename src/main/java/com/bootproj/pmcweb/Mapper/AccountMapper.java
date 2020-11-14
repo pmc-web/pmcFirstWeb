@@ -1,20 +1,20 @@
 package com.bootproj.pmcweb.Mapper;
 
-import com.bootproj.pmcweb.Domain.User;
+import com.bootproj.pmcweb.Domain.Account;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
 
 @Repository
-public interface UserMapper {
-    public List<User> getUserList();
+public interface AccountMapper {
+    public List<Account> getUserList();
 
-    public User getUserById(Long id);
+    public Account getUserById(Long id);
 
-    public User getUserByEmail(String email);
+    public Account getUserByEmail(String email);
 
-    public void createUser(User user);
+    public void createUser(Account user);
 
     public void deleteUser(Long id);
 
