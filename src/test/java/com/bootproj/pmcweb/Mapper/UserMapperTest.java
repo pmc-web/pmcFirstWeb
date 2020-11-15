@@ -1,16 +1,12 @@
 package com.bootproj.pmcweb.Mapper;
 
-import com.bootproj.pmcweb.Domain.User;
-import com.bootproj.pmcweb.Domain.enumclass.UserRole;
-import com.bootproj.pmcweb.Domain.enumclass.UserStatus;
+import com.bootproj.pmcweb.Domain.Account;
 import com.bootproj.pmcweb.PmcwebApplication;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import static org.assertj.core.api.Assertions.*;
 import java.util.List;
@@ -21,37 +17,37 @@ import java.util.List;
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE) // 진짜 데이터베이스에 테스트
 public class UserMapperTest {
     @Autowired
-    private UserMapper userMapper;
+    private AccountMapper userMapper;
     private static final String testEmail = "test@naver.com";
 
     @Test
     @Order(1)
     void createUser() {
-        User testUser = new User(testEmail, "password", "name");
+        Account testUser = new Account(testEmail, "password", "name");
         userMapper.createUser(testUser);
-        User createdUser = userMapper.getUserById(testUser.getId());
+        Account createdUser = userMapper.getUserById(testUser.getId());
         assertThat(createdUser.getEmail().equals(testUser.getEmail()));
     }
 
     @Test
     @Order(2)
     void getUserById() {
-        User testUser = new User(testEmail, "password", "name");
-        User getUser = userMapper.getUserByEmail(testUser.getEmail());
+        Account testUser = new Account(testEmail, "password", "name");
+        Account getUser = userMapper.getUserByEmail(testUser.getEmail());
         assertThat(testUser.getName().equals(getUser.getName()));
     }
 
     @Test
     @Order(3)
     void getUserList() {
-        List<User> userList = userMapper.getUserList();
+        List<Account> userList = userMapper.getUserList();
         assertThat(userList.size() > 0);
     }
 
     @Test
     @Order(4)
     void deleteUser() {
-        User getUser = userMapper.getUserByEmail(testEmail);
+        Account getUser = userMapper.getUserByEmail(testEmail);
         assertThat(userMapper.getUserById(getUser.getId())!=null);
         userMapper.deleteUser(getUser.getId());
         assertThat(userMapper.getUserById(getUser.getId())==null);

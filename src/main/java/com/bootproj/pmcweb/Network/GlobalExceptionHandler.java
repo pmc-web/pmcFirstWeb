@@ -28,6 +28,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Header> handlerMethodArgumentNotValidException(MethodArgumentNotValidException e) {
         log.error("MethodArgumentNotValidException");
+        log.error(e.getMessage());
         return new ResponseEntity(Header.Error(ResultCode.REQUEST_ERROR_INVALID_INPUT_VALUE), ResultCode.REQUEST_ERROR_INVALID_INPUT_VALUE.getStatus());
     }
 
@@ -37,7 +38,8 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(BindException.class)
     public ResponseEntity<Header> handleBindException(BindException e) {
-        log.error("BindException", e);
+        log.error("BindException");
+        log.error(e.getMessage());
         return new ResponseEntity(Header.Error(ResultCode.REQUEST_ERROR_INVALID_INPUT_VALUE), ResultCode.REQUEST_ERROR_INVALID_INPUT_VALUE.getStatus());
     }
 
@@ -47,7 +49,8 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<Header> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException e) {
-        log.error("MethodArgumentTypeMismatchException", e);
+        log.error("MethodArgumentTypeMismatchException");
+        log.error(e.getMessage());
         return new ResponseEntity(Header.Error(ResultCode.REQUEST_ERROR_INVALID_INPUT_VALUE), ResultCode.REQUEST_ERROR_INVALID_INPUT_VALUE.getStatus());
     }
 
@@ -59,6 +62,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(DuplicateEmailException.class)
     public ResponseEntity<Header> handleDuplicateEmailException(DuplicateEmailException e) {
         log.error("DuplicateEmailException");
+        log.error(e.getMessage());
         return new ResponseEntity(Header.Error(ResultCode.ERROR_EMAIL_DUPLICATE), ResultCode.ERROR_EMAIL_DUPLICATE.getStatus());
     }
 
@@ -68,6 +72,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(SendEmailException.class)
     public ResponseEntity<Header> handlerSendEmailException(SendEmailException e) {
         log.error("SendEmailException");
+        log.error(e.getMessage());
         return new ResponseEntity(Header.Error(ResultCode.ERROR_SEND_EMAIL), ResultCode.ERROR_SEND_EMAIL.getStatus());
     }
 
@@ -77,6 +82,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(NoMatchingAcountException.class)
     public ResponseEntity<Header> handlerNoMatchingAcountException(NoMatchingAcountException e){
         log.error("NoMatchingAcountException");
+        log.error(e.getMessage());
         return new ResponseEntity(Header.Error(ResultCode.ERROR_USER_NOT_FOUND), ResultCode.ERROR_USER_NOT_FOUND.getStatus());
     }
 }
