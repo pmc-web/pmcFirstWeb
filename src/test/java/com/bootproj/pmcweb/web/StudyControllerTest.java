@@ -3,61 +3,38 @@ package com.bootproj.pmcweb.web;
 import com.bootproj.pmcweb.Controller.StudyController;
 import com.bootproj.pmcweb.Domain.Study;
 import com.bootproj.pmcweb.Service.StudyService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
-import java.security.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
-@WebMvcTest(StudyController.class) // 테스트 대상 controller 선언
+@WebMvcTest(controllers = StudyController.class)
 public class StudyControllerTest {
 
-    //TODO : controller test code 작성방법 공부하기
     @Autowired
     private MockMvc mvc;
+
+    @Autowired
+    private StudyMapper studyMapper;
 
     @MockBean
     private StudyService studyService;
 
-    Date startDate = new SimpleDateFormat("yyyy-mm-dd").parse("2020-10-11");
-    Date endDate = new SimpleDateFormat("yyyy-mm-dd").parse("2021-04-10");
-//    final Study study = Study.builder()
-//            .title("title test !! ")
-//            .description("스터디 생성 하기 controller. ")
-//            .startDate(startDate)
-//            .endDate(endDate)
-//            .regionId(1L)
-//            .subjectId(1L)
-//            .build();
-
-
-    public StudyControllerTest() throws ParseException {
-    }
-
     @Test
-    public void testMakeStudy() throws Exception {
-//        this.mvc.perform(post("/study")
-//                .contentType(MediaType.APPLICATION_JSON))
-//                .andExpect(status().isOk())
-//                .andExpect(content().string("test ")) .andDo(print());
+    public void test_sample() throws Exception {
+        this.mvc.perform(post("/study"))
+                .andExpect(status().isOk());
+//                .andExpect();
     }
 
     @Test
@@ -71,9 +48,11 @@ public class StudyControllerTest {
         Integer type = 0;
         Long region_id = 1L;
         Long subject_id = 2L;
-        Study test = new Study();
+        final Study study = new Study(null, title,null,null, 0,description,start_date,end_date,evaluation,type,subject_id,region_id);
+
         //when
-//        final ResultActions actions = mvc.perform(post("/study").param());
+        final ResultActions actions = mvc.perform(post("/study").param(title, title));
+
         //mvc.perform(post("/study")).andExpect(status().isOk());
         //.andExpect(content().string(study));
     }
