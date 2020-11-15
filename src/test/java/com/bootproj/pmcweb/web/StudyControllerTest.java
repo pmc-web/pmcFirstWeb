@@ -2,7 +2,6 @@ package com.bootproj.pmcweb.web;
 
 import com.bootproj.pmcweb.Controller.StudyController;
 import com.bootproj.pmcweb.Domain.Study;
-import com.bootproj.pmcweb.Mapper.StudyMapper;
 import com.bootproj.pmcweb.Service.StudyService;
 import org.junit.Test;
 import org.junit.runner.RunWith;

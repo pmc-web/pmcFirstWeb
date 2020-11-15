@@ -19,8 +19,6 @@ import java.util.HashMap;
 @RequiredArgsConstructor
 public class StudyMemberController {
 
-//    private final StudyService studyService;
-
     private final StudyMemberService studyMemberService;
 
     // 스터디 참여
@@ -33,9 +31,12 @@ public class StudyMemberController {
         return new ResponseEntity(Header.OK(resultMap), HttpStatus.CREATED);
     }
 
-    // 스터디 참여요청 수락 거절
+    // 스터디 참여요청 수락 거절 TODO:
     @PutMapping("/status/{studyId}")
-    public HashMap changeMemberStatus(@PathVariable(value = "studyId")Long studyId, @RequestParam(value = "memberId")Long memberId){
-        return null;
+    public ResponseEntity<Header> changeMemberStatus(
+            @PathVariable(value = "studyId")Long studyId, @RequestParam(value = "memberId")Long memberId){
+        studyMemberService.changeStatus(memberId, "NORMAL");
+
+        return new ResponseEntity(Header.OK(), HttpStatus.OK);
     }
 }
