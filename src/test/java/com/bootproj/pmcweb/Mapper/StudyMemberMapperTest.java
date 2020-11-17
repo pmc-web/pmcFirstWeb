@@ -1,6 +1,6 @@
 package com.bootproj.pmcweb.Mapper;
 
-import com.bootproj.pmcweb.DatabaseConfiguration;
+import com.bootproj.pmcweb.Config.DatabaseConfiguration;
 import com.bootproj.pmcweb.Domain.Study;
 import com.bootproj.pmcweb.Domain.StudyMember;
 import org.junit.jupiter.api.Test;
@@ -10,7 +10,6 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
@@ -33,13 +32,4 @@ public class StudyMemberMapperTest {
         assertThat(insertId!=0L);
     }
 
-    @Test
-    public void changeStatus(){
-        Long memberId = 1L;
-        String status = "NOMAL";
-
-        studyMemberMapper.changeRole(memberId, status);
-        StudyMember member = studyMemberMapper.selectMember(memberId);
-        assertThat(member.getId().equals(memberId));
-    }
 }
