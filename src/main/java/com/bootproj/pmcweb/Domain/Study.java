@@ -1,14 +1,13 @@
 package com.bootproj.pmcweb.Domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import com.bootproj.pmcweb.Domain.enumclass.StudyStatus;
+import com.bootproj.pmcweb.Domain.enumclass.StudyType;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
-@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 @ToString
@@ -19,17 +18,14 @@ public class Study{
     private Date instTime;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date updtTime;
-
-    private Integer status; // String -> Integer default:0 (스터디진행중)
+    private String status = StudyStatus.OPEN.getTitle();
     private String description;
-
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date startDate;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date endDate;
-
-    private Integer evaluation;
-    private Integer type; // String -> Integer (무료-0, 유료-1)
+    private Integer evaluation = 0;
+    private String type = StudyType.FREE.getTitle();
     private Long subjectId;
     private Long regionId;
 }
