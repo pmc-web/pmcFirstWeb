@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <head th:replace="/layout/common.html :: fragment-common"></head>
+</head>
+<body>
+<!-- navbar -->
+<nav th:replace="/layout/navbar.html :: fragment-navbar"></nav>
+<!-- main -->
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Profile</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">User Profile</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="col-md-auto">
+                    <!-- Profile Image -->
+                    <div class="card card-primary card-outline">
+                        <div class="card-body box-profile">
+                            <div class="text-center">
+                                <img class="profile-user-img img-fluid img-circle"
+                                     th:src="@{/img/moim.jpg}"
+                                     alt="User profile picture">
+                            </div>
+                            <h3 class="profile-username text-center" th:text="${loginUser} +' 님'"></h3>
+                            <p class="text-muted text-center">이메일</p>
+                            <ul class="list-group list-group-unbordered mb-3">
+                                <li class="list-group-item">
+                                    <b>가입한 모임 수</b> <a class="float-right">3</a>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>운영 모임 수</b> <a class="float-right">1</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+
+                    <!-- About Me Box -->
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">About Me</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <strong><i class="fas fa-map-marker-alt mr-1"></i> 지역</strong>
+                            <p class="text-muted">강남구</p>
+                            <hr>
+                            <strong><i class="fas fa-pencil-alt mr-1"></i> 관심사</strong>
+
+                            <p class="text-muted">
+                                <span class="tag tag-danger">백엔드 개발</span>
+                                <span class="tag tag-success">알고리즘</span>
+                            </p>
+                            <hr>
+                        </div>
+                        <!-- /.card-body -->
+
+                        <a href="#" class="btn btn-primary btn-block"><b>비밀번호 변경하기</b></a>
+                        <a href="#" class="btn btn-primary btn-block"><b>탈퇴하기</b></a>
+                    </div>
+                    <!-- /.card -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+</body>
+</html>

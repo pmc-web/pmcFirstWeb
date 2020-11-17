@@ -67,6 +67,12 @@ public class AccountController {
         return "user/login";
     }
 
+    // 프로필 화면
+    @GetMapping("/user/profile")
+    public String getProfile() {
+        return "user/profile";
+    }
+
     /**
      * REST API
      * made by jiae

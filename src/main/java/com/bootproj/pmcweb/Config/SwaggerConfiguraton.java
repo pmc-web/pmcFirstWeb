@@ -1,4 +1,4 @@
-package com.bootproj.pmcweb;
+package com.bootproj.pmcweb.Config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
