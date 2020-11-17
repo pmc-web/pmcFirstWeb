@@ -69,8 +69,12 @@ public class AccountController {
 
     // 프로필 화면
     @GetMapping("/user/profile")
-    public String getProfile() {
-        return "user/profile";
+    public ModelAndView getProfile(@AuthenticationPrincipal User user) {
+        Account account = accountService.getUserByEmail(user.getUsername());
+        ModelAndView mv = new ModelAndView("/user/profile");
+        mv.addObject("loginUser", account.getName());
+        mv.addObject("loginUserEmail", account.getEmail());
+        return mv;
     }
 
     /**
