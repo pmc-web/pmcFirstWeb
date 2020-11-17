@@ -74,6 +74,7 @@ public class AccountController {
         ModelAndView mv = new ModelAndView("/user/profile");
         mv.addObject("loginUser", account.getName());
         mv.addObject("loginUserEmail", account.getEmail());
+        mv.addObject("loginUserId", account.getId());
         return mv;
     }
 
@@ -83,10 +84,9 @@ public class AccountController {
      */
 
     @DeleteMapping("/user/{id}")
-    @ResponseBody
-    public Header deleteUser(@PathVariable Long id){
+    public String deleteUser(@PathVariable Long id){
         accountService.deleteUser(id);
-        return Header.OK();
+        return "user/login";
     }
 
     @GetMapping("/user/{id}")

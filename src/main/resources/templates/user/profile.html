@@ -76,8 +76,10 @@
                         <!-- /.card-body -->
 
                         <a href="#" class="btn btn-primary btn-block"><b>비밀번호 변경하기</b></a>
-                        <a href="#" class="btn btn-primary btn-block"><b>탈퇴하기</b></a>
-                    </div>
+<!--                        <button id ="btn-user-delete" class="btn btn-primary btn-block"><b>탈퇴하기</b></button>-->
+<!--                        <a id ="btn-user-delete" href="#" class="btn btn-primary btn-block" th:href="@{/user/{loginUserId}(loginUserId=${loginUserId})}" data-confirm="탈퇴하시겠습니까?" data-method="delete" rel="nofollow"><b>탈퇴하기</b></a>-->
+                        <button id ="btn-user-delete" class="btn btn-primary btn-block" th:onclick="deleteUser([[${loginUserId}]])"><b>탈퇴하기</b></button>
+                        </div>
                     <!-- /.card -->
                 </div>
                 <!-- /.col -->
@@ -88,5 +90,24 @@
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        function deleteUser(id){
+            if (confirm("정말로 탈퇴하시겠습니까?")){
+                var url = "/user/"+id;
+                var html = "";
+                html += '<form name="dataForm" action="'+url+'" method="post">';
+				html += '<input type="hidden" name="_method" value="delete" />';
+				html += '</form>';
+				console.log("html");
+				$("body").append(html);
+				document.dataForm.submit();
+            }
+        }
+        /*]]>*/
+    </script>
+</th:block>
 </body>
+
 </html>
