@@ -75,7 +75,7 @@
                         </div>
                         <!-- /.card-body -->
 
-                        <a href="#" class="btn btn-primary btn-block"><b>비밀번호 변경하기</b></a>
+                        <a href="#" class="btn btn-primary btn-block" th:href="@{/user/changePassword}"><b>비밀번호 변경하기</b></a>
 <!--                        <button id ="btn-user-delete" class="btn btn-primary btn-block"><b>탈퇴하기</b></button>-->
 <!--                        <a id ="btn-user-delete" href="#" class="btn btn-primary btn-block" th:href="@{/user/{loginUserId}(loginUserId=${loginUserId})}" data-confirm="탈퇴하시겠습니까?" data-method="delete" rel="nofollow"><b>탈퇴하기</b></a>-->
                         <button id ="btn-user-delete" class="btn btn-primary btn-block" th:onclick="deleteUser([[${loginUserId}]])"><b>탈퇴하기</b></button>

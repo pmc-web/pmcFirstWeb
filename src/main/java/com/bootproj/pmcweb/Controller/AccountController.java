@@ -78,6 +78,12 @@ public class AccountController {
         return mv;
     }
 
+    // 비밀번호 변경 화면
+    @GetMapping("/user/changePassword")
+    public String changePassword() {
+        return "user/changePassword";
+    }
+
     /**
      * REST API
      * made by jiae
@@ -93,6 +99,13 @@ public class AccountController {
     public Header<Account> getUser(@PathVariable Long id) {
         Account account = accountService.getUser(id);
         return Header.OK(account);
+    }
+
+    @PostMapping("/user/changePassword")
+    public String changePassword(@AuthenticationPrincipal User user, @RequestParam(value="oldPassword") String oldPassword, @RequestParam(value="newPassword") String newPassword) {
+        // TODO: 이전 비밀번호가 맞는지 검증하기
+        accountSecurityService.changePassword(user.getUsername(), newPassword);
+        return "redirect:/user/profile";
     }
 
     @PostMapping("/user/sendSignUpEmail")

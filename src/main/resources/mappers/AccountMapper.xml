@@ -39,4 +39,9 @@
         update User set status = #{status}
         where email = #{email};
     </update>
+
+    <update id="updateUserPassword" parameterType="map">
+        update User set password = #{password}
+        where email = #{email};
+    </update>
 </mapper>

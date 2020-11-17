@@ -47,6 +47,14 @@ public class AccountSecurityService implements UserDetailsService {
         return accountServiceimpl.sendSignUpEmail(account);
     }
 
+    public void changePassword (String email, String newPassword){
+        HashMap<String, String> map = new HashMap<String, String>();
+        map.put("email", email);
+        map.put("password", passwordEncoder.encode(newPassword));
+        accountServiceimpl.updateUserPassword(map);
+        return;
+    }
+
     // 회원가입 시, 유효성 체크
     public Map<String, String> validateHandling(Errors errors) {
         Map<String, String> validatorResult = new HashMap<>();
