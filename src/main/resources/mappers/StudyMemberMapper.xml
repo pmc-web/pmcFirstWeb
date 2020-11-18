@@ -3,7 +3,6 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bootproj.pmcweb.Mapper.StudyMemberMapper">
-
     <insert id="insertStudyMember" parameterType="com.bootproj.pmcweb.Domain.StudyMember" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO study_member (role, user_id, study_id)
         VALUES  ( #{studyRole}, #{userId}, #{studyId} );
@@ -11,13 +10,4 @@
             SELECT LAST_INSERT_ID()
         </selectKey>
     </insert>
-
-    <select id="selectMember" parameterType="long" resultType="com.bootproj.pmcweb.Domain.StudyMember">
-        SELECT * FROM study_member where id=#{id};
-    </select>
-
-    <update id="changeRole">
-        UPDATE study_member SET role=#{role} where id = #{id};
-    </update>
-
 </mapper>

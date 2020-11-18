@@ -19,9 +19,4 @@ public class StudyMemberServiceImpl implements StudyMemberService {
             return 0L;
         }
     }
-
-    @Override
-    public void changeStatus(Long studyMemberId, String status) {
-        studyMemberMapper.changeRole(studyMemberId, status);
-    }
 }
