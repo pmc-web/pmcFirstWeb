@@ -12,13 +12,18 @@ import java.util.List;
 public class StudyServiceImpl implements StudyService {
     final private StudyMapper studyMapper; //final : 생성될때 초기화
 
-    public List<Study> selectStudyList() {
-        return studyMapper.getStudyList();
+    @Override
+    public List<Study> getStudyList(Integer page) {
+        Integer limit = 10;
+        Integer offset = limit*(page-1);
+        // TODO : pagination
+        return studyMapper.getStudyList(limit, offset);
     }
 
     @Override
     public Long createStudy(Study study) {
         int result =  studyMapper.insertStudy(study);
+        System.out.println(study.toString());
         if(result == 1){
             return study.getId();
         }else {
@@ -32,17 +37,11 @@ public class StudyServiceImpl implements StudyService {
     }
 
     @Override
-    public Study joinStudy(Long studyId, Long userId) {
-        return studyMapper.joinStudy(studyId, userId);
+    public Study putStudyStatus(Long studyId, String status) {
+        studyMapper.putStudyStatus(studyId, status);
+        Study study = studyMapper.getStudyDetail(studyId);
+        if(study.getStatus().equals(status)) return study;
+        return null; // TODO : Q.이렇게 해도 되나 ?
     }
 
-    @Override
-    public Study putStudyStatus(Long studyId) {
-        return studyMapper.putStudyStatus(studyId);
-    }
-
-    @Override
-    public Integer removeStudy(Long studyId) {
-        return null;
-    }
 }
