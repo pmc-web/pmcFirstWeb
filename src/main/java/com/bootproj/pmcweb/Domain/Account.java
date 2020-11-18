@@ -1,6 +1,7 @@
 package com.bootproj.pmcweb.Domain;
 
 import lombok.*;
+import lombok.experimental.Accessors;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -13,6 +14,8 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+@Builder
+@Accessors(chain=true)
 public class Account {
     private Long id;
 
