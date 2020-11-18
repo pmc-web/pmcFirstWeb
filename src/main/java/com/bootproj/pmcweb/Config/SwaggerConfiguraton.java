@@ -32,7 +32,7 @@ public class SwaggerConfiguraton {
                 .apiInfo(getApiInfo())
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.bootproj.pmcweb.Controller"))
-                .paths(PathSelectors.ant("/user/**"))
+                .paths(PathSelectors.ant("/**"))
                 .build();
 
     }
