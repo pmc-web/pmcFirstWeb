@@ -1,4 +1,4 @@
-package com.bootproj.pmcweb;
+package com.bootproj.pmcweb.Config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -32,7 +32,7 @@ public class SwaggerConfiguraton {
                 .apiInfo(getApiInfo())
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.bootproj.pmcweb.Controller"))
-                .paths(PathSelectors.ant("/user/**"))
+                .paths(PathSelectors.ant("/**"))
                 .build();
 
     }

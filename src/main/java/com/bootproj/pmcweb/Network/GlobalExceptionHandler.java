@@ -2,6 +2,7 @@ package com.bootproj.pmcweb.Network;
 
 import com.bootproj.pmcweb.Network.Exception.DuplicateEmailException;
 import com.bootproj.pmcweb.Network.Exception.NoMatchingAcountException;
+import com.bootproj.pmcweb.Network.Exception.PasswordNotMatchException;
 import com.bootproj.pmcweb.Network.Exception.SendEmailException;
 import com.bootproj.pmcweb.Network.Header;
 import com.bootproj.pmcweb.Network.ResultCode;
@@ -84,5 +85,15 @@ public class GlobalExceptionHandler {
         log.error("NoMatchingAcountException");
         log.error(e.getMessage());
         return new ResponseEntity(Header.Error(ResultCode.ERROR_USER_NOT_FOUND), ResultCode.ERROR_USER_NOT_FOUND.getStatus());
+    }
+
+    /**
+     * 유저 패스워드 변경 시 패스워드가 잘못된 경우 발생
+     */
+    @ExceptionHandler(PasswordNotMatchException.class)
+    public ResponseEntity<Header> handlerPasswordNotMatchException(PasswordNotMatchException e){
+        log.error("PasswordNotMatchException");
+        log.error(e.getMessage());
+        return new ResponseEntity(Header.Error(ResultCode.ERROR_INVALID_PASSWORD), ResultCode.ERROR_INVALID_PASSWORD.getStatus());
     }
 }

@@ -18,4 +18,5 @@ public interface AccountService {
     public void updateUserStatus(Map<String, String> map);
     public String sendSignUpEmail(Account account) throws SendEmailException, DuplicateEmailException;
     public Account signUpConfirm(String authKey, String email) throws NoMatchingAcountException, NoSuchFieldException;
+    public void updateUserPassword(Map<String, String> map);
 }
