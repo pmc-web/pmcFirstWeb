@@ -119,4 +119,10 @@ public class AccountServiceImpl implements AccountService {
         Account changedUser = getUserByEmail(email);
         return changedUser;
     }
+
+    @Override
+    public void updateUserPassword(Map<String, String> map) {
+        accountMapper.updateUserPassword(map);
+        return;
+    }
 }

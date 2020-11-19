@@ -7,5 +7,4 @@ public interface StudyMemberService {
      * made by songi
      * */
     public Long joinStudy(StudyMember studyMember);
-    public void changeStatus(Long studyMemberId, String status);
 }

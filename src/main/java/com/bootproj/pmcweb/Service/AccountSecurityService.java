@@ -4,6 +4,7 @@ import com.bootproj.pmcweb.Domain.Account;
 import com.bootproj.pmcweb.Domain.enumclass.UserRole;
 import com.bootproj.pmcweb.Network.Exception.DuplicateEmailException;
 import com.bootproj.pmcweb.Network.Exception.NoMatchingAcountException;
+import com.bootproj.pmcweb.Network.Exception.PasswordNotMatchException;
 import com.bootproj.pmcweb.Network.Exception.SendEmailException;
 import com.bootproj.pmcweb.Network.ResultCode;
 import lombok.SneakyThrows;
@@ -45,6 +46,21 @@ public class AccountSecurityService implements UserDetailsService {
     public String save(Account account) throws SendEmailException, DuplicateEmailException {
         account.setPassword(passwordEncoder.encode(account.getPassword()));
         return accountServiceimpl.sendSignUpEmail(account);
+    }
+
+    public void changePassword (String email, String oldPassword, String newPassword) throws PasswordNotMatchException {
+        Account account = accountServiceimpl.getUserByEmail(email);
+        if (passwordEncoder.matches(oldPassword, account.getPassword())){
+            // 비밀번호 변경
+            HashMap<String, String> map = new HashMap<String, String>();
+            map.put("email", email);
+            map.put("password", passwordEncoder.encode(newPassword));
+            accountServiceimpl.updateUserPassword(map);
+        } else {
+            throw new PasswordNotMatchException("패스워드를 잘못 입력하셨습니다.");
+        }
+
+        return;
     }
 
     // 회원가입 시, 유효성 체크

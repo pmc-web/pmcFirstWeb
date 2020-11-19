@@ -39,7 +39,7 @@
                             <i class="fas fa-user-circle"></i>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownBlog">
-                            <a sec:authorize="isAuthenticated()" class="dropdown-item" href="#">내 프로필</a>
+                            <a sec:authorize="isAuthenticated()" class="dropdown-item" th:href="@{/user/profile}">내 프로필</a>
                             <a sec:authorize="isAuthenticated()" class="dropdown-item" href="#">즐겨 찾기</a>
                             <a sec:authorize="isAuthenticated()" class="dropdown-item" href="#">내 모임</a>
                         </div>
