@@ -50,17 +50,6 @@ public class AccountController {
         return "user/login";
     }
 
-    // 로그인 성공
-    @GetMapping("/user/loginSuccess")
-    public ModelAndView getLoginSuccess(@AuthenticationPrincipal User user){
-        Account account = accountService.getUserByEmail(user.getUsername());
-        String username = account.getName();
-        ModelAndView mv = new ModelAndView("/main");
-        mv.addObject("loginUser", username);
-
-        return mv;
-    }
-
     // 로그아웃
     @GetMapping("/user/logout")
     public String getLogout(){
