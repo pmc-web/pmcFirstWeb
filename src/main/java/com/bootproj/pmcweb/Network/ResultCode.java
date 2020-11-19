@@ -19,7 +19,8 @@ public enum ResultCode {
     ERROR_EMAIL_DUPLICATE(HttpStatus.INTERNAL_SERVER_ERROR, "U0001", "이메일이 중복되었습니다."),
     ERROR_USER_NOT_FOUND(HttpStatus.NO_CONTENT, "U0002", "해당하는 유저가 존재하지 않습니다."),
     ERROR_SEND_EMAIL(HttpStatus.INTERNAL_SERVER_ERROR, "U0003", "이메일을 전송하는데 실패했습니다."),
-    ERROR_INSERT_USER(HttpStatus.INTERNAL_SERVER_ERROR, "U0004", "회원정보를 저장하는데 실패했습니다.")
+    ERROR_INSERT_USER(HttpStatus.INTERNAL_SERVER_ERROR, "U0004", "회원정보를 저장하는데 실패했습니다."),
+    ERROR_INVALID_PASSWORD(HttpStatus.BAD_REQUEST, "U0005", "잘못된 패스워드 입니다.")
 
     ;
 
