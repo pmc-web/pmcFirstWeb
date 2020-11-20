@@ -26,8 +26,15 @@ public class StudyController {
      */
 
     @GetMapping
-    public ResponseEntity<Header> getStudyList(@RequestParam(value = "page")Integer page){
-        List<Study> list = studyService.getStudyList(page);
+    public ResponseEntity<Header> getStudyList
+    (@RequestParam(required = false, value = "page")Integer page,
+     @RequestParam(required = false, value = "type")String type,
+     @RequestParam(required = false, value = "date")String date,
+     @RequestParam(required = false, value = "title")String title,
+     @RequestParam(required = false, value = "location")String location,
+     @RequestParam(required = false, value = "author")String author){
+        if(page == null) page = 1;
+        List<Study> list = studyService.getStudyList(page);//TODO: 수정
         return new ResponseEntity(Header.OK(list),HttpStatus.OK);
     }
 
