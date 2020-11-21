@@ -31,24 +31,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception{
         http
-                .csrf().disable()
-                .authorizeRequests()
-                // 페이지 권한 설정
-                .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/userInfo/**").hasRole("NORMAL")
-                .antMatchers("/","/user/signup", "/user/login", "/user/sendSignUpEmail", "/user/signUpConfirm", "/study").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .formLogin()
-                .loginPage("/user/login")
-                .defaultSuccessUrl("/user/loginSuccess")
-//                .defaultSuccessUrl("/")
-                .permitAll()
-                .and() // 로그아웃 설정
-                .logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))
-                .logoutSuccessUrl("/")
-                .invalidateHttpSession(true)
-                .permitAll();
+            .csrf().disable()
+            .authorizeRequests()
+            // 페이지 권한 설정
+            .antMatchers("/admin/**").hasRole("ADMIN")
+            .antMatchers("/userInfo/**").hasRole("NORMAL")
+            .antMatchers("/","/user/signup", "/user/login", "/user/sendSignUpEmail", "/user/signUpConfirm","/study").permitAll()
+            .anyRequest().authenticated()
+            .and()
+            .formLogin()
+            .loginPage("/user/login")
+            .defaultSuccessUrl("/")
+            .permitAll()
+            .and() // 로그아웃 설정
+            .logout()
+            .logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))
+            .logoutSuccessUrl("/")
+            .invalidateHttpSession(true)
+            .deleteCookies("JSESSIONID")
+            .permitAll();
+        http.sessionManagement()
+                .maximumSessions(1)
+                .maxSessionsPreventsLogin(false);
     }
 }
