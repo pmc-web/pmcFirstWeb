@@ -10,4 +10,12 @@
             SELECT LAST_INSERT_ID()
         </selectKey>
     </insert>
+    <select id="selectMember" parameterType="long" resultType="com.bootproj.pmcweb.Domain.StudyMember">
+        SELECT * FROM study_member where id=#{id};
+    </select>
+
+    <update id="changeRole">
+        UPDATE study_member SET role=#{role} where id = #{id};
+    </update>
+
 </mapper>

@@ -36,7 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             // 페이지 권한 설정
             .antMatchers("/admin/**").hasRole("ADMIN")
             .antMatchers("/userInfo/**").hasRole("NORMAL")
-            .antMatchers("/","/user/signup", "/user/login", "/user/sendSignUpEmail", "/user/signUpConfirm").permitAll()
+            .antMatchers("/","/user/signup", "/user/login", "/user/sendSignUpEmail", "/user/signUpConfirm","/study").permitAll()
             .anyRequest().authenticated()
             .and()
             .formLogin()
@@ -53,6 +53,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.sessionManagement()
                 .maximumSessions(1)
                 .maxSessionsPreventsLogin(false);
-
     }
 }

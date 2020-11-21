@@ -36,7 +36,9 @@ public class StudyMemberController {
 
     // 스터디 참여요청 수락 거절
     @PutMapping("/status/{studyId}")
-    public ResponseEntity<Header> changeMemberStatus(@PathVariable(value = "studyId")Long studyId, @RequestParam(value = "memberId")Long memberId){
+    public ResponseEntity<Header> changeMemberStatus(
+            @PathVariable(value = "studyId")Long studyId, @RequestParam(value = "memberId")Long memberId) {
+        studyMemberService.changeStatus(memberId, "NORMAL");
 
         return new ResponseEntity(Header.OK(), HttpStatus.OK);
     }
