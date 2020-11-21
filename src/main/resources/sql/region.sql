@@ -8,7 +8,7 @@ INSERT INTO `study`.`region` (`id`, `region_depth1`, `region_depth2`, `region_de
 INSERT INTO `study`.`region` (`id`, `region_depth1`, `region_depth2`, `region_depth3`) VALUES (8, '서울특별시', '종로구', '통인동');
 INSERT INTO `study`.`region` (`id`, `region_depth1`, `region_depth2`, `region_depth3`) VALUES (9, '서울특별시', '종로구', '누상동');
 INSERT INTO `study`.`region` (`id`, `region_depth1`, `region_depth2`, `region_depth3`) VALUES (10, '서울특별시', '종로구', '누하동');
-INSERT INTO `study`.`region` (`id`, `region_depth1`, `region_depth2`, `region_depth3`) VALUES (11, '서울특별시', '종로구', '옥인동`');
+INSERT INTO `study`.`region` (`id`, `region_depth1`, `region_depth2`, `region_depth3`) VALUES (11, '서울특별시', '종로구', '옥인동');
 INSERT INTO `study`.`region` (`id`, `region_depth1`, `region_depth2`, `region_depth3`) VALUES (12, '서울특별시', '종로구', '체부동');
 INSERT INTO `study`.`region` (`id`, `region_depth1`, `region_depth2`, `region_depth3`) VALUES (13, '서울특별시', '종로구', '필운동');
 INSERT INTO `study`.`region` (`id`, `region_depth1`, `region_depth2`, `region_depth3`) VALUES (14, '서울특별시', '종로구', '내자동');
