@@ -116,8 +116,10 @@
                     let result = JSON.parse(xhr.responseText);
                     /*]]>*/
                     console.log(result);
-                    popularStudyList(result.data)
-                    newStudyList(result.data);
+                    if(result.data.length>0) {
+                        popularStudyList(result.data)
+                        newStudyList(result.data);
+                    }
                 }
                 else {
                     console.log('Error!');
