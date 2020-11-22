@@ -1,4 +1,5 @@
-package com.bootproj.pmcweb.Mapper;
+package com.bootproj.pmcweb.Service;
+
 
 import com.bootproj.pmcweb.Domain.Account;
 import com.bootproj.pmcweb.Domain.enumclass.UserRole;
@@ -7,21 +8,21 @@ import com.bootproj.pmcweb.PmcwebApplication;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import static org.assertj.core.api.Assertions.*;
 
 import java.util.Date;
 import java.util.List;
 
-@ExtendWith(SpringExtension.class) //Junit4의 Runwith과 같은 기능을 하는 Junit5 어노테이션
-@SpringBootTest(classes = PmcwebApplication.class) // Junit5 기준 Application Context사용할 때 사용
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class) // Order를 붙일 때 사용
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE) // 진짜 데이터베이스에 테스트
-public class UserMapperTest {
+import static org.assertj.core.api.Assertions.*;
+
+@ExtendWith(SpringExtension.class)
+@SpringBootTest(classes = PmcwebApplication.class)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+public class AccountServiceTest {
+
     @Autowired
-    private AccountMapper userMapper;
+    private AccountServiceImpl userServiceImpl;
     private static final String testEmail = "test@naver.com";
     private static final String testName = "test";
 
@@ -36,33 +37,33 @@ public class UserMapperTest {
                 .role(UserRole.NORMAL.getTitle())
                 .instTime(new Date(System.currentTimeMillis()))
                 .build();
-
-        userMapper.createUser(account);
-        Account createdUser = userMapper.getUserByEmail(testEmail);
-        assertThat(createdUser.getEmail().equals(account.getEmail()));
+        userServiceImpl.createUser(account);
+        Account findUser = userServiceImpl.getUserByEmail(account.getEmail());
+        assertThat(account.getEmail()).isEqualTo(findUser.getEmail());
     }
 
     @Test
     @Order(2)
-    void getUserByEmail() {
-        Account getUser = userMapper.getUserByEmail(testEmail);
+    void getUser() {
+        Account getUser = userServiceImpl.getUserByEmail(testEmail);
+        assertThat(testEmail.equals(getUser.getEmail()));
         assertThat(testName.equals(getUser.getName()));
     }
 
     @Test
     @Order(3)
-    void getUserList() {
-        List<Account> userList = userMapper.getUserList();
+    void getUsers() {
+        List<Account> userList = userServiceImpl.getUsers();
         assertThat(userList.size() > 0);
     }
 
     @Test
     @Order(4)
     void deleteUser() {
-        Account getUser = userMapper.getUserByEmail(testEmail);
-        assertThat(getUser!=null);
-        userMapper.deleteUser(getUser.getId());
-        assertThat(userMapper.getUserById(getUser.getId())==null);
+        Account getUser = userServiceImpl.getUserByEmail(testEmail);
+        assertThat(userServiceImpl.getUserByEmail(testEmail)!=null);
+        userServiceImpl.deleteUser(getUser.getId());
+        assertThat(userServiceImpl.getUserByEmail(testEmail)==null);
     }
 
 }
