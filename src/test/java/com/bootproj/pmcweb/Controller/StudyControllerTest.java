@@ -1,4 +1,4 @@
-package com.bootproj.pmcweb.web;
+package com.bootproj.pmcweb.Controller;
 
 import com.bootproj.pmcweb.Controller.StudyController;
 import com.bootproj.pmcweb.Domain.Study;
