@@ -1,9 +1,6 @@
 package com.bootproj.pmcweb.Network;
 
-import com.bootproj.pmcweb.Network.Exception.DuplicateEmailException;
-import com.bootproj.pmcweb.Network.Exception.NoMatchingAcountException;
-import com.bootproj.pmcweb.Network.Exception.PasswordNotMatchException;
-import com.bootproj.pmcweb.Network.Exception.SendEmailException;
+import com.bootproj.pmcweb.Network.Exception.*;
 import com.bootproj.pmcweb.Network.Header;
 import com.bootproj.pmcweb.Network.ResultCode;
 import lombok.extern.log4j.Log4j2;
@@ -93,6 +90,15 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(PasswordNotMatchException.class)
     public ResponseEntity<Header> handlerPasswordNotMatchException(PasswordNotMatchException e){
         log.error("PasswordNotMatchException");
+        log.error(e.getMessage());
+        return new ResponseEntity(Header.Error(ResultCode.ERROR_INVALID_PASSWORD), ResultCode.ERROR_INVALID_PASSWORD.getStatus());
+    }
+    /**
+     * 회원가입시 이메일 인증하지 않은 경우 발생
+     */
+    @ExceptionHandler(NoAuthEmailException.class)
+    public ResponseEntity<Header> handlerNoAuthEmailException(NoAuthEmailException e){
+        log.error("NoAuthEmailException");
         log.error(e.getMessage());
         return new ResponseEntity(Header.Error(ResultCode.ERROR_INVALID_PASSWORD), ResultCode.ERROR_INVALID_PASSWORD.getStatus());
     }

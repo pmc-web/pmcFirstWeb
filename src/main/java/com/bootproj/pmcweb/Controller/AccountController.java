@@ -51,11 +51,19 @@ public class AccountController {
         return "user/login";
     }
 
+    // 로그인 실패
+    @PostMapping("/user/loginFail")
+    public String getLoginFail(){
+        return "user/loginFail";
+    }
+
     // 로그아웃
     @GetMapping("/user/logout")
     public String getLogout(){
         return "user/login";
     }
+
+
 
     // 프로필 화면
     @GetMapping("/user/profile")
