@@ -16,7 +16,8 @@
 <!-- Navbar -->
 <nav th:replace="/layout/navbar.html :: fragment-navbar"></nav>
 <!-- main -->
-<div class="container">
+<div class="container" >
+    <div class="mt-3">
     <!-- general form elements -->
     <div class="card card-primary">
         <div class="card-header">
@@ -54,15 +55,15 @@
                         <div class="form-group">
                             <label>카테고리</label>
                             <div class="form-group">
-                                <select class="form-control">
-                                    <option>카테고리 주제1</option>
-                                    <option>카테고리 주제2</option>
+                                <select class="form-control" th:each="item: ${subjects}">
+                                    <option>선택해주세요</option>
+                                    <option th:text="${item.subjectDepth1}">optionddd</option>
+
                                 </select>
                             </div>
                             <div class="form-group">
-                                <select class="form-control">
-                                    <option>카테고리 소분류1</option>
-                                    <option>카테고리 소분류2</option>
+                                <select class="form-control" th:each="item: ${subjects}">
+                                    <option th:text="${item.getSubjectDepth2()}"></option>
                                 </select>
                             </div>
 
@@ -109,27 +110,27 @@
                         <div class="col-sm-4">
                             <label>지역 대분류</label>
                             <div class="form-group">
-                                <select class="form-control">
-                                    <option>지역 대분류1</option>
-                                    <option>지역 대분류2</option>
+                                <select class="form-control" th:each="item: ${regions}">
+<!--                                    <option>지역 중분류1</option>-->
+                                    <option th:text="${item.getRegionDepth1()}"></option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-sm-4">
                             <label>지역 중분류</label>
                             <div class="form-group">
-                                <select class="form-control">
-                                    <option>지역 중분류1</option>
-                                    <option>지역 중분류2</option>
+                                <select class="form-control" th:each="item: ${regions}">
+<!--                                    <option>지역 중분류1</option>-->
+                                    <option th:text="${item.getRegionDepth2()}"></option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-sm-4">
                             <label>지역 소분류</label>
                             <div class="form-group">
-                                <select class="form-control">
-                                    <option>지역 소분류1</option>
-                                    <option>지역 소분류2</option>
+                                <select class="form-control" th:each="item: ${regions}">
+<!--                                    <option>지역 소분류</option>-->
+                                    <option th:text="${item.getRegionDepth3()}"></option>
                                 </select>
                             </div>
                         </div>
@@ -160,6 +161,7 @@
     </div>
     <!-- /.card -->
 </div>
+</div>
 <!-- /main container -->
 
 <script th:src="@{/vendor/jquery/jquery.js}"></script>
@@ -168,6 +170,32 @@
 <script>
     $("#startDate").datepicker();
     $("#endDate").datepicker();
+</script>
+
+<script>
+    window.addEventListener('load', function(){
+        console.log("register page load");
+    });
+
+    /*<![CDATA[*/
+    const xhr = new XMLHttpRequest();
+    /*]]>*/
+
+    function fetchCategory(data){
+        xhr.open('GET', 'http://localhost:8080/category');
+        xhr.send();
+        xhr.onload = function (e) {
+            if (xhr.status === 200) {
+                /*<![CDATA[*/
+                let result = JSON.parse(xhr.responseText);
+                /*]]>*/
+                console.log(result);
+            }
+            else {
+                console.log('Error!');
+            }
+        };
+    }
 </script>
 </body>
 </html>
