@@ -1,0 +1,16 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>로그인 실패 페이지</title>
+</head>
+<body>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var message = /*[[${errorMsg}]]*/ 'default';
+    alert(message);
+    location.href="user/login";
+
+    /*]]>*/
+</script>
+</body>
+</html>
