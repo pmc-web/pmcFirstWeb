@@ -3,6 +3,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <head th:replace="/layout/common.html :: fragment-common"></head>
+    <th:block layout:fragment="css"><link th:href="@{/css/image-upload.css}" rel="stylesheet"></th:block>
 </head>
 <body>
 <!-- navbar -->
@@ -36,9 +37,19 @@
                     <div class="card card-primary card-outline">
                         <div class="card-body box-profile">
                             <div class="text-center">
-                                <img class="profile-user-img img-fluid img-circle"
+                                <img id=img-upload class="profile-user-img" th:width="400px" th:height="400px"
                                      th:src="@{/img/moim.jpg}"
                                      alt="User profile picture">
+                            </div>
+                            <div class="container">
+                                <div class="row justify-content-center">
+                                    <div class="col-6">
+                                        <div class="file-box">
+                                            <label for="ex_file">프로필 사진 변경</label>
+                                            <input type="file" id="ex_file">
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <h3 class="profile-username text-center" th:text="${loginUser}"></h3>
                             <p class="text-muted text-center" th:text="${loginUserEmail}"></p>
@@ -76,10 +87,10 @@
                         <!-- /.card-body -->
 
                         <a href="#" class="btn btn-primary btn-block" th:href="@{/user/changePassword}"><b>비밀번호 변경하기</b></a>
-<!--                        <button id ="btn-user-delete" class="btn btn-primary btn-block"><b>탈퇴하기</b></button>-->
-<!--                        <a id ="btn-user-delete" href="#" class="btn btn-primary btn-block" th:href="@{/user/{loginUserId}(loginUserId=${loginUserId})}" data-confirm="탈퇴하시겠습니까?" data-method="delete" rel="nofollow"><b>탈퇴하기</b></a>-->
+                        <!--                        <button id ="btn-user-delete" class="btn btn-primary btn-block"><b>탈퇴하기</b></button>-->
+                        <!--                        <a id ="btn-user-delete" href="#" class="btn btn-primary btn-block" th:href="@{/user/{loginUserId}(loginUserId=${loginUserId})}" data-confirm="탈퇴하시겠습니까?" data-method="delete" rel="nofollow"><b>탈퇴하기</b></a>-->
                         <button id ="btn-user-delete" class="btn btn-primary btn-block" th:onclick="deleteUser([[${loginUserId}]])"><b>탈퇴하기</b></button>
-                        </div>
+                    </div>
                     <!-- /.card -->
                 </div>
                 <!-- /.col -->
@@ -98,16 +109,55 @@
                 var url = "/user/"+id;
                 var html = "";
                 html += '<form name="dataForm" action="'+url+'" method="post">';
-				html += '<input type="hidden" name="_method" value="delete" />';
-				html += '</form>';
-				console.log("html");
-				$("body").append(html);
-				document.dataForm.submit();
+                html += '<input type="hidden" name="_method" value="delete" />';
+                html += '</form>';
+                console.log("html");
+                $("body").append(html);
+                document.dataForm.submit();
             }
         }
         /*]]>*/
     </script>
+    <script>
+        $(document).ready(function () {
+            var fileTarget = $('.file-box .upload-hidden');
+            fileTarget.on('change', function () { // 값이 변경되면
+                var input = $(this),
+                    label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+                input.trigger('fileselect', [label]);
+            });
+
+            $('.file-box :file').on('fileselect', function(event, label) {
+
+                var input = $(this).parents('.input-group').find(':text'),
+                    log = label;
+
+                if( input.length ) {
+                    input.val(log);
+                } else {
+                    if( log ) alert(log);
+                }
+
+            });
+
+            $("#ex_file").change(function(){
+                readURL(this);
+            });
+
+        });
+
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#img-upload').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
 </th:block>
 </body>
-
 </html>

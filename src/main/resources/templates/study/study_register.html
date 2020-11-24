@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:replace="/layout/common.html :: fragment-common"></head>
+<head>
+    <!-- Theme style -->
+    <link rel="stylesheet" th:href="@{/vendor/adminlte/adminlte.min.css}">
+    <!-- daterange picker -->
+    <link rel="stylesheet" th:href="@{/vendor/daterangepicker/daterangepicker.css}">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" th:href="@{/vendor/fontawesome-free/css/all.min.css}">
+
+    <link rel="stylesheet" th:href="@{/vendor/jquery-ui/jquery-ui.css}">
+</head>
+<body>
+<!-- Navbar -->
+<nav th:replace="/layout/navbar.html :: fragment-navbar"></nav>
+<!-- main -->
+<div class="container mt-3">
+    <!-- general form elements -->
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title">스터디 등록</h3>
+        </div>
+        <!-- /.card-header -->
+        <!-- form start -->
+        <form>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <!-- title input -->
+                        <div class="form-group">
+                            <label>제목</label>
+                            <input type="text" class="form-control" placeholder="Title">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>스터디장</label>
+                            <input type="text" class="form-control" placeholder="Host Name" disabled>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <!-- textarea -->
+                        <div class="form-group">
+                            <label>설명</label>
+                            <textarea class="form-control" rows="3" placeholder="Description"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <!-- select -->
+                        <div class="form-group">
+                            <label>카테고리</label>
+                            <div class="form-group">
+                                <select class="form-control">
+                                    <option>카테고리 주제1</option>
+                                    <option>카테고리 주제2</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <select class="form-control">
+                                    <option>카테고리 소분류1</option>
+                                    <option>카테고리 소분류2</option>
+                                </select>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <!-- Date range -->
+                            <div class="form-group">
+                                <label>시작 날짜:</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                      <span class="input-group-text">
+                        <i class="far fa-calendar-alt"></i>
+                      </span>
+                                    </div>
+                                    <input type="text" class="form-control float-right" id="startDate">
+                                </div>
+                                <!-- /.input group -->
+                            </div>
+                            <!-- /.form group -->
+                        </div>
+                        <div class="col-sm-6">
+                            <!-- Date range -->
+                            <div class="form-group">
+                                <label>종료 날짜:</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                      <span class="input-group-text">
+                        <i class="far fa-calendar-alt"></i>
+                      </span>
+                                    </div>
+                                    <input type="text" class="form-control float-right" id="endDate">
+                                </div>
+                                <!-- /.input group -->
+                            </div>
+                            <!-- /.form group -->
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <label>지역 대분류</label>
+                            <div class="form-group">
+                                <select class="form-control">
+                                    <option>지역 대분류1</option>
+                                    <option>지역 대분류2</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <label>지역 중분류</label>
+                            <div class="form-group">
+                                <select class="form-control">
+                                    <option>지역 중분류1</option>
+                                    <option>지역 중분류2</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <label>지역 소분류</label>
+                            <div class="form-group">
+                                <select class="form-control">
+                                    <option>지역 소분류1</option>
+                                    <option>지역 소분류2</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- File -->
+                    <label for="exampleInputFile">첨부파일</label>
+                    <div class="input-group">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="exampleInputFile">
+                            <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                        </div>
+                    </div>
+                    <!-- File End -->
+                </div>
+            </div>
+            <!-- /.card-body -->
+        </form>
+        <div class="card-footer">
+            <div class="row">
+                <div class="col">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.card -->
+</div>
+<!-- /main container -->
+
+<script th:src="@{/vendor/jquery/jquery.js}"></script>
+<script th:src="@{/vendor/jquery-ui/jquery-ui.js}"></script>
+
+<script>
+    $("#startDate").datepicker();
+    $("#endDate").datepicker();
+</script>
+</body>
+</html>
