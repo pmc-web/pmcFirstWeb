@@ -48,6 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .loginPage("/user/login")
             .defaultSuccessUrl("/")
             .failureHandler(failureHandler())
+//            .successHandler(successHandler())
             .permitAll()
             .and() // 로그아웃 설정
             .logout()
@@ -66,4 +67,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationFailureHandler failureHandler() {
         return new LoginFailHandler();
     }
+
+//    @Bean
+//    public AuthenticationSuccessHandler successHandler() {
+//        return new LoginSuccessHandler();
+//    }
 }

@@ -34,7 +34,6 @@ public class AccountSecurityService implements UserDetailsService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @SneakyThrows
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         List<GrantedAuthority> authorities = new ArrayList<>();
@@ -43,7 +42,8 @@ public class AccountSecurityService implements UserDetailsService {
             throw new UsernameNotFoundException("존재하지 않는 계정입니다.");
         }
         if(account.getStatus().equals("UNREGISTERED")){
-            throw new InternalAuthenticationServiceException("이메일이 인증되지 않았습니다.");
+            // enabled 는 추후 부정한 계정에 대한 컨트롤
+            return new User(account.getEmail(), account.getPassword(), true, true, true, false, authorities);
         }else{
             authorities.add(new SimpleGrantedAuthority(account.getRole()));
         }
