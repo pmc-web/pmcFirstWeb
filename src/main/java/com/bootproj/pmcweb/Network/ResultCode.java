@@ -13,7 +13,9 @@ public enum ResultCode {
     REQUEST_ERROR_FORBIDDEN(HttpStatus.FORBIDDEN, "R0003", "권한이 없는 사용자 입니다."),
     REQUEST_ERROR_METHOD_NOT_ALLOWED(HttpStatus.NOT_ACCEPTABLE, "R0004", "허용되지 않은 요청입니다."),
 
+    // Common Server Error
     ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "E0001", "서버에 오류가 발생했습니다."),
+    ERROR_SAVE_FILE(HttpStatus.INTERNAL_SERVER_ERROR, "C0005", "파일 저장에 실패했습니다."),
 
     // User
     ERROR_EMAIL_DUPLICATE(HttpStatus.INTERNAL_SERVER_ERROR, "U0001", "이메일이 중복되었습니다."),

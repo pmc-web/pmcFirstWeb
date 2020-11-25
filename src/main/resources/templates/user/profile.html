@@ -120,16 +120,16 @@
     </script>
     <script>
         $(document).ready(function () {
-            var fileTarget = $('.file-box .upload-hidden');
+            let fileTarget = $('.file-box .upload-hidden');
             fileTarget.on('change', function () { // 값이 변경되면
-                var input = $(this),
+                let input = $(this),
                     label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
                 input.trigger('fileselect', [label]);
             });
 
             $('.file-box :file').on('fileselect', function(event, label) {
 
-                var input = $(this).parents('.input-group').find(':text'),
+                let input = $(this).parents('.input-group').find(':text'),
                     log = label;
 
                 if( input.length ) {
@@ -148,13 +148,69 @@
 
         function readURL(input) {
             if (input.files && input.files[0]) {
-                var reader = new FileReader();
 
-                reader.onload = function (e) {
-                    $('#img-upload').attr('src', e.target.result);
+                // 이미지 파일 형식인지 확인 후 이미지 사진 변경
+                let filesArr = Array.prototype.slice.call(input.files);
+                filesArr.forEach(function (file) {
+                    if(!file.type.match("image.*")){
+                        alert("이미지 확장자만 사용 가능합니다.");
+                        return;
+                    }
+
+                    let reader = new FileReader();
+                    reader.onload = function (e) {
+                        $('#img-upload').attr('src', e.target.result);
+                    }
+                    reader.readAsDataURL(input.files[0]);
+                })
+
+                // 프로필 사진 저장 컨트롤러 호출
+                let file = input.files[0];
+                console.log(file)
+                let formData = new FormData();
+                formData.append("file", file);
+
+                $.ajax({
+                    url: '/attachment/uploadProfile',
+                    data: formData,
+                    dataType:'text',
+                    processData: false,
+                    contentType: false,
+                    type: 'POST',
+                    success: function(data){
+                        alert("프로필 이미지가 변경 되었습니다.")
+
+                    }
+                })
+
+
+                function checkImageType(fileName){
+                    var pattern = /jpg$|gif$|png$|jpeg$/i;
+                    return fileName.match(pattern);
                 }
 
-                reader.readAsDataURL(input.files[0]);
+
+                function getOriginalName(fileName){
+                    if(checkImageType(fileName)){
+                        return;
+                    }
+                    var idx = fileName.indexOf("_") + 1 ;
+                    return fileName.substr(idx);
+
+                }
+
+
+                function getImageLink(fileName){
+
+                    if(!checkImageType(fileName)){
+                        return;
+                    }
+                    var front = fileName.substr(0,12);
+                    var end = fileName.substr(14);
+
+                    return front + end;
+
+                }
             }
         }
     </script>
