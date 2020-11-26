@@ -15,7 +15,8 @@ public enum ResultCode {
 
     // Common Server Error
     ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "E0001", "서버에 오류가 발생했습니다."),
-    ERROR_SAVE_FILE(HttpStatus.INTERNAL_SERVER_ERROR, "C0005", "파일 저장에 실패했습니다."),
+    ERROR_SAVE_FILE(HttpStatus.INTERNAL_SERVER_ERROR, "E0002", "파일 저장에 실패했습니다."),
+    ERROR_DELETE_FILE(HttpStatus.INTERNAL_SERVER_ERROR, "E0003", "파일 삭제에 실패했습니다."),
 
     // User
     ERROR_EMAIL_DUPLICATE(HttpStatus.INTERNAL_SERVER_ERROR, "U0001", "이메일이 중복되었습니다."),

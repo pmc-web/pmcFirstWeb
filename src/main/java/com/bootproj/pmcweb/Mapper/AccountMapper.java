@@ -23,4 +23,6 @@ public interface AccountMapper {
     public void updateUserStatus(Map<String, String> map);
 
     public void updateUserPassword(Map<String, String> map);
+
+    public void updateUserAttachment(Map<String, String> map);
 }
