@@ -112,7 +112,6 @@ public class AccountController {
     }
 
     @PostMapping("/user/sendSignUpEmail")
-//    @ResponseBody
     public String sendSignUpEmail(@ModelAttribute @Valid Account account, BindingResult errors, Model model) throws DuplicateEmailException, SendEmailException{
         if (errors.hasErrors()) {
             // 유효성 통과 못한 필드와 메시지를 핸들링
@@ -129,11 +128,10 @@ public class AccountController {
     }
 
     @GetMapping("/user/signUpConfirm")
-//    @ResponseBody
     public String signUpConfirm(@RequestParam(value="email") String email, @RequestParam(value="authKey") String authKey) throws NoMatchingAcountException, NoSuchFieldException {
+        log.info("이메일 인증하는 부분");
         Account changedUser = accountService.signUpConfirm(authKey, email);
         accountService.signUpConfirm(authKey, email);
-//        return new ResponseEntity(Header.OK(changedUser), HttpStatus.OK);
-        return "redirect:/user/login";
+        return "/user/login";
     }
 }
