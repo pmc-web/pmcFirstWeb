@@ -44,4 +44,9 @@
         update User set password = #{password}
         where email = #{email};
     </update>
+
+    <update id="updateUserAttachment" parameterType="map">
+        update User set attachment_id = #{attachmentId}
+        where email = #{email};
+    </update>
 </mapper>
