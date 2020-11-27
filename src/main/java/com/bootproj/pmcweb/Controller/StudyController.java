@@ -58,5 +58,4 @@ public class StudyController {
         Study result = studyService.putStudyStatus(studyId, status);
         return new ResponseEntity(Header.OK(result),HttpStatus.OK);
     }
-
 }

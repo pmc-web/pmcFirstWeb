@@ -1,9 +1,8 @@
-package com.bootproj.pmcweb.Mapper;
+package com.bootproj.pmcweb.Service;
 
 import com.bootproj.pmcweb.Config.DatabaseConfiguration;
 import com.bootproj.pmcweb.Domain.Region;
 import com.bootproj.pmcweb.Domain.Subject;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,27 +13,21 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
-@SpringBootTest(classes = {DatabaseConfiguration.class})
+@SpringBootTest(classes = {RegionServiceImpl.class, DatabaseConfiguration.class})
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-class CategoryMapperTest {
+class RegionServiceTest {
 
     @Autowired
-    private CategoryMapper categoryMapper;
+    private RegionServiceImpl regionService;
 
     @Test
-    void selectAllRegion() {
-        List<Region> regions = categoryMapper.selectAllRegions();
+    void getAllRegions() {
 
-        assertThat(regions.size()>0);
     }
 
     @Test
-    void selectAllSubject() {
-        List<Subject> subjects = categoryMapper.selectAllSubjects();
-
-        assertThat(subjects.size()>0);
+    void getAllSubjects() {
     }
 }
