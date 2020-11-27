@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -36,18 +37,19 @@ public class AttachmentServiceImpl implements AttachmentService{
     @Override
     public Optional<Attachment> getProfile(String email) {
         // 이메일로 이미지 경로 아이디 가져오기
+        Account account = accountMapper.getUserByEmail(email);
 
         // 이미지 경로 객체 반환하기
-
-        return null;
+        return attachmentMapper.findById(account.getAttachmentId());
     }
 
     @Transactional
     @Override
     public Attachment uploadProfile(MultipartFile file, String email) throws FileSaveException{
         Properties properties = new Properties();
-        // 기존에 있던 이미지 삭제
-        deleteProfile(email);
+        // 기존에 값이 있으면 이미지 삭제
+        Account account = accountMapper.getUserByEmail(email);
+        if (account.getAttachmentId()!=null) deleteProfile(email);
 
         // 이미지 업로드
         fileUpload(file, env.getProperty("profile.image.path") + file.getOriginalFilename());
@@ -62,7 +64,7 @@ public class AttachmentServiceImpl implements AttachmentService{
         // 유저 DB에 이미지 경로 추가하기
         Map<String, String> map = new HashMap<>();
         map.put("email", email);
-        map.put("attachment_id", Long.toString(attachment.getId()));
+        map.put("attachmentId", Long.toString(attachment.getId()));
         accountMapper.updateUserAttachment(map);
 
         return attachment;
@@ -82,19 +84,13 @@ public class AttachmentServiceImpl implements AttachmentService{
 
         // 이미지 경로 가져오기
         Optional<Attachment> attachment = attachmentMapper.findById(account.getAttachmentId());
-        attachment.ifPresentOrElse(
+        attachment.ifPresent(
                 (att) -> {
                     // 이미지 경로 DB에서 지우기
                     attachmentMapper.deleteById(account.getAttachmentId());
                     // 파일 삭제
                     deleteFile(att.getPath());
-                },
-
-                () -> {
-                    throw new IllegalArgumentException("이미지 경로가 존재하지 않습니다.");
                 });
-
-
     }
 
     private void fileUpload(MultipartFile file, String path) throws FileSaveException{
@@ -115,9 +111,12 @@ public class AttachmentServiceImpl implements AttachmentService{
         }
     }
 
-    private void deleteFile(String path) {
+    private void deleteFile(String path) throws FileDeleteException{
         try {
-
+            File file = new File(path);
+            if (file.exists()){
+                file.delete();
+            }
         } catch (Exception e){
             throw new FileDeleteException(e.getMessage());
         }

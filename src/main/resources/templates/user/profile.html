@@ -172,7 +172,7 @@
                 formData.append("file", file);
 
                 $.ajax({
-                    url: '/attachment/uploadProfile',
+                    url: '/profile/upload',
                     data: formData,
                     dataType:'text',
                     processData: false,
@@ -180,7 +180,9 @@
                     type: 'POST',
                     success: function(data){
                         alert("프로필 이미지가 변경 되었습니다.")
-
+                    },
+                    error: function(request,status,error){
+                        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
                     }
                 })
 
