@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
+import java.util.Map;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = {SubjectServiceImpl.class, DatabaseConfiguration.class})
@@ -29,7 +30,7 @@ public class SubjectServiceTest {
     @Test
     void getSubjectDepth2(){
         String subjectDepth1 = "운동";
-        List<String> result = subjectService.getSubjectDepth2(subjectDepth1);
+        List<Map> result = subjectService.getSubjectDepth2(subjectDepth1);
         Assertions.assertThat(result.size()>0);
     }
 

@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -19,7 +20,7 @@ public class SubjectServiceImpl implements SubjectService {
     }
 
     @Override
-    public List<String> getSubjectDepth2(String subjectDepth1) {
+    public List<Map> getSubjectDepth2(String subjectDepth1) {
         return subjectMapper.selectSubjectDepth2(subjectDepth1);
     }
 }

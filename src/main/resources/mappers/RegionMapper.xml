@@ -11,8 +11,8 @@
         WHERE region_depth1=#{regionDepth1}
     </select>
 
-    <select id="selectRegionDepth3" resultType="String">
-        SELECT region_depth3 from region
+    <select id="selectRegionDepth3" resultType="Map">
+        SELECT region_depth3 AS regionDepth3, id from region
         WHERE region_depth1=#{regionDepth1} AND region_depth2=#{regionDepth2}
     </select>
 </mapper>

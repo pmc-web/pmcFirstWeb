@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -39,7 +40,7 @@ class RegionMapperTest {
 
     @Test
     void selectRegionDepth3() {
-        List<String> result = regionMapper.selectRegionDepth3(regionDepth1, regionDepth2);
+        List<Map> result = regionMapper.selectRegionDepth3(regionDepth1, regionDepth2);
         Assertions.assertThat(result.size()>0);
     }
 }

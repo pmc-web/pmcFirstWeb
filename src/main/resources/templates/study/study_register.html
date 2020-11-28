@@ -25,7 +25,7 @@
         </div>
         <!-- /.card-header -->
         <!-- form start -->
-        <form>
+        <form id="form">
             <div class="card-body">
                 <div class="row">
                     <div class="col-sm-6">
@@ -120,7 +120,6 @@
                             <div class="form-group">
                                 <select class="form-control" id="region2">
                                     <option>지역 중분류2</option>
-<!--                                    <option th:each="itemData : ${regions}" th:value="${itemData.regionDepth2}" th:text="${itemData.regionDepth2}"></option>-->
                                 </select>
                             </div>
                         </div>
@@ -129,7 +128,6 @@
                             <div class="form-group">
                                 <select class="form-control" id="region3">
                                     <option>지역 소분류</option>
-<!--                                    <option th:each="itemData : ${regions}" th:value="${itemData.regionDepth3}" th:text="${itemData.regionDepth3}"></option>-->
                                 </select>
                             </div>
                         </div>
@@ -166,11 +164,11 @@
 <script th:src="@{/vendor/jquery/jquery.js}"></script>
 <script th:src="@{/vendor/jquery-ui/jquery-ui.js}"></script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <script>
     $("#startDate").datepicker();
     $("#endDate").datepicker();
 </script>
-
 <script>
     /*<![CDATA[*/
     const xhr = new XMLHttpRequest();
@@ -187,9 +185,6 @@
         /*]]>*/
         if (this.value !== "") {
             fetch(url,{
-                headers: {
-                    'Content-Type': 'application/json',
-                },
                 method : 'GET',
             }).then(function(response) {
                 return response.json();
@@ -199,7 +194,7 @@
                 let subjects = data.data;
                 /*]]>*/
                 for(let i=0; i<subjects.length; i++){
-                    html+= "<option value="+subjects[i]+">"+ subjects[i]+"</option>";
+                    html+= "<option value="+subjects[i].id+">"+ subjects[i].subjectDepth2+"</option>";
                 }
                 document.getElementById("subject2").innerHTML= html;
             }).catch(error => alert(error));
@@ -248,11 +243,11 @@
                 return response.json();
             }).then(function(data) {
                 /*<![CDATA[*/
-                let html = "<option>지역 소류분</option>";
+                let html = "<option>지역 소분류</option>";
                 let regions = data.data;
                 /*]]>*/
                 for(let i=0; i<regions.length; i++){
-                    html+= "<option value="+regions[i]+">"+ regions[i]+"</option>";
+                    html+= "<option value="+regions[i].id+">"+regions[i].regionDepth3+"</option>";
                 }
                 document.getElementById("region3").innerHTML= html;
             }).catch(error => alert(error));
@@ -261,6 +256,7 @@
 
     // check form
     function checkForm(){
+        /*<![CDATA[*/
         let cal_start = document.querySelector("#startDate").value;
         let cal_end = document.querySelector("#endDate").value;
         let title = document.querySelector("#title").value;
@@ -270,10 +266,12 @@
         let reg_1 = region1;
         let reg_2 = region2;
         let reg_3 = document.getElementById("region3").value;
-
         let start = new Date(cal_start);
         let end = new Date(cal_end);
-        if(start>end){
+        /*]]>*/
+        console.log(start ,end);
+        console.log(cal_start, cal_end,title,description ,sub_1,sub_2,reg_1, reg_2, reg_3);
+        if(start>end || cal_start==="" || cal_start=== ""){
             alert(" 날짜를 다시 설정 해 주세요");
         }
         else if(title=="") {
@@ -284,9 +282,41 @@
             alert("카테고리 설정을 해주세요 ");
         }else if(reg_1=="" || reg_2=="" || reg_3==""){
             alert("지역 설정을 해주세요 ");
+        }else {
+            // alert("스터디를 생성 ");
+            /*<![CDATA[*/
+            let study = {
+                title : title,
+                description : description,
+                startDate : moment(start).format("YYYY-MM-DD"),
+                endDate: moment(end).format("YYYY-MM-DD"),
+                evaluation : 0,
+                type : 0, //무료 스터디
+                subjectId: sub_2,
+                regionId: reg_3,
+                status: 1, //모집 중
+            };
+            /*]]>*/
+            console.log(JSON.stringify(study));
+            makeStudy(study);
         }
-        console.log(start ,end )
-        console.log(cal_start, cal_end,title,description ,sub_1,sub_2,reg_1, reg_2, reg_3);
+    }
+
+    function makeStudy(study) {
+        fetch("http://localhost:8080/study",{
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            method : 'POST',
+            // body: study
+            body : JSON.stringify(study),
+        }).then(function(response) {
+            console.log(response);
+            return response.json();
+        }).then(function (result) {
+            if(result.ok) window.href.location = "http://localhost:8080/";
+            else return;
+        }).catch(error => alert(error));
     }
 </script>
 </body>

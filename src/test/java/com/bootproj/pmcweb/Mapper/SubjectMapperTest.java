@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -33,7 +34,7 @@ class SubjectMapperTest {
     void selectSubjectDepth2() {
         String subjectDepth1 = "프로그래밍";
 //        subjectDepth1 = "어학"; //금융, 미디어, 취업, 운동
-        List<String> result = subjectMapper.selectSubjectDepth2(subjectDepth1);
+        List<Map> result = subjectMapper.selectSubjectDepth2(subjectDepth1);
 //        Optional<List> depth1 = Optional.of(result);
 //        Optional<List> op = Optional.empty();
 //        assertThat(depth1).isNotEqualTo(op);

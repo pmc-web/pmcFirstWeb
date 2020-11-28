@@ -7,7 +7,7 @@
         SELECT distinct(subject_depth1) from subject;
     </select>
 
-    <select id="selectSubjectDepth2" resultType="String">
-        SELECT subject_depth2 from subject where subject_depth1 = #{subjectDepth1};
+    <select id="selectSubjectDepth2" resultType="Map">
+        SELECT subject_depth2 AS subjectDepth2, id from subject where subject_depth1 = #{subjectDepth1};
     </select>
 </mapper>

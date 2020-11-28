@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RequestMapping("/subject")
@@ -20,8 +21,7 @@ public class SubjectController {
 
     @GetMapping
     public ResponseEntity<Header> getSubjectDepth2(@RequestParam(value ="subjectDepth1") String subjectDepth1){
-        log.info(" in {}", subjectDepth1);
-        List<String> result = subjectService.getSubjectDepth2(subjectDepth1);
+        List<Map> result = subjectService.getSubjectDepth2(subjectDepth1);
         return new ResponseEntity(Header.OK(result), HttpStatus.OK);
     }
 

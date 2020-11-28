@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -27,7 +28,7 @@ public class RegionServiceImpl implements RegionService {
     }
 
     @Override
-    public List<String> getRegionDepth3(String regionDepth1, String regionDepth2) {
+    public List<Map> getRegionDepth3(String regionDepth1, String regionDepth2) {
         return regionMapper.selectRegionDepth3(regionDepth1, regionDepth2);
     }
 }
