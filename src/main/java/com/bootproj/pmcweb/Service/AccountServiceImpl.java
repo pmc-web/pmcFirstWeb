@@ -90,10 +90,12 @@ public class AccountServiceImpl implements AccountService {
                 updateUserAuthKey(map);
             } catch (Exception e){
                 // 메일 전송 실패 시 데이터 롤백
+                log.info(e.getMessage());
                 deleteUser(account.getId());
                 msg = ResultCode.ERROR_SEND_EMAIL.getMessage();
             }
         } catch (Exception e){
+            log.info(e.getMessage());
             msg = ResultCode.ERROR_EMAIL_DUPLICATE.getMessage();
         }
         return msg;

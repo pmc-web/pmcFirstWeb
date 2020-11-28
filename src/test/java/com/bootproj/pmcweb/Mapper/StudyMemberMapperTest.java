@@ -31,5 +31,14 @@ public class StudyMemberMapperTest {
 
         assertThat(insertId!=0L);
     }
+    @Test
+    public void changeStatus(){
+        Long memberId = 1L;
+        String status = "NOMAL";
+
+        studyMemberMapper.changeRole(memberId, status);
+        StudyMember member = studyMemberMapper.selectMember(memberId);
+        assertThat(member.getId().equals(memberId));
+    }
 
 }

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bootproj.pmcweb.Mapper.RegionMapper">
+    <select id="selectRegionDepth1" resultType="String">
+        SELECT distinct(region_depth1) from region;
+    </select>
+    <select id="selectRegionDepth2" resultType="String">
+        SELECT distinct(region_depth2) from region
+        WHERE region_depth1=#{regionDepth1}
+    </select>
+
+    <select id="selectRegionDepth3" resultType="Map">
+        SELECT region_depth3 AS regionDepth3, id from region
+        WHERE region_depth1=#{regionDepth1} AND region_depth2=#{regionDepth2}
+    </select>
+</mapper>

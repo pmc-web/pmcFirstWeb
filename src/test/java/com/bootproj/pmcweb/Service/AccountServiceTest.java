@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.*;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = PmcwebApplication.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class UserServiceTest {
+public class AccountServiceTest {
 
     @Autowired
     private AccountServiceImpl userServiceImpl;
