@@ -18,7 +18,7 @@
                         <a class="nav-link" sec:authorize="isAnonymous()" th:href="@{/user/login}">로그인</a>
                     </li>
                     <li class="nav-item">
-                        <li class="navbar-text font-weight-lighter font-italic"  sec:authorize="isAuthenticated()" sec:authentication="name"></li>
+<!--                        <li class="navbar-text font-weight-lighter font-italic"  sec:authorize="isAuthenticated()" sec:authentication="name"></li>-->
                         <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/user/logout}">로그아웃</a>
                     </li>
                     <li class="nav-item">

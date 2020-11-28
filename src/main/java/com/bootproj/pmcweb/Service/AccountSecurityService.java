@@ -2,14 +2,14 @@ package com.bootproj.pmcweb.Service;
 
 import com.bootproj.pmcweb.Domain.Account;
 import com.bootproj.pmcweb.Domain.enumclass.UserRole;
-import com.bootproj.pmcweb.Network.Exception.DuplicateEmailException;
-import com.bootproj.pmcweb.Network.Exception.NoMatchingAcountException;
-import com.bootproj.pmcweb.Network.Exception.PasswordNotMatchException;
-import com.bootproj.pmcweb.Network.Exception.SendEmailException;
+import com.bootproj.pmcweb.Network.Exception.*;
+import com.bootproj.pmcweb.Network.Request.LoginFailHandler;
 import com.bootproj.pmcweb.Network.ResultCode;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -17,6 +17,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
@@ -35,11 +36,17 @@ public class AccountSecurityService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Account account = accountServiceimpl.getUserByEmail(username);
-
         List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority(account.getRole()));
-
+        Account account = accountServiceimpl.getUserByEmail(username);
+        if(account == null){
+            throw new UsernameNotFoundException("존재하지 않는 계정입니다.");
+        }
+        if(account.getStatus().equals("UNREGISTERED")){
+            // enabled 는 추후 부정한 계정에 대한 컨트롤
+            return new User(account.getEmail(), account.getPassword(), true, true, true, false, authorities);
+        }else{
+            authorities.add(new SimpleGrantedAuthority(account.getRole()));
+        }
         return new User(account.getEmail(), account.getPassword(), authorities);
     }
 

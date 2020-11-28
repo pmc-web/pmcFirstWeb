@@ -48,7 +48,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     public Account createUser(Account account){
-        account.setStatus(UserStatus.REGISTERED.getTitle());
+        account.setStatus(UserStatus.UNREGISTERED.getTitle());
         account.setRole(UserRole.NORMAL.getTitle());
         account.setInstTime(new Date(System.currentTimeMillis()));
 

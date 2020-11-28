@@ -1,6 +1,9 @@
 package com.bootproj.pmcweb.Config;
 
+import com.bootproj.pmcweb.Network.Request.LoginFailHandler;
+import com.bootproj.pmcweb.Network.Request.LoginSuccessHandler;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -9,6 +12,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
@@ -35,13 +40,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .authorizeRequests()
             // 페이지 권한 설정
             .antMatchers("/admin/**").hasRole("ADMIN")
-            .antMatchers("/userInfo/**").hasRole("NORMAL")
             .antMatchers("/","/user/signup", "/user/login", "/user/sendSignUpEmail", "/user/signUpConfirm","/study").permitAll()
             .anyRequest().authenticated()
             .and()
             .formLogin()
             .loginPage("/user/login")
             .defaultSuccessUrl("/")
+            .failureHandler(failureHandler())
+//            .successHandler(successHandler())
             .permitAll()
             .and() // 로그아웃 설정
             .logout()
@@ -53,5 +59,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.sessionManagement()
                 .maximumSessions(1)
                 .maxSessionsPreventsLogin(false);
+
     }
+
+    @Bean
+    public AuthenticationFailureHandler failureHandler() {
+        return new LoginFailHandler();
+    }
+
+//    @Bean
+//    public AuthenticationSuccessHandler successHandler() {
+//        return new LoginSuccessHandler();
+//    }
 }

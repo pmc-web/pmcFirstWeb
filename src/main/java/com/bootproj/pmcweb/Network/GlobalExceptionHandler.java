@@ -93,6 +93,15 @@ public class GlobalExceptionHandler {
         log.error(e.getMessage());
         return new ResponseEntity(Header.Error(ResultCode.ERROR_INVALID_PASSWORD), ResultCode.ERROR_INVALID_PASSWORD.getStatus());
     }
+    /**
+     * 회원가입시 이메일 인증하지 않은 경우 발생
+     */
+    @ExceptionHandler(NoAuthEmailException.class)
+    public ResponseEntity<Header> handlerNoAuthEmailException(NoAuthEmailException e){
+        log.error("NoAuthEmailException");
+        log.error(e.getMessage());
+        return new ResponseEntity(Header.Error(ResultCode.ERROR_INVALID_PASSWORD), ResultCode.ERROR_INVALID_PASSWORD.getStatus());
+    }
 
 
     // ------------------------------------- Attachment ------------------------------------------
