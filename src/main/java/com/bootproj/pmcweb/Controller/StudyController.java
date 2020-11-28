@@ -39,7 +39,8 @@ public class StudyController {
     }
 
     @PostMapping
-    public ResponseEntity<Header> createStudy(@ModelAttribute Study study){
+    public ResponseEntity<Header> createStudy(@RequestBody Study study){
+        log.info("in {}", study);
         HashMap<String, Long> resultMap = new HashMap<>();
         log.info("result > ", resultMap);
         resultMap.put("insertId", studyService.createStudy(study));
@@ -58,5 +59,4 @@ public class StudyController {
         Study result = studyService.putStudyStatus(studyId, status);
         return new ResponseEntity(Header.OK(result),HttpStatus.OK);
     }
-
 }

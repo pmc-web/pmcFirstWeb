@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bootproj.pmcweb.Mapper.SubjectMapper">
+    <select id="selectSubjectDepth1" resultType="String">
+        SELECT distinct(subject_depth1) from subject;
+    </select>
+
+    <select id="selectSubjectDepth2" resultType="Map">
+        SELECT subject_depth2 AS subjectDepth2, id from subject where subject_depth1 = #{subjectDepth1};
+    </select>
+</mapper>

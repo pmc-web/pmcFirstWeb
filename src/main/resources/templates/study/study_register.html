@@ -16,7 +16,8 @@
 <!-- Navbar -->
 <nav th:replace="/layout/navbar.html :: fragment-navbar"></nav>
 <!-- main -->
-<div class="container mt-3">
+<div class="container" >
+    <div class="mt-3">
     <!-- general form elements -->
     <div class="card card-primary">
         <div class="card-header">
@@ -24,14 +25,14 @@
         </div>
         <!-- /.card-header -->
         <!-- form start -->
-        <form>
+        <form id="form">
             <div class="card-body">
                 <div class="row">
                     <div class="col-sm-6">
                         <!-- title input -->
                         <div class="form-group">
                             <label>제목</label>
-                            <input type="text" class="form-control" placeholder="Title">
+                            <input type="text" class="form-control" placeholder="Title" id="title">
                         </div>
                     </div>
                     <div class="col-sm-6">
@@ -46,7 +47,7 @@
                         <!-- textarea -->
                         <div class="form-group">
                             <label>설명</label>
-                            <textarea class="form-control" rows="3" placeholder="Description"></textarea>
+                            <textarea class="form-control" rows="3" placeholder="Description" id="description"></textarea>
                         </div>
                     </div>
                     <div class="col-sm-6">
@@ -54,15 +55,14 @@
                         <div class="form-group">
                             <label>카테고리</label>
                             <div class="form-group">
-                                <select class="form-control">
-                                    <option>카테고리 주제1</option>
-                                    <option>카테고리 주제2</option>
+                                <select class="form-control" id="subject1">
+                                    <option value="" selected>선택해주세요</option>
+                                    <option th:each="item : ${subjects}" th:value="${item}" th:text="${item}"></option>
                                 </select>
                             </div>
                             <div class="form-group">
-                                <select class="form-control">
-                                    <option>카테고리 소분류1</option>
-                                    <option>카테고리 소분류2</option>
+                                <select class="form-control" id="subject2">
+                                    <option value="" selected>선택해주세요</option>
                                 </select>
                             </div>
 
@@ -109,17 +109,16 @@
                         <div class="col-sm-4">
                             <label>지역 대분류</label>
                             <div class="form-group">
-                                <select class="form-control">
-                                    <option>지역 대분류1</option>
-                                    <option>지역 대분류2</option>
+                                <select class="form-control" id="region1">
+                                    <option>지역 중분류1</option>
+                                    <option th:each="item : ${regions}" th:value="${item}" th:text="${item}"></option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-sm-4">
                             <label>지역 중분류</label>
                             <div class="form-group">
-                                <select class="form-control">
-                                    <option>지역 중분류1</option>
+                                <select class="form-control" id="region2">
                                     <option>지역 중분류2</option>
                                 </select>
                             </div>
@@ -127,9 +126,8 @@
                         <div class="col-sm-4">
                             <label>지역 소분류</label>
                             <div class="form-group">
-                                <select class="form-control">
-                                    <option>지역 소분류1</option>
-                                    <option>지역 소분류2</option>
+                                <select class="form-control" id="region3">
+                                    <option>지역 소분류</option>
                                 </select>
                             </div>
                         </div>
@@ -152,7 +150,7 @@
         <div class="card-footer">
             <div class="row">
                 <div class="col">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary" onclick="checkForm()">Submit</button>
 
                 </div>
             </div>
@@ -160,14 +158,166 @@
     </div>
     <!-- /.card -->
 </div>
+</div>
 <!-- /main container -->
 
 <script th:src="@{/vendor/jquery/jquery.js}"></script>
 <script th:src="@{/vendor/jquery-ui/jquery-ui.js}"></script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <script>
     $("#startDate").datepicker();
     $("#endDate").datepicker();
+</script>
+<script>
+    /*<![CDATA[*/
+    const xhr = new XMLHttpRequest();
+    let subject1 = "";
+    let region1 = "";
+    let region2 = "";
+    /*]]>*/
+
+    // subject1
+    document.getElementById("subject1").addEventListener("change", function() {
+        subject1 = String(this.value);
+        /*<![CDATA[*/
+        let url = "http://localhost:8080/subject?subjectDepth1="+subject1;
+        /*]]>*/
+        if (this.value !== "") {
+            fetch(url,{
+                method : 'GET',
+            }).then(function(response) {
+                return response.json();
+            }).then(function(data) {
+                /*<![CDATA[*/
+                let html = "<option>선택해주세요</option>";
+                let subjects = data.data;
+                /*]]>*/
+                for(let i=0; i<subjects.length; i++){
+                    html+= "<option value="+subjects[i].id+">"+ subjects[i].subjectDepth2+"</option>";
+                }
+                document.getElementById("subject2").innerHTML= html;
+            }).catch(error => alert(error));
+        }
+    });
+
+    document.getElementById("region1").addEventListener("change", function() {
+        region1 = String(this.value);
+        /*<![CDATA[*/
+        let url = "http://localhost:8080/region?regionDepth1="+region1;
+        /*]]>*/
+        if (this.value !== "") {
+            fetch(url,{
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                method : 'GET',
+            }).then(function(response) {
+                return response.json();
+            }).then(function(data) {
+                /*<![CDATA[*/
+                let html = "<option>지역 중분류2</option>";
+                let regions = data.data;
+                /*]]>*/
+                for(let i=0; i<regions.length; i++){
+                    html+= "<option value="+regions[i]+">"+ regions[i]+"</option>";
+                }
+                document.getElementById("region2").innerHTML= html;
+                document.getElementById("region3").innerHTML= "<option>지역 소분류</option>";
+            }).catch(error => alert(error));
+        }
+    });
+
+    document.getElementById("region2").addEventListener("change", function() {
+        region2 = String(this.value);
+        /*<![CDATA[*/
+        let url = "http://localhost:8080/region/depth?regionDepth1="+region1+"&regionDepth2="+region2;
+        /*]]>*/
+        if (this.value !== "") {
+            fetch(url,{
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                method : 'GET',
+            }).then(function(response) {
+                return response.json();
+            }).then(function(data) {
+                /*<![CDATA[*/
+                let html = "<option>지역 소분류</option>";
+                let regions = data.data;
+                /*]]>*/
+                for(let i=0; i<regions.length; i++){
+                    html+= "<option value="+regions[i].id+">"+regions[i].regionDepth3+"</option>";
+                }
+                document.getElementById("region3").innerHTML= html;
+            }).catch(error => alert(error));
+        }
+    });
+
+    // check form
+    function checkForm(){
+        /*<![CDATA[*/
+        let cal_start = document.querySelector("#startDate").value;
+        let cal_end = document.querySelector("#endDate").value;
+        let title = document.querySelector("#title").value;
+        let description = document.querySelector("#description").value;
+        let sub_1 = subject1;
+        let sub_2 = document.getElementById("subject2").value;
+        let reg_1 = region1;
+        let reg_2 = region2;
+        let reg_3 = document.getElementById("region3").value;
+        let start = new Date(cal_start);
+        let end = new Date(cal_end);
+        /*]]>*/
+        console.log(start ,end);
+        console.log(cal_start, cal_end,title,description ,sub_1,sub_2,reg_1, reg_2, reg_3);
+        if(start>end || cal_start==="" || cal_start=== ""){
+            alert(" 날짜를 다시 설정 해 주세요");
+        }
+        else if(title=="") {
+            alert("스터디 이름을 입력하세요");
+        }else if(description==""){
+            alert("설명을 입력해 주세요");
+        }else if(sub_1=="" || sub_2==""){
+            alert("카테고리 설정을 해주세요 ");
+        }else if(reg_1=="" || reg_2=="" || reg_3==""){
+            alert("지역 설정을 해주세요 ");
+        }else {
+            // alert("스터디를 생성 ");
+            /*<![CDATA[*/
+            let study = {
+                title : title,
+                description : description,
+                startDate : moment(start).format("YYYY-MM-DD"),
+                endDate: moment(end).format("YYYY-MM-DD"),
+                evaluation : 0,
+                type : 0, //무료 스터디
+                subjectId: sub_2,
+                regionId: reg_3,
+                status: 1, //모집 중
+            };
+            /*]]>*/
+            console.log(JSON.stringify(study));
+            makeStudy(study);
+        }
+    }
+
+    function makeStudy(study) {
+        fetch("http://localhost:8080/study",{
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            method : 'POST',
+            // body: study
+            body : JSON.stringify(study),
+        }).then(function(response) {
+            console.log(response);
+            return response.json();
+        }).then(function (result) {
+            if(result.ok) window.href.location = "http://localhost:8080/";
+            else return;
+        }).catch(error => alert(error));
+    }
 </script>
 </body>
 </html>
