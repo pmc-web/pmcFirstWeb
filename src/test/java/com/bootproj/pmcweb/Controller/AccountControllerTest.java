@@ -5,11 +5,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.bootproj.pmcweb.Service.AccountSecurityService;
 import com.bootproj.pmcweb.Service.AccountService;
+import org.apache.catalina.User;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -63,7 +67,6 @@ class AccountControllerTest {
     @Test
     void getProfile() {
     }
-
     @Test
     void changePassword() throws Exception {
         this.mockMvc.perform(get("/user/changePassword"))

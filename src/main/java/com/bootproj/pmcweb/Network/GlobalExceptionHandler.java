@@ -1,9 +1,6 @@
 package com.bootproj.pmcweb.Network;
 
-import com.bootproj.pmcweb.Network.Exception.DuplicateEmailException;
-import com.bootproj.pmcweb.Network.Exception.NoMatchingAcountException;
-import com.bootproj.pmcweb.Network.Exception.PasswordNotMatchException;
-import com.bootproj.pmcweb.Network.Exception.SendEmailException;
+import com.bootproj.pmcweb.Network.Exception.*;
 import com.bootproj.pmcweb.Network.Header;
 import com.bootproj.pmcweb.Network.ResultCode;
 import lombok.extern.log4j.Log4j2;
@@ -95,5 +92,28 @@ public class GlobalExceptionHandler {
         log.error("PasswordNotMatchException");
         log.error(e.getMessage());
         return new ResponseEntity(Header.Error(ResultCode.ERROR_INVALID_PASSWORD), ResultCode.ERROR_INVALID_PASSWORD.getStatus());
+    }
+
+
+    // ------------------------------------- Attachment ------------------------------------------
+
+    /**
+     * 파일 저장 시 문제가 발생했을 경우 발생 (프로필 사진 저장 등)
+     */
+    @ExceptionHandler(FileSaveException.class)
+    public ResponseEntity<Header> handlerFileSaveException(FileSaveException e){
+        log.error("FileSaveException");
+        log.error(e.getMessage());
+        return new ResponseEntity(Header.Error(ResultCode.ERROR_SAVE_FILE), ResultCode.ERROR_SAVE_FILE.getStatus());
+    }
+
+    /**
+     * 파일 삭제 시 문제가 발생했을 경우 발생 (프로필 사진 저장 등)
+     */
+    @ExceptionHandler(FileDeleteException.class)
+    public ResponseEntity<Header> handlerFileSaveException(FileDeleteException e){
+        log.error("FileDeleteException");
+        log.error(e.getMessage());
+        return new ResponseEntity(Header.Error(ResultCode.ERROR_SAVE_FILE), ResultCode.ERROR_SAVE_FILE.getStatus());
     }
 }
