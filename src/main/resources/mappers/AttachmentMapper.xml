@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bootproj.pmcweb.Mapper.AttachmentMapper">
+
+    <select id="getList" resultType="com.bootproj.pmcweb.Domain.Attachment">
+        select * from attachment
+    </select>
+
+    <select id="findById" resultType="com.bootproj.pmcweb.Domain.Attachment">
+        select * from attachment
+        where id = #{id}
+    </select>
+
+    <select id="findByFile" resultType="com.bootproj.pmcweb.Domain.Attachment">
+        select * from attachment
+        where path = #{path} and name = #{name};
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        <!--        <selectKey keyProperty="id" resultType="long" order="BEFORE">-->
+        <!--            select CAST(RANDOM()*1000000 as BIGINT) a from SYSIBM.SYSDUMMY1-->
+        <!--        </selectKey>-->
+        insert into attachment (path,name,inst_time)
+        values (#{path},#{name},NOW());
+    </insert>
+
+    <delete id="deleteById">
+        delete from attachment where id = #{id};
+    </delete>
+
+    <delete id="deleteByFile" parameterType="map">
+        delete from attachment where path = #{path} and name = #{name};
+    </delete>
+
+    <update id="updateById" parameterType="map">
+        update attachment set path = #{path}, name = #{name}, updt_time = now()
+        where id = #{id};
+    </update>
+
+    <update id="updateByFile" parameterType="map">
+        update attachment set path = #{path}, name = #{name}, updt_time = now()
+        where path = #{path} and name = #{name};
+    </update>
+
+
+</mapper>
