@@ -54,9 +54,9 @@ public class AttachmentServiceImpl implements AttachmentService{
 
         // 프로필 폴더 생성
         try {
-            File folder = new File(env.getProperty("profile.image.path"));
+            File folder = new File(env.getProperty("profile.image.path") + File.separator + account.getId());
             if (!folder.exists()){
-                folder.mkdir();
+                folder.mkdirs();
                 log.info("프로필 폴더 생성 완료");
             }
         } catch (Exception e){
@@ -64,12 +64,12 @@ public class AttachmentServiceImpl implements AttachmentService{
         }
 
         // 이미지 업로드
-        fileUpload(file, env.getProperty("profile.image.path") + File.separator + file.getOriginalFilename());
+        fileUpload(file, env.getProperty("profile.image.path") + File.separator + account.getId() + File.separator + file.getOriginalFilename());
 
         // 이미지 경로 DB에 추가하기
         Attachment attachment = Attachment.builder()
                 .name(file.getOriginalFilename())
-                .path(env.getProperty("profile.image.path") + file.getOriginalFilename())
+                .path(env.getProperty("profile.image.path") + File.separator + account.getId() + File.separator + file.getOriginalFilename())
                 .build();
         attachmentMapper.insert(attachment);
 
@@ -130,6 +130,8 @@ public class AttachmentServiceImpl implements AttachmentService{
             File file = new File(path);
             if (file.exists()){
                 file.delete();
+            } else {
+                throw new FileDeleteException("기존 파일이 존재하지 않습니다.");
             }
         } catch (Exception e){
             throw new FileDeleteException(e.getMessage());

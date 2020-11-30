@@ -80,7 +80,7 @@ public class AccountController {
         Optional<Attachment> attachment = attachmentService.getProfile(user.getUsername());
         attachment.ifPresentOrElse(
                 (att) -> {
-                    mv.addObject("profileImagePath", "/img/profile/" + att.getName());
+                    mv.addObject("profileImagePath", "/img/profile/" + account.getId() + "/" + att.getName());
                     log.info(attachment.get().getPath());
                 },
                 () -> {
