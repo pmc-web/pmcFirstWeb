@@ -38,7 +38,7 @@
                         <div class="card-body box-profile">
                             <div class="text-center">
                                 <img id=img-upload class="profile-user-img" th:width="400px" th:height="400px"
-                                     th:src="@{/img/moim.jpg}"
+                                     th:src="@{${profileImagePath}}"
                                      alt="User profile picture">
                             </div>
 
@@ -172,7 +172,7 @@
                 formData.append("file", file);
 
                 $.ajax({
-                    url: '/profile/upload',
+                    url: '/profile/image',
                     data: formData,
                     dataType:'text',
                     processData: false,

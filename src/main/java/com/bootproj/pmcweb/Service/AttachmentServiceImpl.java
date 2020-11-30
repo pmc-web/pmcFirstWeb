@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.mail.Folder;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -51,8 +52,19 @@ public class AttachmentServiceImpl implements AttachmentService{
         Account account = accountMapper.getUserByEmail(email);
         if (account.getAttachmentId()!=null) deleteProfile(email);
 
+        // 프로필 폴더 생성
+        try {
+            File folder = new File(env.getProperty("profile.image.path"));
+            if (!folder.exists()){
+                folder.mkdir();
+                log.info("프로필 폴더 생성 완료");
+            }
+        } catch (Exception e){
+            throw new FileSaveException(e.getMessage());
+        }
+
         // 이미지 업로드
-        fileUpload(file, env.getProperty("profile.image.path") + file.getOriginalFilename());
+        fileUpload(file, env.getProperty("profile.image.path") + File.separator + file.getOriginalFilename());
 
         // 이미지 경로 DB에 추가하기
         Attachment attachment = Attachment.builder()
@@ -95,6 +107,8 @@ public class AttachmentServiceImpl implements AttachmentService{
 
     private void fileUpload(MultipartFile file, String path) throws FileSaveException{
         // DB에 byte형식으로 저장하는 방식을 고려해 볼 것.
+
+        // 파일 저장
         try {
             FileOutputStream fos = new FileOutputStream(path);
             InputStream is = file.getInputStream();
