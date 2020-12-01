@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bootproj.pmcweb.Mapper.StudyMaterialMapper">
+
+    <select id="getListAll" resultType="com.bootproj.pmcweb.Domain.StudyMaterial">
+        select * from study_material
+    </select>
+
+    <select id="getListByStudyId" resultType="com.bootproj.pmcweb.Domain.StudyMaterial">
+        select * from study_material
+        where study_id = #{studyId}
+    </select>
+
+    <select id="getByAttachmentId" resultType="com.bootproj.pmcweb.Domain.StudyMaterial">
+        select * from study_material
+        where attachment_id = #{attachmentId}
+    </select>
+
+    <select id="getById" resultType="com.bootproj.pmcweb.Domain.StudyMaterial">
+        select * from study_material
+        where id = #{id}
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        insert into study_material (attachment_id, study_id, type)
+        values (#{attachmentId}, #{studyId}, #{type});
+    </insert>
+
+    <delete id="deleteById">
+        delete from study_material where id = #{id};
+    </delete>
+
+    <update id="update">
+        update study_material set attachment_id = #{attachmentId}, study_id = #{studyId}, type = #{type}
+        where id = #{id};
+    </update>
+
+
+</mapper>
