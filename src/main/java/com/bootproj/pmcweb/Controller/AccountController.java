@@ -81,7 +81,7 @@ public class AccountController {
         attachment.ifPresentOrElse(
                 (att) -> {
                     mv.addObject("profileImagePath", "/img/profile/" + account.getId() + "/" + att.getName());
-                    log.info(attachment.get().getPath());
+                    log.info("/img/profile/" + account.getId() + "/" + att.getName());
                 },
                 () -> {
                     mv.addObject("profileImagePath", "/img/moim.jpg");
