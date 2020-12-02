@@ -1,6 +1,7 @@
 package com.bootproj.pmcweb.Controller;
 
 import com.bootproj.pmcweb.Domain.Attachment;
+import com.bootproj.pmcweb.Domain.enumclass.StudyMaterialType;
 import com.bootproj.pmcweb.Network.Exception.FileSaveException;
 import com.bootproj.pmcweb.Network.Exception.NoMatchingAcountException;
 import com.bootproj.pmcweb.Network.Header;
@@ -44,28 +45,31 @@ public class AttachmentController {
         return new ResponseEntity(Header.OK(attachment.get()), HttpStatus.OK);
     }
 
-//    @PostMapping("/study/{studyId}")
-//    public ResponseEntity<Header<Attachment>> uploadStudyAttachment(@PathVariable("studyId") Long studyId, @RequestParam("file") MultipartFile file){
-//        Attachment attachment;
-//        try {
-//            attachment = attachmentService.uploadStudyAttachment(file, studyId);
-//        } catch (Exception e) {
-//            throw new FileSaveException(e.getMessage());
-//        }
-//        return new ResponseEntity(Header.OK(attachment), HttpStatus.CREATED);
-//    }
-//
-//    @GetMapping("/study/{studyId}")
-//    public ResponseEntity<Header<Attachment>> getStudyAttachment(@PathVariable("studyId") Long studyId) throws NoMatchingAcountException {
-//        Optional<Attachment> attachment = attachmentService.getStudyAttachment(studyId);
-//        attachment.orElseThrow(() -> new NoMatchingAcountException("해당하는 스터디 첨부파일이 없습니다."));
-//        return new ResponseEntity(Header.OK(attachment.get()), HttpStatus.OK);
-//    }
-//
-//    @GetMapping("/attachment/{id}")
-//    public ResponseEntity<Header<Attachment>> getAttachment(@PathVariable("id") Long id) throws NoMatchingAcountException {
-//        Optional<Attachment> attachment = attachmentService.getAttachment(id);
-//        attachment.orElseThrow(() -> new NoMatchingAcountException("해당하는 파일이 없습니다."));
-//        return new ResponseEntity(Header.OK(attachment.get()), HttpStatus.OK);
-//    }
+    @PostMapping("/study/{studyId}")
+    public ResponseEntity<Header<Object>> uploadStudyAttachment(@PathVariable("studyId") Long studyId, @RequestParam String type, @RequestParam("file") MultipartFile file){
+        try {
+            if (StudyMaterialType.MAIN_IMAGE.getTitle().equals(type)) {
+                attachmentService.uploadStudyMainImage(file, studyId);
+            } else {
+                throw new IllegalArgumentException("잘못된 타입입니다.");
+            }
+        } catch (Exception e) {
+            throw new FileSaveException(e.getMessage());
+        }
+        return new ResponseEntity(Header.OK(), HttpStatus.CREATED);
+    }
+
+    @GetMapping("/study/{studyId}")
+    public ResponseEntity<Header<Attachment>> getStudyAttachment(@PathVariable("studyId") Long studyId) throws NoMatchingAcountException {
+        Optional<Attachment> attachment = attachmentService.getStudyMainImage(studyId);
+        attachment.orElseThrow(() -> new NoMatchingAcountException("해당하는 스터디 메인 이미지 파일이 없습니다."));
+        return new ResponseEntity(Header.OK(attachment.get()), HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Header<Attachment>> getAttachment(@PathVariable("id") Long id) throws NoMatchingAcountException {
+        Optional<Attachment> attachment = attachmentService.getAttachment(id);
+        attachment.orElseThrow(() -> new NoMatchingAcountException("해당하는 파일이 없습니다."));
+        return new ResponseEntity(Header.OK(attachment.get()), HttpStatus.OK);
+    }
 }

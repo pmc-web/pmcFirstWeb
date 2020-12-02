@@ -13,6 +13,11 @@
         where study_id = #{studyId}
     </select>
 
+    <select id="getMainImageByStudyId" parameterType="long" resultType="com.bootproj.pmcweb.Domain.StudyMaterial">
+        select * from study_material
+        where study_id = #{studyId} and type = "MAIN_IMAGE"
+    </select>
+
     <select id="getByAttachmentId" parameterType="long" resultType="com.bootproj.pmcweb.Domain.StudyMaterial">
         select * from study_material
         where attachment_id = #{attachmentId}

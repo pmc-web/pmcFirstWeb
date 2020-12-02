@@ -6,6 +6,7 @@ import com.bootproj.pmcweb.Network.Exception.FileDeleteException;
 import com.bootproj.pmcweb.Network.Exception.FileSaveException;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.OptionalInt;
@@ -16,8 +17,9 @@ public interface AttachmentService {
     public Attachment uploadProfile(MultipartFile file, String email) throws FileSaveException, NoSuchElementException;
     public void deleteProfile(String email) throws FileDeleteException, IllegalArgumentException;
     public void updateAttachment(Long attachmentId, String path, String name) throws IllegalArgumentException;
-//    public Optional<Attachment> getStudyAttachment(Long studyId);
-//    public Attachment uploadStudyAttachment(MultipartFile file, Long studyId) throws FileSaveException;
-//    public void deleteStudyAttachment(Long studyId) throws FileDeleteException, IllegalArgumentException;
+    public List<Attachment> getStudyAttachments(Long studyId);
+    public Optional<Attachment> getStudyMainImage(Long studyId);
+    public void uploadStudyMainImage(MultipartFile file, Long studyId) throws FileSaveException;
+    public void deleteStudyMainImage(Long studyId) throws FileDeleteException, IllegalArgumentException;
 
 }

@@ -11,7 +11,7 @@ public enum StudyMaterialType {
     FILE(2, "FILE", "스터디 일반 파일")
     ;
 
-    private Integer id;
-    private String title;
-    private String description;
+    final private Integer id;
+    final private String title;
+    final private String description;
 }

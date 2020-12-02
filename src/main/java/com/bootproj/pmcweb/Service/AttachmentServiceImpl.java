@@ -2,8 +2,12 @@ package com.bootproj.pmcweb.Service;
 
 import com.bootproj.pmcweb.Domain.Account;
 import com.bootproj.pmcweb.Domain.Attachment;
+import com.bootproj.pmcweb.Domain.Study;
+import com.bootproj.pmcweb.Domain.StudyMaterial;
+import com.bootproj.pmcweb.Domain.enumclass.StudyMaterialType;
 import com.bootproj.pmcweb.Mapper.AccountMapper;
 import com.bootproj.pmcweb.Mapper.AttachmentMapper;
+import com.bootproj.pmcweb.Mapper.StudyMaterialMapper;
 import com.bootproj.pmcweb.Network.Exception.FileDeleteException;
 import com.bootproj.pmcweb.Network.Exception.FileSaveException;
 import lombok.extern.log4j.Log4j2;
@@ -16,10 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
 
 @Log4j2
 @Service
@@ -33,6 +34,9 @@ public class AttachmentServiceImpl implements AttachmentService{
 
     @Autowired
     private AccountMapper accountMapper;
+
+    @Autowired
+    private StudyMaterialMapper studyMaterialMapper;
 
     @Override
     public Optional<Attachment> getAttachment(Long attachmentId) {
@@ -136,70 +140,91 @@ public class AttachmentServiceImpl implements AttachmentService{
                 });
     }
 
-//    @Override
-//    public Optional<Attachment> getStudyAttachment(Long studyId) {
-//        Study study = studyMapper.getStudyDetail(studyId);
-//        if (study!=null){
-//            return attachmentMapper.findById(study.getAttachmentId());
-//        } else {
-//            return Optional.empty();
-//        }
-//    }
-//
-//    @Transactional
-//    @Override
-//    public Attachment uploadStudyAttachment(MultipartFile file, Long studyId) throws FileSaveException {
-//        // 기존에 값이 있으면 이미지 삭제
-////        Study study = studyMapper.getStudyDetail(studyId);
-////        if (study.getAttachmentId()!=null) deleteStudyAttachment(studyId);
-//
-//        // 스터디 첨부파일 폴더 생성
-//        try {
-//            File folder = new File(env.getProperty("study.image.path") + File.separator + studyId);
-//            if (!folder.exists()){
-//                folder.mkdirs();
-//                log.info("스터디 첨부파일 폴더 생성 완료");
-//            }
-//        } catch (Exception e){
-//            throw new FileSaveException(e.getMessage());
-//        }
-//
-//        // 이미지 업로드
-//        fileUpload(file, env.getProperty("study.image.path") + File.separator + studyId + File.separator + file.getOriginalFilename());
-//
-//        // 이미지 경로 DB에 추가하기
-//        Attachment attachment = Attachment.builder()
-//                .name(file.getOriginalFilename())
-//                .path(env.getProperty("study.image.path") + File.separator + studyId + File.separator + file.getOriginalFilename())
-//                .build();
-//        attachmentMapper.insert(attachment);
-//
-//        // 유저 DB에 이미지 경로 추가하기
-//        Map<String, String> map = new HashMap<>();
-//        map.put("id", Long.toString(studyId));
-//        map.put("attachmentId", Long.toString(attachment.getId()));
-//        studyMapper.updateAttachmentId(studyId, attachment.getId());
-//
-//        return attachment;
-//    }
-//
-//    @Transactional
-//    @Override
-//    public void deleteStudyAttachment(Long studyId) throws FileDeleteException, IllegalArgumentException {
-//        // 스터디 DB에 연결된 이미지 경로 가져오기
-//        Study study = studyMapper.getStudyDetail(studyId);
-//        studyMapper.updateAttachmentId(studyId, null);
-//
-//        // 이미지 경로 가져오기
-//        Optional<Attachment> attachment = attachmentMapper.findById(study.getAttachmentId());
-//        attachment.ifPresent(
-//                (att) -> {
-//                    // 이미지 경로 DB에서 지우기
-//                    attachmentMapper.deleteById(study.getAttachmentId());
-//                    // 파일 삭제
-//                    deleteFile(att.getPath());
-//                });
-//    }
+    @Override
+    public List<Attachment> getStudyAttachments(Long studyId) {
+        List<StudyMaterial> studyMaterials = studyMaterialMapper.getListByStudyId(studyId);
+        List<Attachment> attachments = new ArrayList<>();
+        for (StudyMaterial studyMaterial : studyMaterials){
+            Attachment attachment = attachmentMapper.findById(studyMaterial.getAttachmentId())
+                    .orElseThrow(()->new NoSuchElementException("Study Attachment 파일이 존재하지 않습니다."));
+            attachments.add(attachment);
+        }
+        return attachments;
+    }
+
+    @Override
+    public Optional<Attachment> getStudyMainImage(Long studyId) {
+        Optional<StudyMaterial> studyMaterialOptional = studyMaterialMapper.getMainImageByStudyId(studyId);
+        if (studyMaterialOptional.isPresent()){
+            return attachmentMapper.findById(studyMaterialOptional.get().getAttachmentId());
+        } else {
+            return Optional.empty();
+        }
+    }
+
+    @Transactional
+    @Override
+    public void uploadStudyMainImage(MultipartFile file, Long studyId) throws FileSaveException {
+        // path 초기화
+        String pathOnly = env.getProperty("study.image.path") + File.separator + studyId;
+        String path = pathOnly + File.separator + file.getOriginalFilename();
+
+        Optional<StudyMaterial> optionalStudyMaterial = studyMaterialMapper.getMainImageByStudyId(studyId);
+        optionalStudyMaterial.ifPresentOrElse(
+                (studyMaterial) -> {
+                    // 기존에 값이 있으면 파일 지우고 Attachment 테이블에 값 업데이트
+                    updateAttachment(studyMaterial.getAttachmentId(), path, file.getOriginalFilename());
+                },
+                () -> {
+                    // 기존에 값이 없으면 새로 생성
+                    // 스터디 폴더 생성
+                    try {
+                        File folder = new File(pathOnly);
+                        if (!folder.exists()) {
+                            folder.mkdirs();
+                            log.info("스터디 폴더 생성 완료");
+                        }
+                    } catch (Exception e) {
+                        throw new FileSaveException(e.getMessage());
+                    }
+
+                    // 이미지 경로 DB에 추가하기
+                    Attachment attachment = Attachment.builder()
+                            .name(file.getOriginalFilename())
+                            .path(path)
+                            .build();
+                    attachmentMapper.insert(attachment);
+
+                    // 스터디 첨부자료 매핑 테이블에 추가하기
+                    StudyMaterial studyMaterial = StudyMaterial.builder()
+                            .type(StudyMaterialType.MAIN_IMAGE.getTitle())
+                            .studyId(studyId)
+                            .attachmentId(attachment.getId())
+                            .build();
+                    studyMaterialMapper.insert(studyMaterial);
+                }
+        );
+
+        // 이미지 업로드
+        fileUpload(file, path);
+    }
+
+    @Transactional
+    @Override
+    public void deleteStudyMainImage(Long studyId) throws FileDeleteException, IllegalArgumentException {
+        // 스터디 DB에 연결된 이미지 지우기
+        Optional<StudyMaterial> studyMaterialOptional = studyMaterialMapper.getMainImageByStudyId(studyId);
+        studyMaterialOptional.ifPresent(studyMaterial -> {
+            attachmentMapper.findById(studyMaterial.getAttachmentId()).ifPresent(
+                    attachment -> {
+                        attachmentMapper.deleteById(studyMaterial.getAttachmentId());
+                        // 파일 삭제
+                        deleteFile(attachment.getPath());
+                    }
+            );
+            studyMaterialMapper.deleteById(studyMaterial.getId());
+        });
+    }
 
     private void fileUpload(MultipartFile file, String path) throws FileSaveException{
         // DB에 byte형식으로 저장하는 방식을 고려해 볼 것.

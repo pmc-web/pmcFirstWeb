@@ -12,6 +12,7 @@ import java.util.Optional;
 public interface StudyMaterialMapper {
     public List<StudyMaterial> getListAll();
     public List<StudyMaterial> getListByStudyId(Long studyId);
+    public Optional<StudyMaterial> getMainImageByStudyId(Long studyId);
     public Optional<StudyMaterial> getByAttachmentId(Long attachmentId);
     public Optional<StudyMaterial> getById(Long id);
     public void insert(StudyMaterial studyMaterial);

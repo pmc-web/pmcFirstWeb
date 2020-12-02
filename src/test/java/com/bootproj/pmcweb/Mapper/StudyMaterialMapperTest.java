@@ -45,6 +45,13 @@ public class StudyMaterialMapperTest {
         Assert.assertTrue(studyMaterials.size()>0);
     }
 
+    @Test
+    void getMainImageByStudyId() {
+        Optional<StudyMaterial> optionalStudyMaterial = studyMaterialMapper.getMainImageByStudyId(testStudyId);
+        log.info(optionalStudyMaterial.orElseGet(null));
+        Assert.assertTrue(optionalStudyMaterial.isPresent());
+    }
+
 
     @Test
     void getByAttachmentId() {
