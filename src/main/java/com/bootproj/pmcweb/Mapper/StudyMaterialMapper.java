@@ -17,7 +17,7 @@ public interface StudyMaterialMapper {
     public void insert(StudyMaterial studyMaterial);
     public void insertBatch(List<StudyMaterial> studyMaterials);
     public void deleteById(Long studyMaterialId);
-    public void deleteByIdBatch(List<Long> studyMaterialIds);
+    public void deleteByStudyId(Long studyId);
     public void update(StudyMaterial studyMaterial);
     public void updateBatch(List<StudyMaterial> studyMaterials);
 }

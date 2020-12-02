@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,7 +23,7 @@ import java.util.Optional;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class StudyMaterialMapperTest {
 
-    Long testId = 4L;
+    Long testId = 14L;
     Long testStudyId = 3L;
     Long testAttachmentId = 44L;
 
@@ -71,23 +72,82 @@ public class StudyMaterialMapperTest {
 
     @Test
     void insertBatch() {
-
+        List<StudyMaterial> studyMaterials = new ArrayList<>();
+        for (int i = 0; i < 3; i++){
+            StudyMaterial studyMaterial = StudyMaterial.builder()
+                    .attachmentId(testAttachmentId)
+                    .studyId(testStudyId)
+                    .type(StudyMaterialType.IMAGE.getTitle())
+                    .build();
+            studyMaterials.add(studyMaterial);
+        }
+        studyMaterialMapper.insertBatch(studyMaterials);
+        log.info(studyMaterials);
+        for (int i = 0; i <3; i++){
+            Assert.assertNotNull(studyMaterials.get(i).getId());
+        }
     }
 
     @Test
     void deleteById() {
+        Optional<StudyMaterial> studyMaterialOptional = studyMaterialMapper.getById(testId);
+        Assert.assertTrue(studyMaterialOptional.isPresent());
+
+        studyMaterialMapper.deleteById(testId);
+
+        Optional<StudyMaterial> deletedStudyMaterialOptional = studyMaterialMapper.getById(testId);
+        Assert.assertFalse(deletedStudyMaterialOptional.isPresent());
     }
 
     @Test
-    void deleteByIdBatch() {
+    void deleteByStudyId() {
+        List<StudyMaterial> studyMaterials = studyMaterialMapper.getListByStudyId(testStudyId);
+        log.info(studyMaterials);
+        studyMaterialMapper.deleteByStudyId(testStudyId);
+
+        List<StudyMaterial> deletedStudyMaterials = studyMaterialMapper.getListByStudyId(testStudyId);
+        log.info(deletedStudyMaterials);
+        Assert.assertEquals(0, deletedStudyMaterials.size());
     }
 
     @Test
     void update() {
+        StudyMaterial studyMaterial = StudyMaterial.builder()
+                .id(testId)
+                .attachmentId(testAttachmentId)
+                .studyId(testStudyId)
+                .type(StudyMaterialType.FILE.getTitle())
+                .build();
+        log.info(studyMaterial);
+
+        studyMaterialMapper.update(studyMaterial);
+        studyMaterialMapper.getById(studyMaterial.getId()).ifPresent(att->{
+            Assert.assertEquals(studyMaterial.getType(), att.getType());
+        });
+
     }
 
     @Test
     void updateBatch() {
+        List<StudyMaterial> studyMaterials = new ArrayList<>();
+        String type = StudyMaterialType.IMAGE.getTitle();
+        for (int i = 0; i < 3; i++){
+            StudyMaterial studyMaterial = StudyMaterial.builder()
+                    .id(testId + i)
+                    .attachmentId(testAttachmentId)
+                    .studyId(testStudyId)
+                    .type(type)
+                    .build();
+            studyMaterials.add(studyMaterial);
+        }
+        log.info(studyMaterials);
+
+        studyMaterialMapper.updateBatch(studyMaterials);
+        log.info(studyMaterials);
+
+        for (int i = 0; i <3; i++){
+            Assert.assertEquals(type, studyMaterials.get(i).getType());
+        }
     }
 
 }
