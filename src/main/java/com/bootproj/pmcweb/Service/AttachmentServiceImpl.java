@@ -2,14 +2,13 @@ package com.bootproj.pmcweb.Service;
 
 import com.bootproj.pmcweb.Domain.Account;
 import com.bootproj.pmcweb.Domain.Attachment;
-import com.bootproj.pmcweb.Domain.Study;
 import com.bootproj.pmcweb.Domain.StudyMaterial;
 import com.bootproj.pmcweb.Domain.enumclass.StudyMaterialType;
 import com.bootproj.pmcweb.Mapper.AccountMapper;
 import com.bootproj.pmcweb.Mapper.AttachmentMapper;
 import com.bootproj.pmcweb.Mapper.StudyMaterialMapper;
-import com.bootproj.pmcweb.Network.Exception.FileDeleteException;
-import com.bootproj.pmcweb.Network.Exception.FileSaveException;
+import com.bootproj.pmcweb.Common.Exception.FileDeleteException;
+import com.bootproj.pmcweb.Common.Exception.FileSaveException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;

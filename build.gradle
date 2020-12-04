@@ -57,6 +57,13 @@ dependencies {
 
 	// 파일 업로드 용 라이브러리
 	compile group: 'commons-fileupload', name: 'commons-fileupload', version: '1.4'
+
+	// post body json값 log를 위한 라이브러리
+	compile group: 'org.json', name: 'json', version: '20180813'
+	compile group: 'commons-io', name: 'commons-io', version: '2.6'
+	compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
+	compile group: 'commons-codec', name: 'commons-codec', version: '1.4'
+
 }
 
 test {

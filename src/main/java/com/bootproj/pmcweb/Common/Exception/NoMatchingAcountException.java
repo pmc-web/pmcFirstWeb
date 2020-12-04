@@ -1,4 +1,4 @@
-package com.bootproj.pmcweb.Network.Exception;
+package com.bootproj.pmcweb.Common.Exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
