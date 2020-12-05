@@ -1,6 +1,6 @@
 package com.bootproj.pmcweb.Controller;
 
-import com.bootproj.pmcweb.Network.Header;
+import com.bootproj.pmcweb.Common.Header;
 import com.bootproj.pmcweb.Service.SubjectService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

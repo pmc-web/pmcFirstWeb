@@ -1,4 +1,4 @@
-package com.bootproj.pmcweb.Network;
+package com.bootproj.pmcweb.Common;
 
 import org.springframework.http.HttpStatus;
 

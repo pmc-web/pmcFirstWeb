@@ -1,4 +1,4 @@
-package com.bootproj.pmcweb.Network.Exception;
+package com.bootproj.pmcweb.Common.Exception;
 
 public class FileSaveException extends RuntimeException {
     public FileSaveException(String message) {

@@ -1,13 +1,11 @@
-package com.bootproj.pmcweb.Network;
+package com.bootproj.pmcweb.Common;
 
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.http.HttpStatus;
 
-import javax.xml.transform.Result;
 import java.time.LocalDateTime;
 
 @Builder

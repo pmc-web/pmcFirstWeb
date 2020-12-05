@@ -53,7 +53,7 @@ public enum ResultCode {
 SpringFramework에서 지원하지 않는 새로운 Exception을 추가하는 경우 Network/Exception 폴더 내에 Exception Class를 새로 정의합니다. 예시 파일은 아래와 같습니다.
 
 ```
-package com.bootproj.pmcweb.Network.Exception;
+package com.bootproj.pmcweb.Common.Exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
