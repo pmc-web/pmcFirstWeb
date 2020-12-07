@@ -2,6 +2,7 @@ package com.bootproj.pmcweb.Controller;
 
 import com.bootproj.pmcweb.Domain.Account;
 import com.bootproj.pmcweb.Domain.Attachment;
+import com.bootproj.pmcweb.Network.Aspect.LogExecutionTime;
 import com.bootproj.pmcweb.Network.Exception.DuplicateEmailException;
 import com.bootproj.pmcweb.Network.Exception.NoMatchingAcountException;
 import com.bootproj.pmcweb.Network.Exception.PasswordNotMatchException;
@@ -128,6 +129,7 @@ public class AccountController {
     }
 
     @PostMapping("/user/sendSignUpEmail")
+    @LogExecutionTime
     public String sendSignUpEmail(@ModelAttribute @Valid Account account, BindingResult errors, Model model) throws DuplicateEmailException, SendEmailException{
         if (errors.hasErrors()) {
             // 유효성 통과 못한 필드와 메시지를 핸들링
@@ -144,6 +146,7 @@ public class AccountController {
     }
 
     @GetMapping("/user/signUpConfirm")
+    @LogExecutionTime
     public String signUpConfirm(@RequestParam(value="email") String email, @RequestParam(value="authKey") String authKey) throws NoMatchingAcountException, NoSuchFieldException {
         log.info("이메일 인증하는 부분");
         Account changedUser = accountService.signUpConfirm(authKey, email);

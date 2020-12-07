@@ -1,5 +1,6 @@
 package com.bootproj.pmcweb.Network.Aspect;
 
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -8,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StopWatch;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -36,6 +38,17 @@ public class LoggingAspect {
         } finally {
             long end = System.currentTimeMillis();
             logger.info("Request: {} {}: {} ({}ms)", request.getMethod(), request.getRequestURL(), paramMapToString(request.getParameterMap()), end - start);
+        }
+    }
+
+    @Around("@annotation(LogExecutionTime)")
+    public Object logExecutionTime(ProceedingJoinPoint joinPoint) throws Throwable{
+        long start = System.currentTimeMillis();
+        try {
+            return joinPoint.proceed(joinPoint.getArgs());
+        } finally {
+            long end = System.currentTimeMillis();
+            logger.info("Method: {}: Execution Time : {} ms ", joinPoint.getSignature().getName(), end-start);
         }
     }
 
