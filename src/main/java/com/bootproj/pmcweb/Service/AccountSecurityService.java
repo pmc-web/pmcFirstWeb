@@ -38,9 +38,9 @@ public class AccountSecurityService implements UserDetailsService {
             // enabled 는 추후 부정한 계정에 대한 컨트롤
             return new User(account.getEmail(), account.getPassword(), true, true, true, false, authorities);
         }else{
-            authorities.add(new SimpleGrantedAuthority(account.getRole()));
+            authorities.add(new SimpleGrantedAuthority(account.getStatus()));
+            return new User(account.getEmail(), account.getPassword(), authorities);
         }
-        return new User(account.getEmail(), account.getPassword(), authorities);
     }
 
     public String save(Account account) throws SendEmailException, DuplicateEmailException {

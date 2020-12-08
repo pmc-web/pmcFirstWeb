@@ -1,165 +1,26 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="/layout/common.html :: fragment-common"></head>
+<head>
+    <th:block th:replace="/layout/common.html :: fragment-common"/>
+    <!-- navbar -->
+    <th:block th:replace="/layout/navbar.html :: fragment-navbar"/>
+    <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</head>
 <body>
-    <!-- Navbar -->
-    <nav th:replace="/layout/navbar.html :: fragment-navbar"></nav>
-    <!-- header -->
-    <header th:replace="/layout/header.html :: fragment-header"></header>
-<!-- main -->
-<div class="container">
-
-    <h2 class="my-4">환영합니다! PMC Moim 페이지 입니다.</h2>
-    <h3>Popular Study</h3>
-
-    <!-- popular study Section -->
-    <div class="row" id="popular-study">
-<!--        <div class="col-lg-4 mb-4" id="id">-->
-<!--            <div class="card h-100">-->
-<!--                <h4 class="card-header" id="title">${popular.title}</h4>-->
-<!--                <div class="card-body">-->
-<!--                    <p class="card-text" id="description">서울시 광진구에서 스프링 스터디 진행 중입니다. 인기 있는 스터디 입니다.</p>-->
-<!--                </div>-->
-<!--                <div class="card-footer">-->
-<!--                    <a href="#" class="btn btn-primary">자세히</a>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div class="col-lg-4 mb-4">-->
-<!--            <div class="card h-100">-->
-<!--                <h4 class="card-header">인기 스터디 모임2</h4>-->
-<!--                <div class="card-body">-->
-<!--                    <p class="card-text">왕십리에서 진행하는 리액트 스터디 입니다. 2기까지 진행했어요!!</p>-->
-<!--                </div>-->
-<!--                <div class="card-footer">-->
-<!--                    <a href="#" class="btn btn-primary">자세히</a>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div class="col-lg-4 mb-4">-->
-<!--            <div class="card h-100">-->
-<!--                <h4 class="card-header">인기 스터디 모임3</h4>-->
-<!--                <div class="card-body">-->
-<!--                    <p class="card-text">강남에서 진행하는 면접대비 취업스터디 입니다. 최근들어 많은 관심을 주시고 계십니다.</p>-->
-<!--                </div>-->
-<!--                <div class="card-footer">-->
-<!--                    <a href="#" class="btn btn-primary">자세히</a>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-    </div>
-
-    <button th:onclick="'alert(\'a\');'"
-            id="fixedBtn" title="createStudy">+</button>
-    <!-- new study Section -->
-    <h3>New Study</h3>
-
-    <div class="row" id="new-study" >
-        <div class="col-lg-4 col-sm-6 portfolio-item">
-            <div class="card h-100">
-                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-                <div class="card-body">
-                    <h4 class="card-title">
-                        <a href="#">새로운 스터디1</a>
-                    </h4>
-                    <p class="card-text">새로운 스터디1 입니다. 많은 관심 주세요</p>
-                </div>
-            </div>
+    <div th:if="${content} == 1">
+        <!-- main -->
+        <div class="container">
+            <th:block th:replace="/layout/kakaoContent.html :: fragment-kakaoContent"/>
         </div>
-<!--        <div class="col-lg-4 col-sm-6 portfolio-item">-->
-<!--            <div class="card h-100">-->
-<!--                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>-->
-<!--                <div class="card-body">-->
-<!--                    <h4 class="card-title">-->
-<!--                        <a href="#">새로운 스터디2</a>-->
-<!--                    </h4>-->
-<!--                    <p class="card-text">새로운 스터디2 입니다. 많은 관심 주세요</p>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div class="col-lg-4 col-sm-6 portfolio-item">-->
-<!--            <div class="card h-100">-->
-<!--                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>-->
-<!--                <div class="card-body">-->
-<!--                    <h4 class="card-title">-->
-<!--                        <a href="#">새로운 스터디3</a>-->
-<!--                    </h4>-->
-<!--                    <p class="card-text">새로운 스터디3 입니다. 많은 관심 주세요</p>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
     </div>
-
-    <hr>
-
-</div>
-<!-- footer -->
-<footer th:replace="/layout/footer.html :: fragment-footer"></footer>
-
-<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
-<script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
-    <script th:inline="javascript">
-        /*<![CDATA[*/
-        window.addEventListener('load', function(){
-            console.log("main page load");
-            fecthGetStudyList();
-        });
-        /*<![CDATA[*/
-        const xhr = new XMLHttpRequest();
-        /*]]>*/
-        function fecthGetStudyList() {
-            xhr.open('GET', 'http://localhost:8080/study?page=1');
-            xhr.send();
-            xhr.onload = function (e) {
-                if (xhr.status === 200) {
-                    /*<![CDATA[*/
-                    let result = JSON.parse(xhr.responseText);
-                    /*]]>*/
-                    console.log(result);
-                    if(result.data.length>0) {
-                        popularStudyList(result.data)
-                        newStudyList(result.data);
-                    }
-                }
-                else {
-                    console.log('Error!');
-                }
-            };
-        };
-
-        function popularStudyList(data) {
-            /*<![CDATA[*/
-            let parent = document.querySelector("#popular-study");
-            let html = parent.innerHTML;
-            /*]]>*/
-            for(let i=0; i<3; i++){
-                html += "<div class=\"col-lg-4 mb-4\" id="+ data[i].id + ">";
-                html += "<div class=\"card h-100\">";
-                html += "<h4 class=\"card-header\">" + data[i].title + "</h4>"
-                html += "<div class=\"card-body\">";
-                html += "<p class=\"card-text\">" + data[i].description + "</p>";
-                html += "</div><div class=\"card-footer\"><a href=\"#\" class=\"btn btn-primary\">자세히</a></div></div></div>";
-            }
-            parent.innerHTML = html;
-        }
-
-        function newStudyList(data) {
-            let parent = document.querySelector("#new-study");
-            let html = parent.innerHTML;
-            /*]]>*/
-            for(let i=0; i<data.length; i++){
-                html += "<div class=\"col-lg-4 col-sm-6 portfolio-item\" id="+ data[i].id + ">";
-                html += "<div class=\"card h-100\">";
-                html += "<a href=\"#\"><img class=\"card-img-top\" src=\"http://placehold.it/700x400\" alt=\"\"></a>";
-                html += "<div class=\"card-body\"><h4 class=\"card-title\">";
-                html += "<a href=\"#\">"+data[i].title+"</a></h4>";
-                html += "<p class=\"card-text\">"+data[i].description+"</p>";
-                html += "</div></div></div>";
-            }
-            parent.innerHTML = html;
-        }
-    </script>
-
+    <div th:unless="${content} == 1">
+        <!-- header -->
+        <th:block th:replace="/layout/header.html :: fragment-header"/>
+        <div class="container">
+            <th:block th:replace="/layout/defaultContent.html :: fragment-defaultContent"/>
+        </div>
+    </div>
 </body>
-
+    <!-- footer -->
+    <th:block th:replace="/layout/footer.html :: fragment-footer"/>
 </html>
