@@ -38,3 +38,7 @@ PMC(Project Makes Coding Skill Up) 프로젝트는 지역의 스터디(모임)�
 [AOP 로거 설정하기](doc/aop.md)
 
 [트랜젝션 설정하기](doc/transaction.md)
+
+[스프링 시큐리티 적용하기](https://okdolmin.tistory.com/30)
+
+[스프링 시큐리티 인증 후 처리](https://okdolmin.tistory.com/36)
