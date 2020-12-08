@@ -1,4 +1,4 @@
-package com.bootproj.pmcweb.Network.Request;
+package com.bootproj.pmcweb.Common.Request;
 
 import lombok.Getter;
 import lombok.Setter;

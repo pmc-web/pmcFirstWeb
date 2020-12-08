@@ -56,7 +56,7 @@ public class LoggingAspect {
     public void onRequest() {
     }
 
-    @Around("com.bootproj.pmcweb.Network.Aspect.LoggingAspect.onRequest()")
+    @Around("com.bootproj.pmcweb.Common.Aspect.LoggingAspect.onRequest()")
     public Object requestLogging(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
         long start = System.currentTimeMillis();
@@ -80,7 +80,7 @@ public class LoggingAspect {
 `@PointCut("within(com.bootproj.pmcweb.Controller..*)")`
   - onRequest메서드에 Controller 패키지 내의 모든 파일에 대해 PointCut으로 정의하겠다는 설정
 
-`@Around("com.bootproj.pmcweb.Network.Aspect.LoggingAspect.onRequest()")`
+`@Around("com.bootproj.pmcweb.Common.Aspect.LoggingAspect.onRequest()")`
   - 위에서 PointCut으로 정의한 onRequest 파일들에 대해 @Around시점(메서드 호출 시점)에 requestLogging 메서드를 실행하겠다는 내용
 
 `proceedingJoinPoint.proceed(proceedingJoinPoint.getArgs()`

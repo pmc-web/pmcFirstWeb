@@ -1,13 +1,15 @@
 package com.bootproj.pmcweb.Controller;
 
 import com.bootproj.pmcweb.Domain.Study;
-import com.bootproj.pmcweb.Network.Header;
+import com.bootproj.pmcweb.Common.Header;
+import com.bootproj.pmcweb.Service.AttachmentService;
 import com.bootproj.pmcweb.Service.StudyService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
 import java.util.List;
@@ -19,6 +21,8 @@ import java.util.List;
 public class StudyController {
 
     private final StudyService studyService;
+
+    private final AttachmentService attachmentService;
 
     /**
      * Study REST API
@@ -39,11 +43,13 @@ public class StudyController {
     }
 
     @PostMapping
-    public ResponseEntity<Header> createStudy(@RequestBody Study study){
+    public ResponseEntity<Header> createStudy(@RequestBody Study study, @RequestParam(required=false) MultipartFile file){
         log.info("in {}", study);
+        log.info("file {}", file);
         HashMap<String, Long> resultMap = new HashMap<>();
         log.info("result > ", resultMap);
         resultMap.put("insertId", studyService.createStudy(study));
+        if (file != null) attachmentService.uploadStudyMainImage(file, study.getId());
         return new ResponseEntity(Header.OK(resultMap), HttpStatus.CREATED);
     }
 

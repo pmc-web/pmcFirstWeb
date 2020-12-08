@@ -1,17 +1,17 @@
 package com.bootproj.pmcweb.Controller;
 
 import com.bootproj.pmcweb.Domain.Account;
-import com.bootproj.pmcweb.Network.Exception.DuplicateEmailException;
-import com.bootproj.pmcweb.Network.Exception.NoMatchingAcountException;
-import com.bootproj.pmcweb.Network.Exception.PasswordNotMatchException;
-import com.bootproj.pmcweb.Network.Exception.SendEmailException;
-import com.bootproj.pmcweb.Network.Header;
+import com.bootproj.pmcweb.Domain.Attachment;
+import com.bootproj.pmcweb.Common.Exception.DuplicateEmailException;
+import com.bootproj.pmcweb.Common.Exception.NoMatchingAcountException;
+import com.bootproj.pmcweb.Common.Exception.PasswordNotMatchException;
+import com.bootproj.pmcweb.Common.Exception.SendEmailException;
+import com.bootproj.pmcweb.Common.Header;
 import com.bootproj.pmcweb.Service.AccountSecurityService;
 import com.bootproj.pmcweb.Service.AccountService;
+import com.bootproj.pmcweb.Service.AttachmentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -21,8 +21,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Slf4j
 @Controller // Rest Controller는 response 바디를 가지고, Controller는 가지지 않음.
@@ -33,6 +33,9 @@ public class AccountController {
 
     @Autowired
     private AccountSecurityService accountSecurityService;
+
+    @Autowired
+    private AttachmentService attachmentService;
 
     /**
      * Security signup login logout
@@ -63,16 +66,26 @@ public class AccountController {
         return "user/login";
     }
 
-
-
     // 프로필 화면
     @GetMapping("/user/profile")
-    public ModelAndView getProfile(@AuthenticationPrincipal User user) {
+    public ModelAndView getProfile(@AuthenticationPrincipal User user) throws NoMatchingAcountException {
         Account account = accountService.getUserByEmail(user.getUsername());
         ModelAndView mv = new ModelAndView("/user/profile");
         mv.addObject("loginUser", account.getName());
         mv.addObject("loginUserEmail", account.getEmail());
         mv.addObject("loginUserId", account.getId());
+        Optional<Attachment> attachment = attachmentService.getProfile(user.getUsername());
+        attachment.ifPresentOrElse(
+                (att) -> {
+                    mv.addObject("profileImagePath", "/img/profile/" + account.getId() + "/" + att.getName());
+                    log.info("/img/profile/" + account.getId() + "/" + att.getName());
+                },
+                () -> {
+                    mv.addObject("profileImagePath", "/img/moim.jpg");
+                    log.info("/img/moim.jpg");
+                }
+        );
+
         return mv;
     }
 

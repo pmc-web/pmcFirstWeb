@@ -1,9 +1,9 @@
 package com.bootproj.pmcweb.Service;
 
 import com.bootproj.pmcweb.Domain.Account;
-import com.bootproj.pmcweb.Network.Exception.DuplicateEmailException;
-import com.bootproj.pmcweb.Network.Exception.NoMatchingAcountException;
-import com.bootproj.pmcweb.Network.Exception.SendEmailException;
+import com.bootproj.pmcweb.Common.Exception.DuplicateEmailException;
+import com.bootproj.pmcweb.Common.Exception.NoMatchingAcountException;
+import com.bootproj.pmcweb.Common.Exception.SendEmailException;
 
 import java.util.List;
 import java.util.Map;

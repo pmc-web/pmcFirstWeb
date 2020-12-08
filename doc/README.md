@@ -40,3 +40,7 @@ PMC(Project Makes Coding Skill Up) 프로젝트는 지역의 스터디(모임)�
 [트랜젝션 설정하기](transaction.md)
 
 [테스트코드 작성하기](junit_test_code.md)
+
+[스프링 시큐리티 적용하기](https://okdolmin.tistory.com/30)
+
+[스프링 시큐리티 후처리](https://okdolmin.tistory.com/36)

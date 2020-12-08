@@ -36,3 +36,6 @@ out/
 ### Setting ###
 #application.properties
 src/main/resources/application.properties
+
+## Profile
+src/main/resources/static/img/profile/*
