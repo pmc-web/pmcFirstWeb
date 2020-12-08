@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <th:block th:fragment="fragment-defaultContent">
+        <h2 class="my-4">환영합니다! PMC Moim 페이지 입니다.</h2>
+        <h3>Popular Study</h3>
+
+        <!-- popular study Section -->
+        <div class="row" id="popular-study">
+            <!--        <div class="col-lg-4 mb-4" id="id">-->
+            <!--            <div class="card h-100">-->
+            <!--                <h4 class="card-header" id="title">${popular.title}</h4>-->
+            <!--                <div class="card-body">-->
+            <!--                    <p class="card-text" id="description">서울시 광진구에서 스프링 스터디 진행 중입니다. 인기 있는 스터디 입니다.</p>-->
+            <!--                </div>-->
+            <!--                <div class="card-footer">-->
+            <!--                    <a href="#" class="btn btn-primary">자세히</a>-->
+            <!--                </div>-->
+            <!--            </div>-->
+            <!--        </div>-->
+            <!--        <div class="col-lg-4 mb-4">-->
+            <!--            <div class="card h-100">-->
+            <!--                <h4 class="card-header">인기 스터디 모임2</h4>-->
+            <!--                <div class="card-body">-->
+            <!--                    <p class="card-text">왕십리에서 진행하는 리액트 스터디 입니다. 2기까지 진행했어요!!</p>-->
+            <!--                </div>-->
+            <!--                <div class="card-footer">-->
+            <!--                    <a href="#" class="btn btn-primary">자세히</a>-->
+            <!--                </div>-->
+            <!--            </div>-->
+            <!--        </div>-->
+            <!--        <div class="col-lg-4 mb-4">-->
+            <!--            <div class="card h-100">-->
+            <!--                <h4 class="card-header">인기 스터디 모임3</h4>-->
+            <!--                <div class="card-body">-->
+            <!--                    <p class="card-text">강남에서 진행하는 면접대비 취업스터디 입니다. 최근들어 많은 관심을 주시고 계십니다.</p>-->
+            <!--                </div>-->
+            <!--                <div class="card-footer">-->
+            <!--                    <a href="#" class="btn btn-primary">자세히</a>-->
+            <!--                </div>-->
+            <!--            </div>-->
+            <!--        </div>-->
+        </div>
+
+        <button th:onclick="'alert(\'a\');'"
+                id="fixedBtn" title="createStudy">+</button>
+        <!-- new study Section -->
+        <h3>New Study</h3>
+
+        <div class="row" id="new-study" >
+            <div class="col-lg-4 col-sm-6 portfolio-item">
+                <div class="card h-100">
+                    <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+                    <div class="card-body">
+                        <h4 class="card-title">
+                            <a href="#">새로운 스터디1</a>
+                        </h4>
+                        <p class="card-text">새로운 스터디1 입니다. 많은 관심 주세요</p>
+                    </div>
+                </div>
+            </div>
+            <!--        <div class="col-lg-4 col-sm-6 portfolio-item">-->
+            <!--            <div class="card h-100">-->
+            <!--                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>-->
+            <!--                <div class="card-body">-->
+            <!--                    <h4 class="card-title">-->
+            <!--                        <a href="#">새로운 스터디2</a>-->
+            <!--                    </h4>-->
+            <!--                    <p class="card-text">새로운 스터디2 입니다. 많은 관심 주세요</p>-->
+            <!--                </div>-->
+            <!--            </div>-->
+            <!--        </div>-->
+            <!--        <div class="col-lg-4 col-sm-6 portfolio-item">-->
+            <!--            <div class="card h-100">-->
+            <!--                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>-->
+            <!--                <div class="card-body">-->
+            <!--                    <h4 class="card-title">-->
+            <!--                        <a href="#">새로운 스터디3</a>-->
+            <!--                    </h4>-->
+            <!--                    <p class="card-text">새로운 스터디3 입니다. 많은 관심 주세요</p>-->
+            <!--                </div>-->
+            <!--            </div>-->
+            <!--        </div>-->
+        </div>
+
+        <hr>
+        <th:block th:replace="/layout/defaultContentScript.html :: fragment-defaultContentScript"/>
+    </th:block>
+</html>

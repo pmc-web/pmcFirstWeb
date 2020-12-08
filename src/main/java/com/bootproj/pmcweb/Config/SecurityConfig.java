@@ -36,11 +36,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception{
         http
-            .csrf().disable()
+//            .csrf().disable()
             .authorizeRequests()
             // 페이지 권한 설정
             .antMatchers("/admin/**").hasRole("ADMIN")
-            .antMatchers("/","/user/signup", "/user/login", "/user/sendSignUpEmail", "/user/signUpConfirm","/study").permitAll()
+            .antMatchers("/","/user/signup", "/user/login", "/user/sendSignUpEmail", "/user/signUpConfirm","/study/**").permitAll()
             .anyRequest().authenticated()
             .and()
             .formLogin()

@@ -1,20 +1,16 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-<head th:replace="/layout/common.html :: fragment-common"></head>
 <head>
+    <th:block th:replace="/layout/common.html :: fragment-common"/>
+    <th:block th:replace="/layout/navbar.html :: fragment-navbar"/>
     <!-- Theme style -->
     <link rel="stylesheet" th:href="@{/vendor/adminlte/adminlte.min.css}">
     <!-- daterange picker -->
     <link rel="stylesheet" th:href="@{/vendor/daterangepicker/daterangepicker.css}">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" th:href="@{/vendor/fontawesome-free/css/all.min.css}">
-
-    <link rel="stylesheet" th:href="@{/vendor/jquery-ui/jquery-ui.css}">
+    <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
 </head>
 <body>
-<!-- Navbar -->
-<nav th:replace="/layout/navbar.html :: fragment-navbar"></nav>
 <!-- main -->
 <div class="container" >
     <div class="mt-3">
