@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <th:block th:fragment="fragment-defaultContentScript">
+<!--        <script th:src="@{/vendor/jquery/jquery.min.js}"></script>-->
+<!--        <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>-->
+        <script th:inline="javascript">
+            /*<![CDATA[*/
+            window.addEventListener('load', function(){
+                console.log("main page load");
+                fecthGetStudyList();
+            });
+            /*<![CDATA[*/
+            const xhr = new XMLHttpRequest();
+            /*]]>*/
+            function fecthGetStudyList() {
+                xhr.open('GET', 'http://localhost:8080/study?page=1');
+                xhr.send();
+                xhr.onload = function (e) {
+                    if (xhr.status === 200) {
+                        /*<![CDATA[*/
+                        let result = JSON.parse(xhr.responseText);
+                        /*]]>*/
+                        console.log(result);
+                        if(result.data.length>0) {
+                            popularStudyList(result.data)
+                            newStudyList(result.data);
+                        }
+                    }
+                    else {
+                        console.log('Error!');
+                    }
+                };
+            };
+
+            function popularStudyList(data) {
+                /*<![CDATA[*/
+                let parent = document.querySelector("#popular-study");
+                let html = parent.innerHTML;
+                /*]]>*/
+                for(let i=0; i<3; i++){
+                    html += "<div class=\"col-lg-4 mb-4\" id="+ data[i].id + ">";
+                    html += "<div class=\"card h-100\">";
+                    html += "<h4 class=\"card-header\">" + data[i].title + "</h4>"
+                    html += "<div class=\"card-body\">";
+                    html += "<p class=\"card-text\">" + data[i].description + "</p>";
+                    html += "</div><div class=\"card-footer\"><a href=\"#\" class=\"btn btn-primary\">자세히</a></div></div></div>";
+                }
+                parent.innerHTML = html;
+            }
+
+            function newStudyList(data) {
+                let parent = document.querySelector("#new-study");
+                let html = parent.innerHTML;
+                /*]]>*/
+                for(let i=0; i<data.length; i++){
+                    html += "<div class=\"col-lg-4 col-sm-6 portfolio-item\" id="+ data[i].id + ">";
+                    html += "<div class=\"card h-100\">";
+                    html += "<a href=\"#\"><img class=\"card-img-top\" src=\"http://placehold.it/700x400\" alt=\"\"></a>";
+                    html += "<div class=\"card-body\"><h4 class=\"card-title\">";
+                    html += "<a href=\"#\">"+data[i].title+"</a></h4>";
+                    html += "<p class=\"card-text\">"+data[i].description+"</p>";
+                    html += "</div></div></div>";
+                }
+                parent.innerHTML = html;
+            }
+        </script>
+    </th:block>
+</html>

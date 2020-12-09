@@ -1,6 +1,6 @@
 package com.bootproj.pmcweb.Network.Aspect;
 
-import org.aspectj.lang.JoinPoint;
+import org.apache.commons.io.IOUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -29,7 +29,7 @@ public class LoggingAspect {
     public void onRequest() {
     }
 
-    @Around("com.bootproj.pmcweb.Network.Aspect.LoggingAspect.onRequest()")
+    @Around("com.bootproj.pmcweb.Common.Aspect.LoggingAspect.onRequest()")
     public Object requestLogging(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
         long start = System.currentTimeMillis();
@@ -38,6 +38,9 @@ public class LoggingAspect {
         } finally {
             long end = System.currentTimeMillis();
             logger.info("Request: {} {}: {} ({}ms)", request.getMethod(), request.getRequestURL(), paramMapToString(request.getParameterMap()), end - start);
+            if ("POST".equalsIgnoreCase(request.getMethod())){
+                logger.info("Body: {} ", IOUtils.toString(request.getReader()));
+            }
         }
     }
 
@@ -58,4 +61,5 @@ public class LoggingAspect {
                         entry.getKey(), Arrays.toString(entry.getValue())))
                 .collect(Collectors.joining(", "));
     }
+
 }

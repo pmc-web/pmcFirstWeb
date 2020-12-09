@@ -1,15 +1,9 @@
 package com.bootproj.pmcweb.Service;
 
 import com.bootproj.pmcweb.Domain.Account;
-import com.bootproj.pmcweb.Domain.enumclass.UserRole;
-import com.bootproj.pmcweb.Network.Exception.*;
-import com.bootproj.pmcweb.Network.Request.LoginFailHandler;
-import com.bootproj.pmcweb.Network.ResultCode;
-import lombok.SneakyThrows;
+import com.bootproj.pmcweb.Common.Exception.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.DisabledException;
-import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -17,7 +11,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
@@ -45,9 +38,9 @@ public class AccountSecurityService implements UserDetailsService {
             // enabled 는 추후 부정한 계정에 대한 컨트롤
             return new User(account.getEmail(), account.getPassword(), true, true, true, false, authorities);
         }else{
-            authorities.add(new SimpleGrantedAuthority(account.getRole()));
+            authorities.add(new SimpleGrantedAuthority(account.getStatus()));
+            return new User(account.getEmail(), account.getPassword(), authorities);
         }
-        return new User(account.getEmail(), account.getPassword(), authorities);
     }
 
     public String save(Account account) throws SendEmailException, DuplicateEmailException {

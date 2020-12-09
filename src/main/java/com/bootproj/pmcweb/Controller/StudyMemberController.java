@@ -1,7 +1,7 @@
 package com.bootproj.pmcweb.Controller;
 
 import com.bootproj.pmcweb.Domain.StudyMember;
-import com.bootproj.pmcweb.Network.Header;
+import com.bootproj.pmcweb.Common.Header;
 import com.bootproj.pmcweb.Service.StudyMemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

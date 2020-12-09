@@ -2,10 +2,9 @@ package com.bootproj.pmcweb.Controller;
 
 import com.bootproj.pmcweb.Domain.Attachment;
 import com.bootproj.pmcweb.Domain.enumclass.StudyMaterialType;
-import com.bootproj.pmcweb.Network.Exception.FileSaveException;
-import com.bootproj.pmcweb.Network.Exception.NoMatchingAcountException;
-import com.bootproj.pmcweb.Network.Header;
-import com.bootproj.pmcweb.Network.ResultCode;
+import com.bootproj.pmcweb.Common.Exception.FileSaveException;
+import com.bootproj.pmcweb.Common.Exception.NoMatchingAcountException;
+import com.bootproj.pmcweb.Common.Header;
 import com.bootproj.pmcweb.Service.AttachmentService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +15,6 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.FileOutputStream;
-import java.io.InputStream;
 import java.util.Optional;
 
 @Log4j2

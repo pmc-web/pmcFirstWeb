@@ -1,7 +1,5 @@
-package com.bootproj.pmcweb.Network.Response;
+package com.bootproj.pmcweb.Common.Response;
 
-import com.bootproj.pmcweb.Domain.enumclass.UserRole;
-import com.bootproj.pmcweb.Domain.enumclass.UserStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

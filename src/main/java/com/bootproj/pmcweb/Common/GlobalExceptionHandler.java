@@ -1,10 +1,7 @@
-package com.bootproj.pmcweb.Network;
+package com.bootproj.pmcweb.Common;
 
-import com.bootproj.pmcweb.Network.Exception.*;
-import com.bootproj.pmcweb.Network.Header;
-import com.bootproj.pmcweb.Network.ResultCode;
+import com.bootproj.pmcweb.Common.Exception.*;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
