@@ -1,4 +1,4 @@
-package com.bootproj.pmcweb.Network.Aspect;
+package com.bootproj.pmcweb.Common.Aspect;
 
 import org.apache.commons.io.IOUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -7,17 +7,13 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StopWatch;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.Map;
-import java.util.Set;
-import java.util.StringJoiner;
 import java.util.stream.Collectors;
 
 @Aspect

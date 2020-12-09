@@ -1,4 +1,4 @@
-package com.bootproj.pmcweb.Network.Aspect;
+package com.bootproj.pmcweb.Common.Aspect;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

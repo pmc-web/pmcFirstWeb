@@ -1,5 +1,6 @@
 package com.bootproj.pmcweb.Controller;
 
+import com.bootproj.pmcweb.Common.Aspect.LogExecutionTime;
 import com.bootproj.pmcweb.Domain.Account;
 import com.bootproj.pmcweb.Domain.Attachment;
 import com.bootproj.pmcweb.Common.Exception.DuplicateEmailException;
@@ -12,8 +13,6 @@ import com.bootproj.pmcweb.Service.AccountService;
 import com.bootproj.pmcweb.Service.AttachmentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -23,7 +22,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
