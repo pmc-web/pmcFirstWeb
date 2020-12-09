@@ -1,12 +1,10 @@
 package com.bootproj.pmcweb.Common.Aspect;
 
-import org.apache.commons.io.IOUtils;
+import lombok.extern.log4j.Log4j2;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -18,8 +16,9 @@ import java.util.stream.Collectors;
 
 @Aspect
 @Component
+@Log4j2
 public class LoggingAspect {
-    private static final Logger logger = LoggerFactory.getLogger(LoggingAspect.class);
+
 
     @Pointcut("within(com.bootproj.pmcweb.Controller..*)")
     public void onRequest() {
@@ -27,16 +26,13 @@ public class LoggingAspect {
 
     @Around("com.bootproj.pmcweb.Common.Aspect.LoggingAspect.onRequest()")
     public Object requestLogging(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
         long start = System.currentTimeMillis();
         try {
             return proceedingJoinPoint.proceed(proceedingJoinPoint.getArgs());
         } finally {
+            HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
             long end = System.currentTimeMillis();
-            logger.info("Request: {} {}: {} ({}ms)", request.getMethod(), request.getRequestURL(), paramMapToString(request.getParameterMap()), end - start);
-            if ("POST".equalsIgnoreCase(request.getMethod())){
-                logger.info("Body: {} ", IOUtils.toString(request.getReader()));
-            }
+            log.info("Request: {} {} : {} ({}ms)", request.getMethod(), request.getRequestURL(), paramMapToString(request.getParameterMap()),end - start);
         }
     }
 
@@ -47,7 +43,7 @@ public class LoggingAspect {
             return joinPoint.proceed(joinPoint.getArgs());
         } finally {
             long end = System.currentTimeMillis();
-            logger.info("Method: {}: Execution Time : {} ms ", joinPoint.getSignature().getName(), end-start);
+            log.info("Method: {}: Execution Time : {} ms ", joinPoint.getSignature().getName(), end-start);
         }
     }
 
