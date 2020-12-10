@@ -1,5 +1,6 @@
 package com.bootproj.pmcweb.Service;
 
+import com.bootproj.pmcweb.Common.Response.AlarmApiResponse;
 import com.bootproj.pmcweb.Domain.Alarm;
 import com.bootproj.pmcweb.Domain.enumclass.AlarmStatus;
 import com.bootproj.pmcweb.Domain.enumclass.AlarmType;
@@ -26,14 +27,14 @@ public class AlarmServiceImpl implements AlarmService {
     }
 
     @Override
-    public List<Alarm> getNotReadListByUserId(Long userId) {
-        List<Alarm> alarms = alarmMapper.getAlarmByUserIdStatus(userId, AlarmStatus.NOT_READ);
+    public List<AlarmApiResponse> getNotReadListByUserId(Long userId) {
+        List<AlarmApiResponse> alarms = alarmMapper.getAlarmByUserIdStatus(userId, AlarmStatus.NOT_READ);
         return alarms;
     }
 
     @Override
-    public List<Alarm> getListByUserId(Long userId) {
-        List<Alarm> alarms = alarmMapper.getAlarmByUserId(userId);
+    public List<AlarmApiResponse> getListByUserId(Long userId) {
+        List<AlarmApiResponse> alarms = alarmMapper.getAlarmByUserId(userId);
         return alarms;
     }
 

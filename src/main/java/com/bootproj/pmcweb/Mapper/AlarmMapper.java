@@ -1,5 +1,6 @@
 package com.bootproj.pmcweb.Mapper;
 
+import com.bootproj.pmcweb.Common.Response.AlarmApiResponse;
 import com.bootproj.pmcweb.Domain.Alarm;
 import com.bootproj.pmcweb.Domain.enumclass.AlarmStatus;
 import lombok.AllArgsConstructor;
@@ -12,11 +13,11 @@ import java.util.Optional;
 
 @Repository
 public interface AlarmMapper {
-    public List<Alarm> getAlarmByUserId(Long userId);
+    public List<AlarmApiResponse> getAlarmByUserId(Long userId);
 
     public Optional<Alarm> getAlarmById (Long id);
 
-    public List<Alarm> getAlarmByUserIdStatus(@Param("userId") Long userId, @Param("status") AlarmStatus status);
+    public List<AlarmApiResponse> getAlarmByUserIdStatus(@Param("userId") Long userId, @Param("status") AlarmStatus status);
 
     public void createAlarm (Alarm alarm);
 

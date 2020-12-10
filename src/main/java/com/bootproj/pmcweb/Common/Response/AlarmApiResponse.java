@@ -1,4 +1,4 @@
-package com.bootproj.pmcweb.Domain;
+package com.bootproj.pmcweb.Common.Response;
 
 import com.bootproj.pmcweb.Common.CommonUtils;
 import com.bootproj.pmcweb.Domain.enumclass.AlarmStatus;
@@ -14,7 +14,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Builder
 @ToString
-public class Alarm {
+public class AlarmApiResponse {
     private Long id;
     private AlarmType type;
     @DateTimeFormat(pattern = CommonUtils.ALARM_DATE_FORMAT)
@@ -22,4 +22,5 @@ public class Alarm {
     private AlarmStatus status;
     private Long userId;
     private Long dateId;
+    private String description; // data table join
 }

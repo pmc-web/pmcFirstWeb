@@ -1,5 +1,6 @@
 package com.bootproj.pmcweb.Mapper;
 
+import com.bootproj.pmcweb.Common.Response.AlarmApiResponse;
 import com.bootproj.pmcweb.Domain.Alarm;
 import com.bootproj.pmcweb.Domain.enumclass.AlarmStatus;
 import com.bootproj.pmcweb.Domain.enumclass.AlarmType;
@@ -24,8 +25,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 class AlarmMapperTest {
-    private final String dateFormat = "yyyy-MM-dd HH:mm:ss";
-    private long testUserId = 99L;
+    private long testUserId = 50L;
     private long testDateId = 1L;
     private long testId = 3L;
 
@@ -34,7 +34,7 @@ class AlarmMapperTest {
 
     @Test
     void getAlarmByUserId() {
-        List<Alarm> alarms = alarmMapper.getAlarmByUserId(testUserId);
+        List<AlarmApiResponse> alarms = alarmMapper.getAlarmByUserId(testUserId);
         log.info(alarms);
         Assert.assertTrue(alarms.size()>0);
     }
@@ -75,7 +75,7 @@ class AlarmMapperTest {
 
     @Test
     void deleteAlarmByUserId() {
-        List<Alarm> alarms = alarmMapper.getAlarmByUserId(testUserId);
+        List<AlarmApiResponse> alarms = alarmMapper.getAlarmByUserId(testUserId);
         assertTrue(alarms.size()>0);
         alarmMapper.deleteAlarmByUserId(testUserId);
         assertTrue(alarmMapper.getAlarmById(testId).isEmpty());
@@ -102,7 +102,7 @@ class AlarmMapperTest {
 
     @Test
     void getAlarmByUserIdStatus() {
-        List<Alarm> alarms = alarmMapper.getAlarmByUserIdStatus(testUserId, AlarmStatus.NOT_READ);
+        List<AlarmApiResponse> alarms = alarmMapper.getAlarmByUserIdStatus(testUserId, AlarmStatus.NOT_READ);
         log.info(alarms);
         Assert.assertTrue(alarms.size()>0);
     }
