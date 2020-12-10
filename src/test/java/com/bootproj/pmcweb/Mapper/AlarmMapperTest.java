@@ -27,7 +27,7 @@ class AlarmMapperTest {
     private final String dateFormat = "yyyy-MM-dd HH:mm:ss";
     private long testUserId = 99L;
     private long testDateId = 1L;
-    private long testId = 2L;
+    private long testId = 3L;
 
     @Autowired
     AlarmMapper alarmMapper;
@@ -63,28 +63,12 @@ class AlarmMapperTest {
 
     @Test
     void updateAlarmStatus() {
-        alarmMapper.getAlarmById(testId).ifPresentOrElse(
-                (alarm) -> {
-                    Assert.assertEquals(AlarmStatus.NOT_READ.getTitle(), alarm.getStatus());
-                },
-                () -> {
-                    createAlarmBeforeTest();
-                }
-        );
-        alarmMapper.updateAlarmStatus(testId, AlarmStatus.READ.getTitle());
-        Assert.assertEquals(alarmMapper.getAlarmById(testId).get().getStatus(), AlarmStatus.READ.getTitle());
+        alarmMapper.updateAlarmStatus(testId, AlarmStatus.READ);
+        Assert.assertEquals(alarmMapper.getAlarmById(testId).get().getStatus(), AlarmStatus.READ);
     }
 
     @Test
     void deleteAlarmById() {
-        alarmMapper.getAlarmById(testId).ifPresentOrElse(
-                (alarm) -> {
-                    assertEquals(testId, alarm.getId());
-                },
-                () -> {
-                    testId = createAlarmBeforeTest();
-                }
-        );
         alarmMapper.deleteAlarmById(testId);
         assertTrue(alarmMapper.getAlarmById(testId).isEmpty());
     }
@@ -114,5 +98,12 @@ class AlarmMapperTest {
 
         alarmMapper.createAlarm(alarm);
         return alarm.getId();
+    }
+
+    @Test
+    void getAlarmByUserIdStatus() {
+        List<Alarm> alarms = alarmMapper.getAlarmByUserIdStatus(testUserId, AlarmStatus.NOT_READ);
+        log.info(alarms);
+        Assert.assertTrue(alarms.size()>0);
     }
 }

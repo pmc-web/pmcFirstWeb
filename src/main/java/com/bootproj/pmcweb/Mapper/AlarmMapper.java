@@ -1,7 +1,9 @@
 package com.bootproj.pmcweb.Mapper;
 
 import com.bootproj.pmcweb.Domain.Alarm;
+import com.bootproj.pmcweb.Domain.enumclass.AlarmStatus;
 import lombok.AllArgsConstructor;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Date;
@@ -14,9 +16,11 @@ public interface AlarmMapper {
 
     public Optional<Alarm> getAlarmById (Long id);
 
+    public List<Alarm> getAlarmByUserIdStatus(@Param("userId") Long userId, @Param("status") AlarmStatus status);
+
     public void createAlarm (Alarm alarm);
 
-    public void updateAlarmStatus(Long id, String status);
+    public void updateAlarmStatus(@Param("id") Long id, @Param("status") AlarmStatus status);
 
     public void deleteAlarmById (Long id);
 
