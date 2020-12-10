@@ -8,5 +8,6 @@ import java.util.List;
 public interface AlarmService {
     public Alarm insert(Alarm alarm);
     public List<Alarm> getNotReadListByUserId(Long userId);
+    public List<Alarm> getListByUserId(Long userId);
     public void updateStatusById(Long id, AlarmStatus status);
 }

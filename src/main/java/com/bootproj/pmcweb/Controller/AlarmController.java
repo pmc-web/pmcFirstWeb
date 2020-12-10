@@ -22,7 +22,7 @@ public class AlarmController {
 
     @GetMapping("/{userId}")
     public ResponseEntity getAlarmList(@PathVariable(value = "userId") Long userId){
-        List<Alarm> alarms = alarmService.getNotReadListByUserId(userId);
+        List<Alarm> alarms = alarmService.getListByUserId(userId);
         return new ResponseEntity(Header.OK(alarms), HttpStatus.OK);
     }
 

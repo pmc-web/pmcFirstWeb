@@ -32,6 +32,12 @@ public class AlarmServiceImpl implements AlarmService {
     }
 
     @Override
+    public List<Alarm> getListByUserId(Long userId) {
+        List<Alarm> alarms = alarmMapper.getAlarmByUserId(userId);
+        return alarms;
+    }
+
+    @Override
     public void updateStatusById(Long id, AlarmStatus status) {
         alarmMapper.updateAlarmStatus(id, status);
     }
