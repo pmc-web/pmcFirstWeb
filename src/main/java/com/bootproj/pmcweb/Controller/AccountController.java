@@ -145,6 +145,6 @@ public class AccountController {
         log.info("이메일 인증하는 부분");
         Account changedUser = accountService.signUpConfirm(authKey, email);
         accountService.signUpConfirm(authKey, email);
-        return "/user/login";
+        return "redirect:/user/login";
     }
 }

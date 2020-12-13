@@ -32,6 +32,7 @@ public class LoginFailHandler implements AuthenticationFailureHandler {
         }else{
             errorMsg = "알수없는 이유로 로그인에 실패하였습니다.";
         }
+
         request.setAttribute("errorMsg", errorMsg);
         request.getRequestDispatcher(DEFAULT_FAILURE_URL).forward(request, response);
     }

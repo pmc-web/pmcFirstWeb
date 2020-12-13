@@ -39,8 +39,8 @@ public class AccountSecurityService implements UserDetailsService {
             return new User(account.getEmail(), account.getPassword(), true, true, true, false, authorities);
         }else{
             authorities.add(new SimpleGrantedAuthority(account.getStatus()));
-            return new User(account.getEmail(), account.getPassword(), authorities);
         }
+        return new User(account.getEmail(), account.getPassword(), authorities);
     }
 
     public String save(Account account) throws SendEmailException, DuplicateEmailException {
