@@ -17,28 +17,34 @@ PMC(Project Makes Coding Skill Up) 프로젝트는 지역의 스터디(모임)�
 
 ## 기획
 
-[기획 문서](doc/project_planning.md)
+[기획 문서](https://hirlawldo.tistory.com/35)
 
 ---
 
 ## 설계
 
-[ERD 설계 문서](doc/erd_design.md)
+[ERD 설계 문서](https://hirlawldo.tistory.com/36)
 
 ---
 
 ## 개발
 
-[개발 가이드](doc/develop_guide.md)
+[개발 가이드](https://hirlawldo.tistory.com/25)
 
-[예외 처리 가이드](doc/exception_guide.md)
+[예외 처리 가이드](https://hirlawldo.tistory.com/26)
 
-[Swagger 설정하기](doc/swagger.md)
+[Swagger 설정하기](https://hirlawldo.tistory.com/32)
 
-[AOP 로거 설정하기](doc/aop.md)
+[AOP 로거 설정하기](https://hirlawldo.tistory.com/31)
 
-[트랜젝션 설정하기](doc/transaction.md)
+[트랜젝션 설정하기](https://hirlawldo.tistory.com/33)
 
 [스프링 시큐리티 적용하기](https://okdolmin.tistory.com/30)
 
 [스프링 시큐리티 인증 후 처리](https://okdolmin.tistory.com/36)
+
+[Junit5 테스트 코드 작성하기(Junit4와 차이점)](https://hirlawldo.tistory.com/39)
+
+[Annotation 동작 원리와 사용법](https://hirlawldo.tistory.com/43)
+
+[인터셉터로 request, response json 값 로깅하기](https://hirlawldo.tistory.com/44)
