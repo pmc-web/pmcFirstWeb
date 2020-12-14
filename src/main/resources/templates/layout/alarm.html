@@ -6,7 +6,7 @@
            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" th:onclick="alarmButton()">
             <i class="fas fa-bell fa-fw"></i>
             <!-- Counter - Alerts -->
-            <span class="badge badge-danger badge-counter">3+</span>
+            <span id="alarmCount" class="badge badge-danger badge-counter">3+</span>
         </a>
 
         <!-- Dropdown - Alerts -->
@@ -40,5 +40,6 @@
             <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
         </div>
         <th:block th:replace="/layout/alarmScript.html :: fragment-alarm-script"/>
+        <th:block th:replace="/layout/alarmWebSocketScript.html :: fragment-alarm-websocket-script"/>
     </th:block>
 </html>
