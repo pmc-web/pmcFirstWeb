@@ -3,6 +3,7 @@
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <sec:authentication property="principal.username" var="userName" />
 <th:block th:fragment="fragment-alarm">
+
     <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown"
         aria-haspopup="true" aria-expanded="false" th:onclick="alarmButton()">
         <i class="fas fa-bell fa-fw"></i>

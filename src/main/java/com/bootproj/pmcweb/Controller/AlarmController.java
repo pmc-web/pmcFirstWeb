@@ -2,6 +2,7 @@ package com.bootproj.pmcweb.Controller;
 
 import com.bootproj.pmcweb.Common.Header;
 import com.bootproj.pmcweb.Common.Response.AlarmApiResponse;
+import com.bootproj.pmcweb.Common.WebSocket.AlarmWebSocketHandler;
 import com.bootproj.pmcweb.Domain.Account;
 import com.bootproj.pmcweb.Domain.Alarm;
 import com.bootproj.pmcweb.Domain.enumclass.AlarmStatus;
@@ -15,6 +16,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.socket.WebSocketSession;
 
 import java.util.List;
 
@@ -40,10 +42,4 @@ public class AlarmController {
         alarmService.updateStatusById(id, AlarmStatus.READ);
         return new ResponseEntity(Header.OK(), HttpStatus.OK);
     }
-
-    @GetMapping("/loginUser")
-    public ResponseEntity getLoginUserName(@AuthenticationPrincipal User user){
-        return new ResponseEntity(Header.OK(user), HttpStatus.OK);
-    }
-
 }
