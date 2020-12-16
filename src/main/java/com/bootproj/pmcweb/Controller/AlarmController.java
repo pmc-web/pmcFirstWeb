@@ -41,4 +41,9 @@ public class AlarmController {
         return new ResponseEntity(Header.OK(), HttpStatus.OK);
     }
 
+    @GetMapping("/loginUser")
+    public ResponseEntity getLoginUserName(@AuthenticationPrincipal User user){
+        return new ResponseEntity(Header.OK(user), HttpStatus.OK);
+    }
+
 }

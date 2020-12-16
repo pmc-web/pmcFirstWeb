@@ -40,7 +40,7 @@ public class AlarmWebSocketHandler extends TextWebSocketHandler {
         log.info("서버가 받은 메세지: " + message.getPayload());
         Account account = accountService.getUserByEmail(message.getPayload());
         Integer alarmCount = alarmService.getListByUserId(account.getId()).size();
-        session.sendMessage(new TextMessage("서버에서 보내는 메세지: " + alarmCount));
+        session.sendMessage(new TextMessage(Integer.toString(alarmCount)));
         super.handleTextMessage(session, message);
     }
 

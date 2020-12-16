@@ -3,6 +3,7 @@
 <th:block th:fragment="fragment-alarm-websocket-script">
     <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+
     <script th:inline="javascript">
         console.log("Alarm Websocket Script load");
         let socket = null;
@@ -12,11 +13,21 @@
             sock = new SockJS(wsAlarmCountUrl);
             socket = sock;
             // 데이터를 전달 받았을때 
-            sock.onmessage = onMessage; // toast 생성
+            sock.onmessage = function (event) {
+                console.log(event.data + '\n');
+                $("#alarmCount").text(event.data);
+            };
+            sock.onopen = function (event) {
+                console.log(wsAlarmCountUrl + "에 연결되었습니다.");
+                sendLoginUser();
+            };
+
+            // sock.onmessage = onMessage; // toast 생성
         }
 
         function onMessage(evt) {
             var data = evt.data;
+            console.log(data);
             // toast
             let toast = "<div class='toast' role='alert' aria-live='assertive' aria-atomic='true'>";
             toast += "<div class='toast-header'><i class='fas fa-bell mr-2'></i><strong class='mr-auto'>알림</strong>";
@@ -31,6 +42,24 @@
         $(document).ready(function () {
             send_message();
         });
+
+        function sendLoginUser(){
+                /*<![CDATA[*/
+                let url = "http://localhost:8080/alarm/loginUser";
+                /*]]>*/
+                if (this.value !== "") {
+                    fetch(url, {
+                        method: 'GET',
+                    }).then(function (response) {
+                        return response.json();
+                    }).then(function (data) {
+                        /*<![CDATA[*/
+                        let user = data.data;
+                        console.log(user);
+                        sock.send(user.username);
+                    }).catch(error => alert(error));
+                }
+            };
     </script>
 </th:block>
 
