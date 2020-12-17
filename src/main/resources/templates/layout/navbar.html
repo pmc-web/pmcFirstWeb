@@ -15,6 +15,7 @@
                 </span>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto">
+
                         <li class="nav-item">
                             <a class="nav-link" sec:authorize="isAnonymous()" th:href="@{/user/login}">로그인</a>
                         </li>
@@ -47,6 +48,11 @@
                         </li>
                         <li class="nav-item">
                             <a sec:authorize="isAuthenticated()" class="nav-link" href="#" th:href="@{/study/register}"><i class="fas fa-plus"></i></a>
+                        </li>
+
+                        <!-- Nav Item - Alerts -->
+                        <li sec:authorize="isAuthenticated()" class="nav-item dropdown no-arrow mx-1">
+                            <th:block th:replace="/layout/alarm.html :: fragment-alarm"/>
                         </li>
                     </ul>
                 </div>

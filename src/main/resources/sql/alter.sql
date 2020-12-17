@@ -21,3 +21,11 @@ ADD `type` VARCHAR(50) NULL COMMENT '메인 이미지 체크용';
 /*----------------2020.12.02---------------------*/
 ALTER TABLE `study`.`attachment`
 CHANGE COLUMN `path` `path` VARCHAR(300) NOT NULL COMMENT '자료 위치' ;
+
+/*----------------2020.12.13---------------------*/
+alter table region add latitude varchar(50) null comment '위도';
+alter table region add longitude varchar(50) null comment '경도';
+
+SET foreign_key_checks = 0;
+TRUNCATE TABLE region
+SET foreign_key_checks = 1;

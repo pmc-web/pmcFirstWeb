@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lagn="ko" xmlns:th="http://www.thymeleaf.org">
+    <th:block th:fragment="fragment-alarm-script">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+        <script th:inline="javascript">
+            const htmlStart = "<h6 class=\"dropdown-header\">\n" +
+                "                알람 리스트\n" +
+                "            </h6>";
+            const notReadHtml1 = "<a class=\"dropdown-item d-flex align-items-center\" href=\"#\" id=\"alertNotRead\">\n" +
+                "                <div class=\"mr-3\">\n" +
+                "                    <div class=\"icon-circle\">\n" +
+                "                        <i class=\"far fa-calendar-alt\" style=\"color:#178828;\"></i>\n" +
+                "                    </div>\n" +
+                "                </div>\n" +
+                "                <div>\n" +
+                "                    <div class=\"small text-gray-500\">";
+            const notReadHtml2 = "</div>\n" +
+                "                    <span class=\"font-weight-bold\">";
+            const notReadHtml3 = "</span>\n" +
+                "                </div>\n" +
+                "            </a>";
+            const readHtml1 = "<a class=\"dropdown-item d-flex align-items-center\" href=\"#\" id=\"alertRead\">\n" +
+                "                <div class=\"mr-3\">\n" +
+                "                    <div class=\"icon-circle\">\n" +
+                "                        <i class=\"far fa-calendar-alt\" style=\"color:#939393;\"></i>\n" +
+                "                    </div>\n" +
+                "                </div>\n" +
+                "                <div>\n" +
+                "                    <div class=\"small text-gray-500\">";
+            const readHtml2 = "</div>";
+            const readHtml3 = "</div>\n" +
+                "            </a>";
+            const htmlEnd = "<a class=\"dropdown-item text-center small text-gray-500\" href=\"#\">Show All Alerts</a>";
+            /*<![CDATA[*/
+            let alarm = "";
+            const dateFormat = "YYYY-MM-DD HH:mm:ss";
+            console.log("navbar alarm script")
+
+            function alarmButton(){
+                /*<![CDATA[*/
+                let url = "http://localhost:8080/alarm";
+                /*]]>*/
+                if (this.value !== "") {
+                    fetch(url, {
+                        method: 'GET',
+                    }).then(function (response) {
+                        return response.json();
+                    }).then(function (data) {
+                        /*<![CDATA[*/
+                        let alarms = data.data;
+                        console.log(alarms);
+                        let html = htmlStart;
+                        for(let i=0; i<alarms.length; i++){
+                            if (alarms[i].status == "NOT_READ"){
+                                html += notReadHtml1 + moment(new Date(alarms[i].alarm_time)).format("YYYY-MM-DD HH:mm:ss") + notReadHtml2 + alarms[i].description + notReadHtml3;
+                            } else if (alarms[i].status == "READ"){
+                                html += readHtml1 + moment(new Date(alarms[i].alarm_time)).format("YYYY-MM-DD HH:mm:ss") + readHtml2 + alarms[i].description + readHtml3;
+                            }
+                        }
+                        html += htmlEnd;
+                        document.getElementById("alertDropdownList").innerHTML= html;
+                    }).catch(error => alert(error));
+                }
+            };
+        </script>
+    </th:block>
+</html>
