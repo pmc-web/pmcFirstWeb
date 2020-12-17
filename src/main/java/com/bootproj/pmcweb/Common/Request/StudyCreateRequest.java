@@ -1,4 +1,4 @@
-package com.bootproj.pmcweb.Domain;
+package com.bootproj.pmcweb.Common.Request;
 
 import com.bootproj.pmcweb.Domain.enumclass.StudyStatus;
 import com.bootproj.pmcweb.Domain.enumclass.StudyType;
@@ -6,15 +6,13 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
 
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
-public class Study{
+public class StudyCreateRequest {
     private Long id;
     private String title;
     @DateTimeFormat(pattern = "yyyy-MM-dd")

@@ -1,7 +1,7 @@
 package com.bootproj.pmcweb.Controller;
 
-import com.bootproj.pmcweb.Domain.Study;
 import com.bootproj.pmcweb.Common.Header;
+import com.bootproj.pmcweb.Domain.Study;
 import com.bootproj.pmcweb.Service.AttachmentService;
 import com.bootproj.pmcweb.Service.StudyService;
 import lombok.RequiredArgsConstructor;
@@ -42,7 +42,7 @@ public class StudyController {
         return new ResponseEntity(Header.OK(list),HttpStatus.OK);
     }
 
-    @PostMapping
+    @PostMapping // TODO : Study 안에 Multipartfile 로 만들어야할듯
     public ResponseEntity<Header> createStudy(@RequestBody Study study, @RequestParam(required=false) MultipartFile file){
         log.info("in {}", study);
         log.info("file {}", file);
