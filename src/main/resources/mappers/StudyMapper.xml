@@ -20,8 +20,16 @@
 
 <select id="getStudyDetail" parameterType="long" resultType="com.bootproj.pmcweb.Domain.Study">
         SELECT * FROM study where id=#{studyId};
-    </select>
-
+</select>
+<select id="getStudyInfoDetail" parameterType="long" resultType="com.bootproj.pmcweb.Common.Response.StudyApiResponse">
+    select A.*, B.path as attachmentPath, B.id as attachmentId  from (SELECT study.*, study_member.user_id as adminId
+    from study INNER JOIN study_member on study.id = study_member.study_id
+    where study_member.role = "ADMIN" and study.id = #{studyId})A
+    left join (select attachment.path, study_material.study_id, attachment.id from attachment
+    inner join study_material
+    on study_material.attachment_id = attachment.id) B
+    on B.study_id = A.id;
+</select>
 <update id="putStudyStatus">
         UPDATE study SET status=#{status} where id = #{id};
     </update>

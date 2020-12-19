@@ -17,5 +17,8 @@
     <update id="changeRole">
         UPDATE study_member SET role=#{role} where id = #{id};
     </update>
+    <select id="getMemberRole" parameterType="long" resultType="string">
+        SELECT role FROM study.study_member where study_id=#{studyId} and user_id=#{userId};
+    </select>
 
 </mapper>

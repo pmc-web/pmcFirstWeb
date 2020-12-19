@@ -1,6 +1,7 @@
 package com.bootproj.pmcweb.Mapper;
 
 import com.bootproj.pmcweb.Common.Request.StudyCreateRequest;
+import com.bootproj.pmcweb.Common.Response.StudyApiResponse;
 import com.bootproj.pmcweb.Config.DatabaseConfiguration;
 import com.bootproj.pmcweb.Domain.enumclass.StudyStatus;
 import org.junit.jupiter.api.*;
@@ -81,5 +82,13 @@ public class StudyMapperTest {
 
 //      studyMapper.putStudyStatus(studyId, open);
 //      studyMapper.putStudyStatus(studyId, close);
+    }
+
+    @Test
+    void getStudyInfoDetail(){
+        Long studyId = 3L;
+        StudyApiResponse response = studyMapper.getStudyInfoDetail(studyId);
+        Study study = studyMapper.getStudyDetail(studyId);
+        assertThat(response.getId().equals(study.getId()));
     }
 }

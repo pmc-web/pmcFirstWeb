@@ -1,6 +1,7 @@
 package com.bootproj.pmcweb.Mapper;
 
 import com.bootproj.pmcweb.Common.Request.StudyCreateRequest;
+import com.bootproj.pmcweb.Common.Response.StudyApiResponse;
 import com.bootproj.pmcweb.Domain.Study;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -17,5 +18,6 @@ public interface StudyMapper {
     public List<Study> getStudyListByDate(String from, String to); // TODO : 날짜
     public Integer insertStudy(StudyCreateRequest study);
     public Study getStudyDetail(Long studyId);
+    public StudyApiResponse getStudyInfoDetail(Long studyId);
     public void putStudyStatus(@Param("id")Long studyId, @Param("status")String status);
 }

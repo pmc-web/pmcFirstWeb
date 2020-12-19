@@ -24,4 +24,9 @@ public class StudyMemberServiceImpl implements StudyMemberService {
     public void changeStatus(Long studyMemberId, String status) {
         studyMemberMapper.changeRole(studyMemberId, status);
     }
+
+    @Override
+    public String getMemberRole(Long studyId, Long userId) {
+        return studyMemberMapper.getMemberRole(studyId, userId);
+    }
 }
