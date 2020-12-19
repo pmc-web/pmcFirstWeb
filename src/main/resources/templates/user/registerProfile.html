@@ -187,7 +187,7 @@
             console.log(response);
             return response.json();
         }).then(function (result) {
-            if(result.ok) window.href.location = "http://localhost:8080/";
+            if (result.ok) window.href.location = "http://localhost:8080/";
             else return;
         }).catch(error => alert(error));
     }

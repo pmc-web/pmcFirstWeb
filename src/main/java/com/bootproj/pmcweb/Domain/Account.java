@@ -37,6 +37,7 @@ public class Account {
     private String name;
     private String role;
     private Long regionId;
+    private Long subjectId;
     private Long attachmentId;
     private String authKey;
 }

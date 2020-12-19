@@ -1,6 +1,7 @@
 package com.bootproj.pmcweb.Controller;
 
 import com.bootproj.pmcweb.Common.Aspect.LogExecutionTime;
+import com.bootproj.pmcweb.Common.Request.ProfileUpdateApiRequest;
 import com.bootproj.pmcweb.Domain.Account;
 import com.bootproj.pmcweb.Domain.Attachment;
 import com.bootproj.pmcweb.Common.Exception.DuplicateEmailException;
@@ -98,8 +99,12 @@ public class AccountController {
     }
 
     @PostMapping("/user/updateProfile")
-    public ResponseEntity<Header> updateProfile(@RequestBody User user){
-
-        return new ResponseEntity(Header.OK(), HttpStatus.OK);
+    public ResponseEntity<Header> updateProfile(@RequestBody ProfileUpdateApiRequest request, @AuthenticationPrincipal User user){
+        accountService.updateUserRegion(user.getUsername(), request.getRegionId());
+        accountService.updateUserSubject(user.getUsername(), request.getSubjectId());
+        Account account = accountService.getUserByEmail(user.getUsername());
+        return new ResponseEntity(Header.OK(account), HttpStatus.OK);
     }
+
+
 }

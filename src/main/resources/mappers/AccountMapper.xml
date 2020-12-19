@@ -49,4 +49,15 @@
         update User set attachment_id = #{attachmentId}
         where email = #{email};
     </update>
+
+    <update id="updateUserSubjectId" parameterType="map">
+        update User set subject_id = #{subjectId}
+        where email = #{email};
+    </update>
+
+    <update id="updateUserRegionId" parameterType="map">
+        update User set region_id = #{regionId}
+        where email = #{email};
+    </update>
+
 </mapper>
