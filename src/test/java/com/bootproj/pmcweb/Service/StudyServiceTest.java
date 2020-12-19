@@ -1,5 +1,6 @@
 package com.bootproj.pmcweb.Service;
 
+import com.bootproj.pmcweb.Common.Request.StudyCreateRequest;
 import com.bootproj.pmcweb.Domain.Study;
 import com.bootproj.pmcweb.Domain.enumclass.StudyStatus;
 import com.bootproj.pmcweb.PmcwebApplication;
@@ -33,7 +34,7 @@ public class StudyServiceTest {
 
     @Test
     void createStudy() throws ParseException {
-        Study testStudy = new Study();
+        StudyCreateRequest testStudy = new StudyCreateRequest();
         String title = "study mapper test study";
         String description = "this is description";
         Date startDate = new SimpleDateFormat("yyyy-mm-dd").parse("2020-10-11");

@@ -1,12 +1,14 @@
 package com.bootproj.pmcweb.Controller;
 
 import com.bootproj.pmcweb.Common.Header;
+import com.bootproj.pmcweb.Common.Request.StudyCreateRequest;
 import com.bootproj.pmcweb.Domain.Study;
 import com.bootproj.pmcweb.Service.AttachmentService;
 import com.bootproj.pmcweb.Service.StudyService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -42,14 +44,12 @@ public class StudyController {
         return new ResponseEntity(Header.OK(list),HttpStatus.OK);
     }
 
-    @PostMapping // TODO : Study 안에 Multipartfile 로 만들어야할듯
-    public ResponseEntity<Header> createStudy(@RequestBody Study study, @RequestParam(required=false) MultipartFile file){
-        log.info("in {}", study);
-        log.info("file {}", file);
+    @PostMapping(consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public ResponseEntity<Header> createStudy(@ModelAttribute StudyCreateRequest study){
+        log.info(study.toString());
         HashMap<String, Long> resultMap = new HashMap<>();
-        log.info("result > ", resultMap);
         resultMap.put("insertId", studyService.createStudy(study));
-        if (file != null) attachmentService.uploadStudyMainImage(file, study.getId());
+        if (study.getImage()!= null) attachmentService.uploadStudyMainImage(study.getImage(), study.getId());
         return new ResponseEntity(Header.OK(resultMap), HttpStatus.CREATED);
     }
 

@@ -8,7 +8,7 @@
         ORDER BY id DESC limit #{limit} offset #{offset}
     </select>
 
-<insert id="insertStudy" parameterType="com.bootproj.pmcweb.Domain.Study" useGeneratedKeys="true" keyProperty="id">
+<insert id="insertStudy" parameterType="com.bootproj.pmcweb.Common.Request.StudyCreateRequest" useGeneratedKeys="true" keyProperty="id">
     INSERT INTO study
     (title, inst_time, updt_time, status, description, start_date, end_date, evaluation, type, region_id, subject_id)
     values (#{title}, now(), now(), #{status}, #{description}, #{startDate}, #{endDate}, #{evaluation}, #{type},
