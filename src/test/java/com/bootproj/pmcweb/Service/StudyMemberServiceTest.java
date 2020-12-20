@@ -34,4 +34,12 @@ public class StudyMemberServiceTest {
         Long result = studyMemberService.joinStudy(studyMember);
         assertThat(result!=0L);
     }
+
+    @Test
+    void getMemberRole(){
+        Long userId = 6L;
+        Long studyId = 3L;
+        String role = "ADMIN";
+        assertThat(studyMemberService.getMemberRole(studyId, userId)).isEqualTo(role);
+    }
 }

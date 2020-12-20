@@ -174,7 +174,7 @@
     /*]]>*/
 
     // file
-    let inputFile;
+    let inputFile = null;
 
     // subject1
     document.getElementById("subject1").addEventListener("change", function() {
@@ -284,6 +284,7 @@
         }else {
             // alert("스터디를 생성 ");
             /*<![CDATA[*/
+            let form = new FormData();
             let study = {
                 title : title,
                 description : description,
@@ -294,26 +295,38 @@
                 subjectId: sub_2,
                 regionId: reg_3,
                 status: 1, //모집 중
+                image: inputFile == null ?inputFile : inputFile.files[0]
             };
             /*]]>*/
-            console.log(JSON.stringify(study));
-            makeStudy(study);
+
+            form.append("title", title);
+            form.append("description", description);
+            form.append("startDate", moment(start).format("YYYY-MM-DD"));
+            form.append("endDate",moment(end).format("YYYY-MM-DD"));
+            form.append("evaluation", 0);
+            form.append("type", 0);
+            form.append("subjectId", sub_2);
+            form.append("regionId", reg_3);
+            form.append("status", 1);
+            form.append("image", inputFile == null ? inputFile : inputFile.files[0]);
+            // console.log(JSON.stringify(study))
+            makeStudy(form);
         }
     }
+
 
     function makeStudy(study) {
         fetch("http://localhost:8080/study",{
             headers: {
-                'Content-Type': 'application/json',
+                'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                // 'Content-Type': 'application/json',
             },
             method : 'POST',
-            // body: study
-            body : JSON.stringify(study),
+            body: study
+            // body : JSON.stringify(study),
         }).then(function(response) {
             console.log(response);
-            return response.json();
-        }).then(function (result) {
-            if(result.ok) window.href.location = "http://localhost:8080/";
+            if(response.ok) window.href.location = "http://localhost:8080/";
             else return;
         }).catch(error => alert(error));
     }

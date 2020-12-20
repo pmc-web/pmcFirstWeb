@@ -8,4 +8,5 @@ public interface StudyMemberService {
      * */
     public Long joinStudy(StudyMember studyMember);
     public void changeStatus(Long studyMemberId, String status);
+    public String getMemberRole(Long studyId, Long userId);
 }

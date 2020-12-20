@@ -1,20 +1,22 @@
-package com.bootproj.pmcweb.Domain;
+package com.bootproj.pmcweb.Common.Response;
 
+import com.bootproj.pmcweb.Domain.Study;
 import com.bootproj.pmcweb.Domain.enumclass.StudyStatus;
 import com.bootproj.pmcweb.Domain.enumclass.StudyType;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
 
-@NoArgsConstructor
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @ToString
-public class Study{
+public class StudyApiResponse {
     private Long id;
     private String title;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -24,10 +26,8 @@ public class Study{
     private String status = StudyStatus.OPEN.getTitle();
     private String description;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @JsonProperty("startDate")
     @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd", timezone="Asia/Seoul")
     private Date startDate;
-    @JsonProperty("endDate")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd", timezone="Asia/Seoul")
     private Date endDate;
@@ -37,4 +37,7 @@ public class Study{
     private Long subjectId;
     @JsonProperty("regionId")
     private Long regionId;
+    private Long adminId; // 스터디장
+    private Long attachmentId;
+    private String attachmentPath;
 }
