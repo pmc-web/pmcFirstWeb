@@ -18,6 +18,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
         // security쪽에서 래핑하는 것과 충돌이 나서 /user/**도 제외함.
         registry.addInterceptor(loggingInterceptor)
                 .addPathPatterns("/**")
-                .excludePathPatterns("/vendor/**", "/css/*", "/img/*");
+                .excludePathPatterns("/vendor/**", "/css/*", "/img/*", "/alarm/*");
     }
 }

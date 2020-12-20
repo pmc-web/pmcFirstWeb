@@ -1,44 +1,48 @@
 <!DOCTYPE html>
-<html lagn="ko" xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-    <th:block th:fragment="fragment-alarm">
-        <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
-           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" th:onclick="alarmButton()">
-            <i class="fas fa-bell fa-fw"></i>
-            <!-- Counter - Alerts -->
-            <span class="badge badge-danger badge-counter">3+</span>
-        </a>
+<html lagn="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<sec:authentication property="principal.username" var="userName" />
+<th:block th:fragment="fragment-alarm">
 
-        <!-- Dropdown - Alerts -->
-        <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-             aria-labelledby="alertsDropdown" id="alertDropdownList">
-            <h6 class="dropdown-header">
-                알람 리스트
-            </h6>
-            <a class="dropdown-item d-flex align-items-center" href="#" id="alertNotRead">
-                <div class="mr-3">
-                    <div class="icon-circle">
-                        <i class="far fa-calendar-alt" style="color:#178828;"></i>
-                    </div>
+    <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown"
+        aria-haspopup="true" aria-expanded="false" th:onclick="alarmButton()">
+        <i class="fas fa-bell fa-fw"></i>
+        <!-- Counter - Alerts -->
+        <span id="alarmCount" class="badge badge-danger badge-counter">3+</span>
+    </a>
+
+    <!-- Dropdown - Alerts -->
+    <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+        aria-labelledby="alertsDropdown" id="alertDropdownList">
+        <h6 class="dropdown-header">
+           알람 리스트
+        </h6>
+        <a class="dropdown-item d-flex align-items-center" href="#" id="alertNotRead">
+            <div class="mr-3">
+                <div class="icon-circle">
+                    <i class="far fa-calendar-alt" style="color:#178828;"></i>
                 </div>
-                <div>
-                    <div class="small text-gray-500">December 12, 2019</div>
-                    <span class="font-weight-bold">A new monthly report is ready to download!</span>
+            </div>
+            <div>
+                <div class="small text-gray-500">December 12, 2019</div>
+                <span class="font-weight-bold">A new monthly report is ready to download!</span>
+            </div>
+        </a>
+        <a class="dropdown-item d-flex align-items-center" href="#" id="alertRead">
+            <div class="mr-3">
+                <div class="icon-circle">
+                    <i class="far fa-calendar-alt" style="color:#939393;"></i>
                 </div>
-            </a>
-            <a class="dropdown-item d-flex align-items-center" href="#" id="alertRead">
-                <div class="mr-3">
-                    <div class="icon-circle">
-                        <i class="far fa-calendar-alt" style="color:#939393;"></i>
-                    </div>
-                </div>
-                <div>
-                    <div class="small text-gray-500">December 7, 2019</div>
-                    $290.29 has been deposited into your account!
-                </div>
-            </a>
-            <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-        </div>
-        <th:block th:replace="/layout/alarmScript.html :: fragment-alarm-script"/>
-    </th:block>
+            </div>
+            <div>
+                <div class="small text-gray-500">December 7, 2019</div>
+                $290.29 has been deposited into your account!
+            </div>
+        </a>
+        <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+    </div>
+    <th:block th:replace="/layout/alarmScript.html :: fragment-alarm-script" />
+    <th:block th:replace="/layout/alarmWebSocketScript.html :: fragment-alarm-websocket-script" />
+</th:block>
+
 </html>

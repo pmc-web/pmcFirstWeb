@@ -38,6 +38,7 @@ public class AlarmServiceImpl implements AlarmService {
         return alarms;
     }
 
+
     @Override
     public void updateStatusById(Long id, AlarmStatus status) {
         alarmMapper.updateAlarmStatus(id, status);
