@@ -1,7 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
     <th:block th:fragment="fragment-kakaoContent">
-        <div id="map" style="width:100%;height:770px;"></div>
+    <th:block th:replace="/layout/common.html :: fragment-common"/>
+        <link rel="stylesheet" th:href="@{/vendor/adminlte/adminlte.min.css}">
+        <!-- daterange picker -->
+        <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+
+        <div id="map" style="width:100%;height:700px;"></div>
         <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2aed99bb162bd9e8920ff6c2c8f70568"></script>
         <script>
             var mapContainer = document.getElementById('map');
@@ -53,6 +58,106 @@
             // 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
             var zoomControl = new kakao.maps.ZoomControl();
             map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+
+            $(document).ready(function(){
+                let region1 = "";
+
+                $("#region1").change(function(){
+                    region1 = String(this.value);
+                    let url = "http://localhost:8080/region?regionDepth1="+region1;
+
+                    $.ajax({
+                        url: url,
+                        data: region1,
+                        dataType: 'json',
+                        processData: false,
+                        contentType: false,
+                        type: 'GET',
+                        success: function (data) {
+                            /*<![CDATA[*/
+                            let html = "<option>구를 선택하세요</option>";
+                            let regions = data.data;
+                            /*]]>*/
+                            for(let i=0; i<regions.length; i++){
+                                html+= "<option value="+regions[i]+">"+ regions[i]+"</option>";
+                            }
+                            document.getElementById("region2").innerHTML= html;
+                        },
+                        error: function (request, status, error) {
+                            alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+                        }
+                    })
+                });
+            });
+
+            // 키워드 검색을 요청하는 함수입니다
+            function searchPlaces() {
+                let searchData;
+                let region1 = document.getElementById('region1').value;
+                let region2 = document.getElementById('region2').value;
+                let keyword = document.getElementById('keyword').value;
+
+                alert(region1+""+region2+""+keyword);
+
+
+                // document.getElementById("region2").addEventListener("change", function() {
+                //     region2 = String(this.value);
+                //     /*<![CDATA[*/
+                //     let url = "http://localhost:8080/region/depth?regionDepth1="+region1+"&regionDepth2="+region2;
+                //     /*]]>*/
+                //     if (this.value !== "") {
+                //         fetch(url,{
+                //             headers: {
+                //                 'Content-Type': 'application/json',
+                //             },
+                //             method : 'GET',
+                //         }).then(function(response) {
+                //             return response.json();
+                //         }).then(function(data) {
+                //             /*<![CDATA[*/
+                //             let html = "<option>지역 소분류</option>";
+                //             let regions = data.data;
+                //             /*]]>*/
+                //             for(let i=0; i<regions.length; i++){
+                //                 html+= "<option value="+regions[i].id+">"+regions[i].regionDepth3+"</option>";
+                //             }
+                //             document.getElementById("region3").innerHTML= html;
+                //         }).catch(error => alert(error));
+                //     }
+                // });
+
+            }
+            // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+            map.setBounds(bounds);
         </script>
+        <div class="map_wrap">
+            <div id="menu_wrap" class="bg_white">
+                <div class="row mt-2">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <select class="form-control" id="region1">
+                                <option>시를 선택하세요</option>
+                                <option th:each="item : ${regions}" th:value="${item}" th:text="${item}"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <select class="form-control" id="region2">
+                                <option>구를 선택하세요</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="검색어를 입력하세요" id="keyword">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-dark" id="searchBtn" type="button" onclick="searchPlaces();">검색하기</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </th:block>
 </html>
