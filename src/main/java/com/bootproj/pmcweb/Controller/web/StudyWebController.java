@@ -49,4 +49,10 @@ public class StudyWebController {
         return mv;
     }
 
+    @GetMapping("/study/detail")
+    public ModelAndView getDetail() {
+        ModelAndView mv = new ModelAndView("study/study_detail");
+        return mv;
+    }
+
 }
