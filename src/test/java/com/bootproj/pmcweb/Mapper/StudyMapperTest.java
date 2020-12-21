@@ -1,5 +1,7 @@
 package com.bootproj.pmcweb.Mapper;
 
+import com.bootproj.pmcweb.Common.Request.StudyCreateRequest;
+import com.bootproj.pmcweb.Common.Response.StudyApiResponse;
 import com.bootproj.pmcweb.Config.DatabaseConfiguration;
 import com.bootproj.pmcweb.Domain.enumclass.StudyStatus;
 import org.junit.jupiter.api.*;
@@ -37,7 +39,7 @@ public class StudyMapperTest {
     @Test
     @Order(1)
     public void insertStudy() throws ParseException {
-        Study testStudy = new Study();
+        StudyCreateRequest testStudy = new StudyCreateRequest();
         String title = "study mapper test study";
         String description = "this is description";
         Date startDate = new SimpleDateFormat("yyyy-mm-dd").parse("2020-10-11");
@@ -80,5 +82,13 @@ public class StudyMapperTest {
 
 //      studyMapper.putStudyStatus(studyId, open);
 //      studyMapper.putStudyStatus(studyId, close);
+    }
+
+    @Test
+    void getStudyInfoDetail(){
+        Long studyId = 3L;
+        StudyApiResponse response = studyMapper.getStudyInfoDetail(studyId);
+        Study study = studyMapper.getStudyDetail(studyId);
+        assertThat(response.getId().equals(study.getId()));
     }
 }

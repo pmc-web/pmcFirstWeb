@@ -41,4 +41,11 @@ public class StudyMemberMapperTest {
         assertThat(member.getId().equals(memberId));
     }
 
+    @Test
+    public void getMemberRole(){
+        Long userId = 6L;
+        Long studyId = 3L;
+        String role = "ADMIN";
+        assertThat(studyMemberMapper.getMemberRole(studyId, userId)).isEqualTo(role);
+    }
 }

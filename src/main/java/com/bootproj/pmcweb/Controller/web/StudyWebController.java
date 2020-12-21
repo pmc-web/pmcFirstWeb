@@ -1,11 +1,12 @@
 package com.bootproj.pmcweb.Controller.web;
 
+import com.bootproj.pmcweb.Common.Response.StudyApiResponse;
 import com.bootproj.pmcweb.Domain.Account;
 import com.bootproj.pmcweb.Domain.Region;
+import com.bootproj.pmcweb.Domain.Study;
 import com.bootproj.pmcweb.Domain.Subject;
-import com.bootproj.pmcweb.Service.AccountService;
-import com.bootproj.pmcweb.Service.RegionService;
-import com.bootproj.pmcweb.Service.SubjectService;
+import com.bootproj.pmcweb.Domain.enumclass.MemberRole;
+import com.bootproj.pmcweb.Service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -29,6 +32,8 @@ public class StudyWebController {
 
     private final RegionService regionService;
     private final SubjectService subjectService;
+    private final StudyMemberService studyMemberService;
+    private final StudyService studyService;
 
     @Autowired
     private AccountService accountService;
@@ -47,6 +52,23 @@ public class StudyWebController {
         mv.addObject("subjects", subjects);
         mv.addObject("loginUser", account.getName());
         return mv;
+    }
+
+    @GetMapping("/study/detail")
+    public ModelAndView getDetail(@AuthenticationPrincipal User user, @RequestParam(value = "id")Long id) {
+        ModelAndView adminView = new ModelAndView("study/study_detail");
+        ModelAndView normalView = new ModelAndView("study/study_detail");
+        StudyApiResponse studyDetail = studyService.getStudyInfo(id); // TODO :NULL exception
+
+        adminView.addObject("study",studyDetail);
+        normalView.addObject("study", studyDetail);
+
+        if(user == null) return  normalView;
+        Account account = accountService.getUserByEmail(user.getUsername());
+        String role = studyMemberService.getMemberRole(id,account.getId());
+
+        if(MemberRole.ADMIN.getTitle().equals(role))return adminView;
+        return normalView;
     }
 
 }

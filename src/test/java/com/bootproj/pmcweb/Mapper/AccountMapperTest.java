@@ -79,4 +79,22 @@ public class AccountMapperTest {
         map.put("attachmentId", testAttachmentId);
         userMapper.updateUserAttachment(map);
     }
+
+    @Test
+    void updateUserSubjectId() {
+        String testEmail = "hirlawldo@naver.com";
+        Map<String, String> map = new HashMap<>();
+        map.put("email", testEmail);
+        map.put("subjectId", "2");
+        userMapper.updateUserSubjectId(map);
+    }
+
+    @Test
+    void updateUserRegionId() {
+        String testEmail = "hirlawldo@naver.com";
+        Map<String, String> map = new HashMap<>();
+        map.put("email", testEmail);
+        map.put("regionId", "11665");
+        userMapper.updateUserRegionId(map);
+    }
 }

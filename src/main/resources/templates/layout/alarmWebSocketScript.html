@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lagn="ko" xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="fragment-alarm-websocket-script">
+    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+
+    <script th:inline="javascript">
+        console.log("Alarm Websocket Script load");
+        let socket = null;
+        let wsAlarmCountUrl = "http://localhost:8080/alarm/count";
+        function send_message() {
+            console.log("send_message");
+            sock = new SockJS(wsAlarmCountUrl);
+            socket = sock;
+            // 데이터를 전달 받았을때 
+            sock.onmessage = function (event) {
+                console.log(event.data + '\n');
+                $("#alarmCount").text(event.data);
+                // makeToast(event.data);
+            };
+            sock.onopen = function (event) {
+                console.log(wsAlarmCountUrl + "에 연결되었습니다.");
+            };
+
+            // sock.onmessage = onMessage; // toast 생성
+        }
+
+        function makeToast(data) {
+            // toast
+            let toast = "<div class='toast' role='alert' aria-live='assertive' aria-atomic='true'>";
+            toast += "<div class='toast-header'><i class='fas fa-bell mr-2'></i><strong class='mr-auto'>알림</strong>";
+            toast += "<small class='text-muted'>just now</small><button type='button' class='ml-2 mb-1 close' data-dismiss='toast' aria-label='Close'>";
+            toast += "<span aria-hidden='true'>&times;</span></button>";
+            toast += "</div> <div class='toast-body'>" + data + "</div></div>";
+            $("#alertDropdownList").append(toast);   // msgStack div에 생성한 toast 추가
+            $(".toast").toast({ "animation": true, "autohide": false });
+            $('.toast').toast('show');
+        };
+
+        $(document).ready(function () {
+            send_message();
+        });
+
+    </script>
+</th:block>
+
+</html>

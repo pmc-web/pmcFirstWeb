@@ -1,5 +1,7 @@
 package com.bootproj.pmcweb.Service;
 
+import com.bootproj.pmcweb.Common.Request.StudyCreateRequest;
+import com.bootproj.pmcweb.Common.Response.StudyApiResponse;
 import com.bootproj.pmcweb.Domain.Study;
 import com.bootproj.pmcweb.Mapper.StudyMapper;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +23,7 @@ public class StudyServiceImpl implements StudyService {
     }
 
     @Override
-    public Long createStudy(Study study) {
+    public Long createStudy(StudyCreateRequest study) {
         int result =  studyMapper.insertStudy(study);
         System.out.println(study.toString());
         if(result == 1){
@@ -34,6 +36,11 @@ public class StudyServiceImpl implements StudyService {
     @Override
     public Study getStudyDetail(Long studyId) {
         return studyMapper.getStudyDetail(studyId);
+    }
+
+    @Override
+    public StudyApiResponse getStudyInfo(Long studyId) {
+        return studyMapper.getStudyInfoDetail(studyId);
     }
 
     @Override

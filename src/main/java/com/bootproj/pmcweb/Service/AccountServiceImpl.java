@@ -76,6 +76,24 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    public void updateUserRegion(String email, Long regionId) {
+        Map<String, String> map = new HashMap<>();
+        map.put("email", email);
+        map.put("regionId", Long.toString(regionId));
+        accountMapper.updateUserRegionId(map);
+        return;
+    }
+
+    @Override
+    public void updateUserSubject(String email, Long subjectId) {
+        Map<String, String> map = new HashMap<>();
+        map.put("email", email);
+        map.put("subjectId", Long.toString(subjectId));
+        accountMapper.updateUserSubjectId(map);
+        return;
+    }
+
+    @Override
     public String sendSignUpEmail(Account account) throws SendEmailException, DuplicateEmailException {
         String msg = ResultCode.OK.getMessage();
         try {
