@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @RequiredArgsConstructor // 생성자를 통해 DI
 @Service
@@ -49,6 +50,11 @@ public class StudyServiceImpl implements StudyService {
         Study study = studyMapper.getStudyDetail(studyId);
         if(study.getStatus().equals(status)) return study;
         return null; // TODO : Q.이렇게 해도 되나 ?
+    }
+
+    @Override
+    public List<String> getAllList() {
+        return studyMapper.getStudyAllList();
     }
 
 }

@@ -37,4 +37,8 @@ public class Study{
     private Long subjectId;
     @JsonProperty("regionId")
     private Long regionId;
+
+    private float latitude;
+    private float longitude;
+
 }

@@ -6,7 +6,20 @@
 <select id="getStudyList" resultType="com.bootproj.pmcweb.Domain.Study">
         SELECT * FROM study
         ORDER BY id DESC limit #{limit} offset #{offset}
-    </select>
+</select>
+
+<select id="getStudyAllList" resultType="com.bootproj.pmcweb.Domain.Study">
+    SELECT 	s1.id as id
+    ,       title
+    ,		description
+    ,		start_date
+    ,		end_date
+    ,		latitude
+    ,		longitude
+    FROM    study s1
+    INNER JOIN region r1
+    ON s1.region_id = r1.id
+</select>
 
 <insert id="insertStudy" parameterType="com.bootproj.pmcweb.Common.Request.StudyCreateRequest" useGeneratedKeys="true" keyProperty="id">
     INSERT INTO study
