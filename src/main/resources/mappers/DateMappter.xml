@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bootproj.pmcweb.Mapper.DateMapper">
+
+    <insert id="createDate" parameterType="com.bootproj.pmcweb.Domain.Dates" useGeneratedKeys="true" keyProperty="id">
+        insert into date (date, description, study_id)
+        values (#{date}, #{description}, #{studyId});
+        <selectKey keyProperty="id" resultType="long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+
+    <update id="updateDate" parameterType="com.bootproj.pmcweb.Domain.Dates">
+        UPDATE date
+        <set>
+            <if test="date != null">date=#{date},</if>
+            <if test="description != null">description=#{description},</if>
+            <if test="studyId != null">study_id=#{studyId},</if>
+        </set>
+        where id = #{id};
+    </update>
+
+    <select id="getDate" resultType="com.bootproj.pmcweb.Domain.Dates">
+        select * from date where id = #{id};
+    </select>
+
+    <delete id="deleteDate">
+        delete from date where id = #{id};
+    </delete>
+</mapper>
