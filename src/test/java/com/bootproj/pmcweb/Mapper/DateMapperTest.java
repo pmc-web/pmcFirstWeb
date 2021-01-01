@@ -11,6 +11,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -36,6 +37,13 @@ class DateMapperTest {
         Integer result = dateMapper.createDate(dates);
         log.info("create id : {}", dates.getId());
         Assertions.assertThat(result.equals(1));
+    }
+
+    @Test
+    void getDateList(){
+        List<Dates> dates = dateMapper.getDatesList(studyId, "2020",null,null);
+
+        Assertions.assertThat(dates.size()>0);
     }
 
     @Test
