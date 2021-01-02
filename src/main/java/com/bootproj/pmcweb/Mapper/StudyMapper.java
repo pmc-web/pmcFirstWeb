@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface StudyMapper {
@@ -20,4 +21,6 @@ public interface StudyMapper {
     public Study getStudyDetail(Long studyId);
     public StudyApiResponse getStudyInfoDetail(Long studyId);
     public void putStudyStatus(@Param("id")Long studyId, @Param("status")String status);
+
+    List<String> getStudyAllList();
 }
