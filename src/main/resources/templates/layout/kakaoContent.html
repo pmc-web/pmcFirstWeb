@@ -26,14 +26,16 @@
         </div>
         <div id="current">현재 위치</div>
         <div id="map" style="width:100%; height:820px;"></div>
-
+<!--        <script type="application/javascript" th:src="@{/js/kakaodata.js}"/>-->
         <script th:inline="javascript">
+            // jSon 형식으로 변경 필요
+            // 자바스크립트는 클래스 형태 못받아옴
             let data = [];
             /*[# th:each="n : ${studyAllList}"]*/
             data.push("[(${n})]");
             /*[/]*/
-        </script>
-        <script>
+            console.log(data);
+
             var mapOptions = {
                 center: new naver.maps.LatLng(37.3595704, 127.105399),
                 zoom: 10
@@ -46,8 +48,8 @@
 
             for (var i in data){
                 var target = data[i];
-                alert(target.latitude);
-                alert(target.longitude);
+                console.log(target.latitude);
+                console.log(target.longitude);
                 var latlng = new naver.maps.LatLng(target.latitude, target.longitude);
                 marker = new naver.maps.Marker({
                     map : map,
