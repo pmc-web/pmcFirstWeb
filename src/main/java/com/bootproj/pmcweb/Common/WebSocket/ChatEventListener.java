@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.socket.messaging.SessionConnectedEvent;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
-@Profile("stomp")
+//@Profile("stomp")
 @Component
 public class ChatEventListener {
     private static final Logger logger = LoggerFactory.getLogger(ChatEventListener.class);
