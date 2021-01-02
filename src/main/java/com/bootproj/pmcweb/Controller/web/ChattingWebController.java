@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class ChattingWebController {
     @GetMapping("/chatting")
     public String chattingView(){ // TODO FIX
-        return "study/chatting";
+        return "study/chat";
     }
 }
