@@ -30,9 +30,11 @@ public class LoggingAspect {
         try {
             return proceedingJoinPoint.proceed(proceedingJoinPoint.getArgs());
         } finally {
-//            HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
-//            long end = System.currentTimeMillis();
-//            log.info("Request: {} {} : {} ({}ms)", request.getMethod(), request.getRequestURL(), paramMapToString(request.getParameterMap()),end - start);
+            if (RequestContextHolder.getRequestAttributes() != null) {
+                HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+                long end = System.currentTimeMillis();
+                log.info("Request: {} {} : {} ({}ms)", request.getMethod(), request.getRequestURL(), paramMapToString(request.getParameterMap()),end - start);
+            }
         }
     }
 
