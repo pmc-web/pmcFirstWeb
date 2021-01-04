@@ -10,7 +10,7 @@ import java.util.Map;
 public interface StudyService {
 
     public List<Study> getStudyList(Integer page);
-    public Long createStudy(StudyCreateRequest study);
+    public Long createStudy(Study study);
     public Study getStudyDetail(Long studyId);
     public StudyApiResponse getStudyInfo(Long studyId);
     public Study putStudyStatus(Long studyId, String status);

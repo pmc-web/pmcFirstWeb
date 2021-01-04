@@ -44,12 +44,12 @@ public class StudyController {
         return new ResponseEntity(Header.OK(list),HttpStatus.OK);
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public ResponseEntity<Header> createStudy(@ModelAttribute StudyCreateRequest study){
+    // @PostMapping(consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    @PostMapping
+    public ResponseEntity<Header> createStudy(@RequestBody Study study){
         log.info(study.toString());
         HashMap<String, Long> resultMap = new HashMap<>();
         resultMap.put("insertId", studyService.createStudy(study));
-        if (study.getImage()!= null) attachmentService.uploadStudyMainImage(study.getImage(), study.getId());
         return new ResponseEntity(Header.OK(resultMap), HttpStatus.CREATED);
     }
 
