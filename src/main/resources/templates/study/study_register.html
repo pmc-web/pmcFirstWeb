@@ -12,148 +12,151 @@
 </head>
 <body>
 <!-- main -->
-<div class="container" >
+<div class="container">
     <div class="mt-3">
-    <!-- general form elements -->
-    <div class="card card-primary">
-        <div class="card-header">
-            <h3 class="card-title">스터디 등록</h3>
-        </div>
-        <!-- /.card-header -->
-        <!-- form start -->
-        <form id="form">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <!-- title input -->
-                        <div class="form-group">
-                            <label>제목</label>
-                            <input type="text" class="form-control" placeholder="Title" id="title">
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <label>스터디장</label>
-                            <input type="text" class="form-control" disabled th:attr="placeholder=${loginUser}">
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-6">
-                        <!-- textarea -->
-                        <div class="form-group">
-                            <label>설명</label>
-                            <textarea class="form-control" rows="3" placeholder="Description" id="description"></textarea>
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <!-- select -->
-                        <div class="form-group">
-                            <label>카테고리</label>
-                            <div class="form-group">
-                                <select class="form-control" id="subject1">
-                                    <option value="" selected>선택해주세요</option>
-                                    <option th:each="item : ${subjects}" th:value="${item}" th:text="${item}"></option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <select class="form-control" id="subject2">
-                                    <option value="" selected>선택해주세요</option>
-                                </select>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
+        <!-- general form elements -->
+        <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title">스터디 등록</h3>
+            </div>
+            <!-- /.card-header -->
+            <!-- form start -->
+            <form id="form">
+                <div class="card-body">
                     <div class="row">
                         <div class="col-sm-6">
-                            <!-- Date range -->
+                            <!-- title input -->
                             <div class="form-group">
-                                <label>시작 날짜:</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
+                                <label>제목</label>
+                                <input type="text" class="form-control" placeholder="Title" id="title">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>스터디장</label>
+                                <input type="text" class="form-control" disabled th:attr="placeholder=${loginUser}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <!-- textarea -->
+                            <div class="form-group">
+                                <label>설명</label>
+                                <textarea class="form-control" rows="3" placeholder="Description"
+                                          id="description"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <!-- select -->
+                            <div class="form-group">
+                                <label>카테고리</label>
+                                <div class="form-group">
+                                    <select class="form-control" id="subject1">
+                                        <option value="" selected>선택해주세요</option>
+                                        <option th:each="item : ${subjects}" th:value="${item}"
+                                                th:text="${item}"></option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <select class="form-control" id="subject2">
+                                        <option value="" selected>선택해주세요</option>
+                                    </select>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <!-- Date range -->
+                                <div class="form-group">
+                                    <label>시작 날짜:</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
                                       <span class="input-group-text">
                                         <i class="far fa-calendar-alt"></i>
                                       </span>
+                                        </div>
+                                        <input type="text" class="form-control float-right" id="startDate">
                                     </div>
-                                    <input type="text" class="form-control float-right" id="startDate">
+                                    <!-- /.input group -->
                                 </div>
-                                <!-- /.input group -->
+                                <!-- /.form group -->
                             </div>
-                            <!-- /.form group -->
-                        </div>
-                        <div class="col-sm-6">
-                            <!-- Date range -->
-                            <div class="form-group">
-                                <label>종료 날짜:</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
+                            <div class="col-sm-6">
+                                <!-- Date range -->
+                                <div class="form-group">
+                                    <label>종료 날짜:</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
                                       <span class="input-group-text">
                                         <i class="far fa-calendar-alt"></i>
                                       </span>
+                                        </div>
+                                        <input type="text" class="form-control float-right" id="endDate">
                                     </div>
-                                    <input type="text" class="form-control float-right" id="endDate">
+                                    <!-- /.input group -->
                                 </div>
-                                <!-- /.input group -->
-                            </div>
-                            <!-- /.form group -->
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <label>지역 대분류</label>
-                            <div class="form-group">
-                                <select class="form-control" id="region1">
-                                    <option>지역 중분류1</option>
-                                    <option th:each="item : ${regions}" th:value="${item}" th:text="${item}"></option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <label>지역 중분류</label>
-                            <div class="form-group">
-                                <select class="form-control" id="region2">
-                                    <option>지역 중분류2</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <label>지역 소분류</label>
-                            <div class="form-group">
-                                <select class="form-control" id="region3">
-                                    <option>지역 소분류</option>
-                                </select>
+                                <!-- /.form group -->
                             </div>
                         </div>
 
-                    </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <label>지역 대분류</label>
+                                <div class="form-group">
+                                    <select class="form-control" id="region1">
+                                        <option>지역 중분류1</option>
+                                        <option th:each="item : ${regions}" th:value="${item}"
+                                                th:text="${item}"></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <label>지역 중분류</label>
+                                <div class="form-group">
+                                    <select class="form-control" id="region2">
+                                        <option>지역 중분류2</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <label>지역 소분류</label>
+                                <div class="form-group">
+                                    <select class="form-control" id="region3">
+                                        <option>지역 소분류</option>
+                                    </select>
+                                </div>
+                            </div>
 
-                    <!-- File -->
-                    <label for="exampleInputFile">첨부파일</label>
-                    <div class="input-group">
-                        <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="exampleInputFile">
-                            <label class="custom-file-label" for="exampleInputFile">Choose file</label>
                         </div>
+
+                        <!-- File -->
+                        <label for="exampleInputFile">첨부파일</label>
+                        <div class="input-group">
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="exampleInputFile">
+                                <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                            </div>
+                        </div>
+                        <!-- File End -->
                     </div>
-                    <!-- File End -->
                 </div>
-            </div>
-            <!-- /.card-body -->
-        </form>
-        <div class="card-footer">
-            <div class="row">
-                <div class="col">
-                    <button type="submit" class="btn btn-primary" onclick="checkForm()">Submit</button>
+                <!-- /.card-body -->
+            </form>
+            <div class="card-footer">
+                <div class="row">
+                    <div class="col">
+                        <button type="submit" class="btn btn-primary" onclick="checkForm()">Submit</button>
 
+                    </div>
                 </div>
             </div>
         </div>
+        <!-- /.card -->
     </div>
-    <!-- /.card -->
-</div>
 </div>
 <!-- /main container -->
 
@@ -164,6 +167,7 @@
 <script>
     $("#startDate").datepicker();
     $("#endDate").datepicker();
+
 </script>
 <script>
     /*<![CDATA[*/
@@ -299,18 +303,6 @@
             };
             /*]]>*/
             makeStudy(study);
-            // form.append("title", title);
-            // form.append("description", description);
-            // form.append("startDate", moment(start).format("YYYY-MM-DD"));
-            // form.append("endDate",moment(end).format("YYYY-MM-DD"));
-            // form.append("evaluation", 0);
-            // form.append("type", 0);
-            // form.append("subjectId", sub_2);
-            // form.append("regionId", reg_3);
-            // form.append("status", 1);
-            // form.append("image", inputFile == null ? inputFile : inputFile.files[0]);
-            // console.log(JSON.stringify(study))
-            //makeStudy(form);
         }
     }
 
@@ -326,11 +318,41 @@
              body : JSON.stringify(study),
         }).then(function(response) {
             console.log(response);
-            if(response.ok) window.location.href = "http://localhost:8080/";
-            else return;
+            if(response.ok){
+                return response.json();
+            }
+        }).then(function(data) {
+                console.log(data);
+                console.log(data.data);
+                if (inputFile != null) {
+                    makeStudyImage(data.data.id);
+                } else {
+                    window.location.href = "http://localhost:8080/";
+                }
         }).catch(error => alert(error));
     }
 
+    function makeStudyImage(studyId){
+            console.log(inputFile);
+            let formData = new FormData();
+            formData.append("file", inputFile.files[0]);
+            formData.append("type", "MAIN_IMAGE");
+            $.ajax({
+                url: '/attachment/study/' + studyId,
+                data: formData,
+                dataType:'text',
+                processData: false,
+                contentType: false,
+                type: 'POST',
+                success: function(data){
+                alert("스터디 이미지가 추가 되었습니다.")
+                window.location.href = "http://localhost:8080/";
+            },
+            error: function(request,status,error){
+                alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+            }
+            })
+    }
     $(document).ready(function () {
         let fileTarget = $('.custom-file-input .upload-hidden');
         fileTarget.on('change', function () { // 값이 변경되면
@@ -416,6 +438,7 @@
             }
         }
     }
+
 </script>
 </body>
 </html>

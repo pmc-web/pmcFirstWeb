@@ -46,11 +46,9 @@ public class StudyController {
 
     // @PostMapping(consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     @PostMapping
-    public ResponseEntity<Header> createStudy(@RequestBody Study study){
-        log.info(study.toString());
-        HashMap<String, Long> resultMap = new HashMap<>();
-        resultMap.put("insertId", studyService.createStudy(study));
-        return new ResponseEntity(Header.OK(resultMap), HttpStatus.CREATED);
+    public ResponseEntity<Header<Study>> createStudy(@RequestBody Study study){
+        Study createdStudy = studyService.createStudy(study);
+        return new ResponseEntity(Header.OK(createdStudy), HttpStatus.CREATED);
     }
 
     @GetMapping("/{studyId}")

@@ -17,7 +17,7 @@ public interface StudyMapper {
      * */
     public List<Study> getStudyList(@Param("limit") Integer limit, @Param("offset") Integer offset); // TODO : mybatis 문법 잘 아시는분 리팩토링 좀!
     public List<Study> getStudyListByDate(String from, String to); // TODO : 날짜
-    public Integer insertStudy(Study study);
+    public void insertStudy(Study study);
     public Study getStudyDetail(Long studyId);
     public StudyApiResponse getStudyInfoDetail(Long studyId);
     public void putStudyStatus(@Param("id")Long studyId, @Param("status")String status);
