@@ -78,7 +78,7 @@ public class StudyController {
     @PutMapping("/{studyId}")
     public ResponseEntity<Header> changeStudyStatus(@PathVariable(value="studyId")Long studyId, @RequestParam(value = "status")String status) throws Exception{
         try{
-            Study study = studyService.putStudyStatus(studyId, status);
+            Optional<Study> study = studyService.putStudyStatus(studyId, status);
             return new ResponseEntity(Header.OK(study),HttpStatus.OK);
         }catch (Exception e){
             log.warn(e.getMessage());
