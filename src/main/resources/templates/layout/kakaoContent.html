@@ -30,9 +30,10 @@
         <script th:inline="javascript">
             // jSon 형식으로 변경 필요
             // 자바스크립트는 클래스 형태 못받아옴
+            // data.push("{"evaluation":0,"endDate":"Sat Dec 05 00:00:00 KST 2020","latitude":37.55729,"description":"테스트1","id":1,"type":"FREE","title":"스터디 테스트1","startDate":"Tue Dec 01 00:00:00 KST 2020","status":"OPEN","longitude":126.97937}");
             let data = [];
-            /*[# th:each="n : ${studyAllList}"]*/
-            data.push("[(${n})]");
+            /*[# th:each="data : ${studyAllList}"]*/
+            data.push("[(${data})]");
             /*[/]*/
             console.log(data);
 
@@ -48,8 +49,6 @@
 
             for (var i in data){
                 var target = data[i];
-                console.log(target.latitude);
-                console.log(target.longitude);
                 var latlng = new naver.maps.LatLng(target.latitude, target.longitude);
                 marker = new naver.maps.Marker({
                     map : map,
