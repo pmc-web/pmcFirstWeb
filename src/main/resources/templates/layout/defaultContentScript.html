@@ -58,7 +58,11 @@
                 for(let i=0; i<data.length; i++){
                     html += "<div class=\"col-lg-4 col-sm-6 portfolio-item\" id="+ data[i].id + ">";
                     html += "<div class=\"card h-100\">";
-                    html += "<a href=\"#\"><img class=\"card-img-top\" src=\"http://placehold.it/700x400\" alt=\"\"></a>";
+                    if (data[i].attachment_path != null){
+                        html += "<a href=\"#\"><img class=\"card-img-top\" src=\"/img/study/" + data[i].id + "/" + data[i].attachment_path+"\" alt=\"\"></a>";
+                    } else {
+                        html += "<a href=\"#\"><img class=\"card-img-top\" src=\"http://placehold.it/700x400\" alt=\"\"></a>";
+                    }
                     html += "<div class=\"card-body\"><h4 class=\"card-title\">";
                     html += "<a href=\"#\">"+data[i].title+"</a></h4>";
                     html += "<p class=\"card-text\">"+data[i].description+"</p>";
