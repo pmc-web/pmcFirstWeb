@@ -1,19 +1,18 @@
 package com.bootproj.pmcweb.Controller;
 
 import com.bootproj.pmcweb.Common.Header;
-import com.bootproj.pmcweb.Common.Request.StudyCreateRequest;
+import com.bootproj.pmcweb.Common.Response.StudyApiResponse;
 import com.bootproj.pmcweb.Domain.Study;
 import com.bootproj.pmcweb.Service.AttachmentService;
+import com.bootproj.pmcweb.Service.StudyMemberService;
 import com.bootproj.pmcweb.Service.StudyService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -23,6 +22,8 @@ import java.util.List;
 public class StudyController {
 
     private final StudyService studyService;
+
+    private final StudyMemberService studyMemberService;
 
     private final AttachmentService attachmentService;
 
@@ -41,16 +42,14 @@ public class StudyController {
      @RequestParam(required = false, value = "author")String author){
         if(page == null) page = 1;
         List<Study> list = studyService.getStudyList(page);//TODO: 수정
-        return new ResponseEntity(Header.OK(list),HttpStatus.OK);
+        return new ResponseEntity(Header.OK(getStudyApiResponse(list)),HttpStatus.OK);
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public ResponseEntity<Header> createStudy(@ModelAttribute StudyCreateRequest study){
-        log.info(study.toString());
-        HashMap<String, Long> resultMap = new HashMap<>();
-        resultMap.put("insertId", studyService.createStudy(study));
-        if (study.getImage()!= null) attachmentService.uploadStudyMainImage(study.getImage(), study.getId());
-        return new ResponseEntity(Header.OK(resultMap), HttpStatus.CREATED);
+    // @PostMapping(consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    @PostMapping
+    public ResponseEntity<Header<Study>> createStudy(@RequestBody Study study){
+        Study createdStudy = studyService.createStudy(study);
+        return new ResponseEntity(Header.OK(createdStudy), HttpStatus.CREATED);
     }
 
     @GetMapping("/{studyId}")
@@ -64,5 +63,30 @@ public class StudyController {
     public ResponseEntity<Header> changeStudyStatus(@PathVariable(value="studyId")Long studyId, @RequestParam(value = "status")String status){
         Study result = studyService.putStudyStatus(studyId, status);
         return new ResponseEntity(Header.OK(result),HttpStatus.OK);
+    }
+
+    private List<StudyApiResponse> getStudyApiResponse(List<Study> studies){
+        List<StudyApiResponse> studyApiResponses = new ArrayList<>();
+        for (Study study : studies) {
+            StudyApiResponse studyApiResponse = StudyApiResponse.builder()
+                    .id(study.getId())
+                    .title(study.getTitle())
+                    .instTime(study.getInstTime())
+                    .updtTime(study.getUpdtTime())
+                    .status(study.getStatus())
+                    .description(study.getDescription())
+                    .startDate(study.getStartDate())
+                    .endDate(study.getEndDate())
+                    .evaluation(study.getEvaluation())
+                    .type(study.getType())
+                    .subjectId(study.getSubjectId())
+                    .regionId(study.getRegionId())
+                    .build();
+            attachmentService.getStudyMainImage(study.getId()).ifPresent(attachment -> {
+                studyApiResponse.setAttachmentPath(attachment.getName());
+            });
+            studyApiResponses.add(studyApiResponse);
+        }
+        return studyApiResponses;
     }
 }

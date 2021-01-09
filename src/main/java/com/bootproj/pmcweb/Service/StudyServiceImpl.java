@@ -7,6 +7,7 @@ import com.bootproj.pmcweb.Mapper.StudyMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -24,14 +25,9 @@ public class StudyServiceImpl implements StudyService {
     }
 
     @Override
-    public Long createStudy(StudyCreateRequest study) {
-        int result =  studyMapper.insertStudy(study);
-        System.out.println(study.toString());
-        if(result == 1){
-            return study.getId();
-        }else {
-            return 0L;
-        }
+    public Study createStudy(Study study) {
+        studyMapper.insertStudy(study);
+        return study;
     }
 
     @Override
