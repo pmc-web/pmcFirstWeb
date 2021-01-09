@@ -16,6 +16,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @ExtendWith(SpringExtension.class) //Junit4의 Runwith과 같은 기능을 하는 Junit5 어노테이션
 @SpringBootTest(classes = {Study.class, DatabaseConfiguration.class})
@@ -65,8 +66,8 @@ public class StudyMapperTest {
     @Order(2)
     public void getDetail(){
         Long findId = 3L;
-        Study test = studyMapper.getStudyDetail(findId);
-        assertThat(test.getId().equals(findId));
+        Optional<Study> test = studyMapper.getStudyDetail(findId);
+        assertThat(test.get().getId().equals(findId));
     }
 
     @Test
@@ -77,8 +78,8 @@ public class StudyMapperTest {
         String close = StudyStatus.CLOSE.getTitle();
         studyMapper.putStudyStatus(studyId, del);
 
-        Study test = studyMapper.getStudyDetail(studyId);
-        assertThat(test.getStatus().equals(del));
+        Optional<Study> test = studyMapper.getStudyDetail(studyId);
+        assertThat(test.get().getStatus().equals(del));
 
 //      studyMapper.putStudyStatus(studyId, open);
 //      studyMapper.putStudyStatus(studyId, close);
@@ -88,7 +89,7 @@ public class StudyMapperTest {
     void getStudyInfoDetail(){
         Long studyId = 3L;
         StudyApiResponse response = studyMapper.getStudyInfoDetail(studyId);
-        Study study = studyMapper.getStudyDetail(studyId);
-        assertThat(response.getId().equals(study.getId()));
+        Optional<Study> study = studyMapper.getStudyDetail(studyId);
+        assertThat(response.getId().equals(study.get().getId()));
     }
 }

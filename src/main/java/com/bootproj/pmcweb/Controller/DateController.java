@@ -17,23 +17,37 @@ public class DateController {
 
     private final DateService dateService;
 
-    // TODO : Q 어떤 로직이 실패했을때는 (요청은 받았으나 결과는 요청한대로 이루어지지않음)  어떤 결과를 리턴해줘야 할까요
     @PostMapping
-    public ResponseEntity<Header> createDate(@RequestBody Dates dates){
-        Long result = dateService.createDate(dates);
-        if(result==0) return new ResponseEntity(Header.OK(), HttpStatus.OK);
-        else return new ResponseEntity(Header.Error(null), HttpStatus.NOT_ACCEPTABLE);
+    public ResponseEntity<Header> createDate(@RequestBody Dates dates) throws Exception{
+        try {
+            Long result = dateService.createDate(dates);
+            if(result!=0) log.info("create Date Success : {}", dates);
+            return new ResponseEntity(Header.OK(), HttpStatus.OK);
+        }catch (Exception e){
+            log.warn(e.getMessage());
+            throw new Exception(e.getMessage());
+        }
     }
 
     @PutMapping
-    public ResponseEntity<Header> updateDate(@RequestBody Dates dates){
-        return new ResponseEntity(Header.OK(), HttpStatus.OK);
+    public ResponseEntity<Header> updateDate(@RequestBody Dates dates)throws Exception{
+        try {
+            Dates result = dateService.updateDates(dates);
+            return new ResponseEntity(Header.OK(result), HttpStatus.OK);
+        }catch (Exception e){
+            log.warn(e.getMessage());
+            throw new Exception(e.getMessage());
+        }
     }
 
     @DeleteMapping
-    public ResponseEntity<Header> deleteDate(Long id){
-        boolean result = dateService.deleteDates(id);
-        if(result) return new ResponseEntity(Header.OK(), HttpStatus.OK);
-        else return new ResponseEntity(Header.Error(null), HttpStatus.NOT_ACCEPTABLE);
+    public ResponseEntity<Header> deleteDate(Long id) throws Exception{
+        try {
+            boolean result = dateService.deleteDates(id);
+            return new ResponseEntity(Header.OK(), HttpStatus.OK);
+         }catch (Exception e){
+            log.warn(e.getMessage());
+            throw new Exception(e.getMessage());
+        }
     }
 }

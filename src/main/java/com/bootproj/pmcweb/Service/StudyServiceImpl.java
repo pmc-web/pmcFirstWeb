@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RequiredArgsConstructor // 생성자를 통해 DI
 @Service
@@ -31,21 +32,20 @@ public class StudyServiceImpl implements StudyService {
     }
 
     @Override
-    public Study getStudyDetail(Long studyId) {
+    public Optional<Study> getStudyDetail(Long studyId) {
         return studyMapper.getStudyDetail(studyId);
     }
 
     @Override
-    public StudyApiResponse getStudyInfo(Long studyId) {
+    public Optional<StudyApiResponse> getStudyInfo(Long studyId) {
         return studyMapper.getStudyInfoDetail(studyId);
     }
 
     @Override
-    public Study putStudyStatus(Long studyId, String status) {
+    public Optional<Study> putStudyStatus(Long studyId, String status) {
         studyMapper.putStudyStatus(studyId, status);
-        Study study = studyMapper.getStudyDetail(studyId);
-        if(study.getStatus().equals(status)) return study;
-        return null; // TODO : Q.이렇게 해도 되나 ?
+        Optional<Study> study = studyMapper.getStudyDetail(studyId);
+        return study;
     }
 
     @Override
