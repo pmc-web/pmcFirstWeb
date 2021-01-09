@@ -56,8 +56,8 @@ public class StudyController {
     // TODO : 익셉션 추가해야 하는 사항: 생성할 때 스터디장이 여러개의 진행중인 스터디를 지니고 있을 경우
     // TODO : file create하는건 study create하는거에서 분리해서 따로 호출하는 방향으로 진행
     // TODO study detail page는 create할 때 study member에 호스트인 애들을 같이 넣어줄 것
-    @PostMapping(consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public ResponseEntity<Header> createStudy(@ModelAttribute Study study) throws CannotCreateException {
+    @PostMapping
+    public ResponseEntity<Header> createStudy(@RequestBody Study study) throws CannotCreateException {
         Study createdStudy;
         try {
             createdStudy = studyService.createStudy(study);
