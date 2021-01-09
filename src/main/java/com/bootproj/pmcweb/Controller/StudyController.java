@@ -61,6 +61,9 @@ public class StudyController {
         try {
             resultMap.put("insertId", studyService.createStudy(study));
             if (study.getImage()!= null) attachmentService.uploadStudyMainImage(study.getImage(), study.getId());
+//            chatRoomRepository.createChatRoom(name);
+            // 스터디 채팅방 생성
+
         }catch (Exception e){
             throw new FileSaveException(e.getMessage());
         }
@@ -80,7 +83,7 @@ public class StudyController {
         try{
             Optional<Study> study = studyService.putStudyStatus(studyId, status);
             return new ResponseEntity(Header.OK(study),HttpStatus.OK);
-        }catch (Exception e){
+        }catch (Exception e){ // TODO: exception 명시, roll back logic 구
             log.warn(e.getMessage());
             throw new Exception(e.getMessage());
         }

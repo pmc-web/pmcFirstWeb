@@ -41,7 +41,7 @@ public class StudyServiceImpl implements StudyService {
     }
 
     @Override
-    public StudyApiResponse getStudyInfo(Long studyId) {
+    public Optional<StudyApiResponse> getStudyInfo(Long studyId) {
         return studyMapper.getStudyInfoDetail(studyId);
     }
 

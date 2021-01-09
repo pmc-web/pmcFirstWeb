@@ -325,10 +325,18 @@
             body: study
             // body : JSON.stringify(study),
         }).then(function(response) {
-            console.log(response);
-            if(response.ok) window.href.location = "http://localhost:8080/";
-            else return;
-        }).catch(error => alert(error));
+            if (response.status >= 200 && response.status <= 299) {
+                return response.json();
+            } else {
+                throw Error(response.statusText); // error를 던져야 catch 에서 받음
+            }
+        }).then(()=>{
+            alert("스터디를 생성했습니다");
+            // window.location = "http://localhost:8080/";
+        }).catch(error => {
+            console.error(error);
+            alert("스터디 생성에 실패했습니다");
+        });
     }
 
     $(document).ready(function () {
