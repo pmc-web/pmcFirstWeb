@@ -167,7 +167,6 @@
 <script>
     $("#startDate").datepicker();
     $("#endDate").datepicker();
-
 </script>
 <script>
     /*<![CDATA[*/
@@ -317,19 +316,24 @@
             // body: study
              body : JSON.stringify(study),
         }).then(function(response) {
-            console.log(response);
-            if(response.ok){
+            if (response.status >= 200 && response.status <= 299) {
                 return response.json();
+            } else {
+                throw Error(response.statusText); // error를 던져야 catch 에서 받음
             }
         }).then(function(data) {
-                console.log(data);
-                console.log(data.data);
-                if (inputFile != null) {
-                    makeStudyImage(data.data.id);
-                } else {
-                    window.location.href = "http://localhost:8080/";
-                }
-        }).catch(error => alert(error));
+            console.log(data);
+            console.log(data.data);
+            if (inputFile != null) {
+                makeStudyImage(data.data.id);
+            } else {
+                alert("스터디를 생성했습니다");
+                window.location.href = "http://localhost:8080/";
+            }
+        }).catch(error => {
+            console.error(error);
+            alert("스터디 생성에 실패했습니다");
+        });
     }
 
     function makeStudyImage(studyId){
@@ -345,12 +349,12 @@
                 contentType: false,
                 type: 'POST',
                 success: function(data){
-                alert("스터디 이미지가 추가 되었습니다.")
-                window.location.href = "http://localhost:8080/";
-            },
-            error: function(request,status,error){
-                alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-            }
+                    alert("스터디를 생성했습니다");
+                    window.location.href = "http://localhost:8080/";
+                },
+                error: function(request,status,error){
+                    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+                }
             })
     }
     $(document).ready(function () {
@@ -438,7 +442,6 @@
             }
         }
     }
-
 </script>
 </body>
 </html>

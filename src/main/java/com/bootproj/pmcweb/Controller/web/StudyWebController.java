@@ -55,20 +55,24 @@ public class StudyWebController {
     }
 
     @GetMapping("/study/detail")
-    public ModelAndView getDetail(@AuthenticationPrincipal User user, @RequestParam(value = "id")Long id) {
-        ModelAndView adminView = new ModelAndView("study/study_detail");
-        ModelAndView normalView = new ModelAndView("study/study_detail");
-        StudyApiResponse studyDetail = studyService.getStudyInfo(id); // TODO :NULL exception
+    public ModelAndView getDetail(@AuthenticationPrincipal User user, @RequestParam(value = "id")Long id)throws Exception{
+            ModelAndView adminView = new ModelAndView("study/study_detail");
+            ModelAndView normalView = new ModelAndView("study/study_detail");
+        try {
+            StudyApiResponse studyDetail = studyService.getStudyInfo(id).orElseThrow(() -> new NoSuchElementException());
 
-        adminView.addObject("study",studyDetail);
-        normalView.addObject("study", studyDetail);
+            adminView.addObject("study", studyDetail);
+            normalView.addObject("study", studyDetail);
 
-        if(user == null) return  normalView;
-        Account account = accountService.getUserByEmail(user.getUsername());
-        String role = studyMemberService.getMemberRole(id,account.getId());
+            if (user == null) return normalView;
+            Account account = accountService.getUserByEmail(user.getUsername());
+            String role = studyMemberService.getMemberRole(id, account.getId());
 
-        if(MemberRole.ADMIN.getTitle().equals(role))return adminView;
-        return normalView;
+            if (MemberRole.ADMIN.getTitle().equals(role)) return adminView;
+            return normalView;
+        }catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
     }
 
 }
