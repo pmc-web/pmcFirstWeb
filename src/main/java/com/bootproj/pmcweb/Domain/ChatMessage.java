@@ -13,5 +13,5 @@ public class ChatMessage {
     private String sender;
     private String content;
     private String roomId; // uid
-    private Long roomName; // studyId
+    private String roomName; // studyId
 }
