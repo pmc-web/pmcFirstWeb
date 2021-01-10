@@ -14,24 +14,23 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 @Slf4j
 @Controller
 @RequiredArgsConstructor
 public class ContentWebController {
 
-    private final StudyService studyService;
+//    private final StudyService studyService;
 
     @GetMapping("/content/kakaoMap")
     public String changeContentView(Model model, @AuthenticationPrincipal User user){
         SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat ( "MM월 dd일", Locale.KOREA );
         Date currentTime = new Date ();
         String sysdate = mSimpleDateFormat.format ( currentTime );
-        List<String> studyAllList = studyService.getAllList();
-        JSONArray jsonArray = new JSONArray(studyAllList);
+//        List<String> studyAllList = studyService.getAllList();
+//        JSONArray jsonArray = new JSONArray(studyAllList);
 
-        model.addAttribute("studyAllList", jsonArray);
+//        model.addAttribute("studyAllList", studyAllList);
         model.addAttribute("content", 1);
         model.addAttribute("getdate", sysdate);
 

@@ -10,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -64,5 +66,12 @@ public class StudyController {
     public ResponseEntity<Header> changeStudyStatus(@PathVariable(value="studyId")Long studyId, @RequestParam(value = "status")String status){
         Study result = studyService.putStudyStatus(studyId, status);
         return new ResponseEntity(Header.OK(result),HttpStatus.OK);
+    }
+
+    // 지도에서 데이터 보여주기 위한 스터디 조회
+    @GetMapping
+    public ResponseEntity<Header> getStudyAllList(@AuthenticationPrincipal User user){
+        List<String> studyAllList = studyService.getAllList();
+        return new ResponseEntity(Header.OK(studyAllList),HttpStatus.OK);
     }
 }
