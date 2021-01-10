@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Repository
 public interface StudyMapper {
@@ -17,9 +18,9 @@ public interface StudyMapper {
      * */
     public List<Study> getStudyList(@Param("limit") Integer limit, @Param("offset") Integer offset); // TODO : mybatis 문법 잘 아시는분 리팩토링 좀!
     public List<Study> getStudyListByDate(String from, String to); // TODO : 날짜
-    public Integer insertStudy(StudyCreateRequest study);
-    public Study getStudyDetail(Long studyId);
-    public StudyApiResponse getStudyInfoDetail(Long studyId);
+    public void insertStudy(Study study);
+    public Optional<Study> getStudyDetail(Long studyId);
+    public Optional<StudyApiResponse> getStudyInfoDetail(Long studyId);
     public void putStudyStatus(@Param("id")Long studyId, @Param("status")String status);
 
     List<String> getStudyAllList();
