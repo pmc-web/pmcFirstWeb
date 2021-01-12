@@ -45,6 +45,6 @@
 </select>
 <update id="putStudyStatus">
         UPDATE study SET status=#{status} where id = #{id};
-    </update>
+</update>
 
 </mapper>

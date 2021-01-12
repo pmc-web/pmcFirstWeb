@@ -4,8 +4,12 @@ import com.bootproj.pmcweb.Common.Exception.FileSaveException;
 import com.bootproj.pmcweb.Common.Exception.NoMatchingAcountException;
 import com.bootproj.pmcweb.Common.Header;
 import com.bootproj.pmcweb.Common.Response.StudyApiResponse;
+import com.bootproj.pmcweb.Domain.Account;
 import com.bootproj.pmcweb.Domain.Study;
+import com.bootproj.pmcweb.Domain.StudyMember;
+import com.bootproj.pmcweb.Service.AccountService;
 import com.bootproj.pmcweb.Service.AttachmentService;
+import com.bootproj.pmcweb.Service.StudyMemberService;
 import com.bootproj.pmcweb.Service.StudyService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +17,8 @@ import org.apache.ibatis.javassist.tools.reflect.CannotCreateException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -29,6 +35,10 @@ public class StudyController {
     private final StudyService studyService;
 
     private final AttachmentService attachmentService;
+
+    private final StudyMemberService studyMemberService;
+
+    private final AccountService accountService;
 
     /**
      * Study REST API
@@ -57,10 +67,14 @@ public class StudyController {
     // TODO : file create하는건 study create하는거에서 분리해서 따로 호출하는 방향으로 진행
     // TODO study detail page는 create할 때 study member에 호스트인 애들을 같이 넣어줄 것
     @PostMapping
-    public ResponseEntity<Header> createStudy(@RequestBody Study study) throws CannotCreateException {
+    public ResponseEntity<Header> createStudy(@RequestBody Study study, @AuthenticationPrincipal User user) throws CannotCreateException {
         Study createdStudy;
         try {
             createdStudy = studyService.createStudy(study);
+            // 스터디 생성시 studyMember 테이블에 amdin 데이터 추가
+            Account account = accountService.getUserByEmail(user.getUsername());
+            StudyMember studyMember = StudyMember.builder().studyRole("ADMIN").studyId(createdStudy.getId()).userId(account.getId()).build();
+            studyMemberService.joinStudy(studyMember);
         }catch (Exception e){
             throw new CannotCreateException(e.getMessage());
         }
