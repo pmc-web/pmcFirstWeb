@@ -26,9 +26,9 @@ import java.util.List;
 @RequestMapping("/alarm")
 public class AlarmController {
 
-    final AlarmService alarmService;
+    private final AlarmService alarmService;
 
-    final AccountService accountService;
+    private final AccountService accountService;
 
     @GetMapping("")
     public ResponseEntity getAlarmList(@AuthenticationPrincipal User user){

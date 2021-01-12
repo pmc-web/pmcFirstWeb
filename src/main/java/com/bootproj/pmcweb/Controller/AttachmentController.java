@@ -6,6 +6,7 @@ import com.bootproj.pmcweb.Common.Exception.FileSaveException;
 import com.bootproj.pmcweb.Common.Exception.NoMatchingAcountException;
 import com.bootproj.pmcweb.Common.Header;
 import com.bootproj.pmcweb.Service.AttachmentService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,9 +21,10 @@ import java.util.Optional;
 @Log4j2
 @RestController
 @RequestMapping("/attachment")
+@RequiredArgsConstructor
 public class AttachmentController {
-    @Autowired
-    AttachmentService attachmentService;
+
+    private final AttachmentService attachmentService;
 
     @PostMapping("/profile")
     public ResponseEntity<Header<Attachment>> uploadProfile(@AuthenticationPrincipal User user, @RequestParam("file") MultipartFile file){

@@ -2,6 +2,7 @@ package com.bootproj.pmcweb.Service;
 
 import com.bootproj.pmcweb.Domain.Account;
 import com.bootproj.pmcweb.Common.Exception.*;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -19,13 +20,12 @@ import java.util.*;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class AccountSecurityService implements UserDetailsService {
 
-    @Autowired
-    private AccountServiceImpl accountServiceimpl;
+    private final AccountServiceImpl accountServiceimpl;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

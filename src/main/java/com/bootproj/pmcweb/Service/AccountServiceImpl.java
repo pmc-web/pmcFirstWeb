@@ -8,6 +8,7 @@ import com.bootproj.pmcweb.Common.Exception.DuplicateEmailException;
 import com.bootproj.pmcweb.Common.Exception.NoMatchingAcountException;
 import com.bootproj.pmcweb.Common.Exception.SendEmailException;
 import com.bootproj.pmcweb.Common.ResultCode;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,16 +20,12 @@ import java.util.Map;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class AccountServiceImpl implements AccountService {
 
-    @Autowired
-    AccountMapper accountMapper;
+    private final AccountMapper accountMapper;
 
-    @Autowired
-    AccountSecurityService accountSecurityService;
-
-    @Autowired
-    private MailSendService mailSendService;
+    private final  MailSendService mailSendService;
 
     public Account getUser(Long id){
         Account account = accountMapper.getUserById(id);
