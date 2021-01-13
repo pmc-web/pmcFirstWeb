@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/layout/common.html :: fragment-common"></head>
+<body>
+    <!-- Navbar -->
+    <nav th:replace="/layout/navbar.html :: fragment-navbar"></nav>
+    <!-- main -->
+    <div class="container">
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <!-- 404 Error Text -->
+                <div class="text-center">
+                    <img class="error-img mb-4" th:src="@{/img/moim.jpg}" alt="Error Image" width="200" height="200">
+                    <h2 th:text="${status}"><b></b></h2>
+                    <h4>권한이 없는 사용자 입니다.</h4></br></br>
+                    <h7 th:text="${error + ' : ' + path}"></h7></br>
+                    <h7 th:text="${timestamp}"></h7></br>
+                    <h6>This requested URL was not found on this server.</h6>
+                    <a href="/"><b>&larr; 메인 화면으로 돌아가기</b></a></br>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
