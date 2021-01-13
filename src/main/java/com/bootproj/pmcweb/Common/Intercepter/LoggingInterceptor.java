@@ -21,6 +21,7 @@ public class LoggingInterceptor extends HandlerInterceptorAdapter {
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
         if (request.getClass().getName().contains("SecurityContextHolderAwareRequestWrapper")) return;
+        if (request.getClass().getName().contains("StandardMultipartHttpServletRequest")) return;
         final ContentCachingRequestWrapper cachingRequest = (ContentCachingRequestWrapper) request;
         final ContentCachingResponseWrapper cachingResponse = (ContentCachingResponseWrapper) response;
 

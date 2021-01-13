@@ -12,7 +12,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -66,4 +68,19 @@ public class AccountServiceTest {
         assertThat(userServiceImpl.getUserByEmail(testEmail)==null);
     }
 
+    @Test
+    void updateUserRegion() {
+        String testEmail = "hirlawldo@naver.com";
+        Long regionId = 11665l;
+        userServiceImpl.updateUserRegion(testEmail, regionId);
+        assertThat(regionId == userServiceImpl.getUserByEmail(testEmail).getRegionId());
+    }
+
+    @Test
+    void updateUserSubject() {
+        String testEmail = "hirlawldo@naver.com";
+        Long subjectId = 4l;
+        userServiceImpl.updateUserSubject(testEmail, subjectId);
+        assertThat(subjectId == userServiceImpl.getUserByEmail(testEmail).getSubjectId());
+    }
 }

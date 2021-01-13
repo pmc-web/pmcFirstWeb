@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.socket.CloseStatus;
@@ -21,6 +22,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Log4j2
 @Component
+@Profile("!stomp")
 public class AlarmWebSocketHandler extends TextWebSocketHandler {
     @Autowired
     AlarmService alarmService;

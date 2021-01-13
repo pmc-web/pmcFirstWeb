@@ -1,0 +1,195 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <th:block th:replace="/layout/common.html :: fragment-common"/>
+    <th:block layout:fragment="css"><link th:href="@{/css/register.css}" rel="stylesheet"></th:block>
+</head>
+<body>
+    <div class="container d-flex justify-content-center">
+        <div class="row my-5">
+            <div class="col-md-5 text-left text-white lcol">
+                <div class="greeting">
+                    <a href="/"><img class="mb-4" th:src="@{/img/moim.jpg}" alt="" width="92" height="92"></a>
+                    <h4>Welcome to <span class="txt">Profile Register</span></h4>
+                </div>
+                <h7 class="mt-3">가입을 축하드립니다!</h7><br>
+                <h7 class="mt-3">관심사와 지역을 선택해주세요.</h7>
+                <h7 class="mt-3">선택한 정보를 바탕으로 회원님께 스터디를 추천해드립니다!</h7>
+                <div class="footer">
+                    <div class="socials d-flex flex-row justify-content-between text-white">
+                        <div class="d-flex flex-row"><i class="fab fa-linkedin-in"></i><i class="fab fa-facebook-f"></i><i class="fab fa-twitter"></i></div> <span>PMC Moim Project</span> <span>&copy; ver 2020</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-7 rcol">
+                <form id="form">
+                        <label>지역</label>
+                        <div class="form-group">
+                            <select class="form-control" id="region1">
+                                <option>선택해주세요.</option>
+                                <option th:each="item : ${regions}" th:value="${item}" th:text="${item}"></option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control" id="region2">
+                                <option>지역 중분류</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control" id="region3">
+                                <option>지역 소분류</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>카테고리</label>
+                            <div class="form-group">
+                                <select class="form-control" id="subject1">
+                                    <option value="" selected>선택해주세요</option>
+                                    <option th:each="item : ${subjects}" th:value="${item}" th:text="${item}"></option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <select class="form-control" id="subject2">
+                                    <option value="" selected>카테고리 소분류</option>
+                                </select>
+                            </div>
+                        </div>
+                    <button type="submit" class="btn btn-block btn-bold btn-primary mt-2" onclick="checkForm()">Register Profile</button>
+                </form>
+                <p class="exist mt-4">지금 선택하지 않는다.<span><a th:href="@{/}">Skip</a></span></p>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script th:src="@{/vendor/jquery/jquery.js}"></script>
+
+<script>
+    /*<![CDATA[*/
+    const xhr = new XMLHttpRequest();
+    let subject1 = "";
+    let region1 = "";
+    let region2 = "";
+    /*]]>*/
+
+     // subject1
+    document.getElementById("subject1").addEventListener("change", function() {
+        subject1 = String(this.value);
+        /*<![CDATA[*/
+        let url = "http://localhost:8080/subject?subjectDepth1="+subject1;
+        /*]]>*/
+        if (this.value !== "") {
+            fetch(url,{
+                method : 'GET',
+            }).then(function(response) {
+                return response.json();
+            }).then(function(data) {
+                /*<![CDATA[*/
+                let html = "<option>선택해주세요</option>";
+                let subjects = data.data;
+                /*]]>*/
+                for(let i=0; i<subjects.length; i++){
+                    html+= "<option value="+subjects[i].id+">"+ subjects[i].subjectDepth2+"</option>";
+                }
+                document.getElementById("subject2").innerHTML= html;
+            }).catch(error => alert(error));
+        }
+    });
+
+    document.getElementById("region1").addEventListener("change", function() {
+        region1 = String(this.value);
+        /*<![CDATA[*/
+        let url = "http://localhost:8080/region?regionDepth1="+region1;
+        /*]]>*/
+        if (this.value !== "") {
+            fetch(url,{
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                method : 'GET',
+            }).then(function(response) {
+                return response.json();
+            }).then(function(data) {
+                /*<![CDATA[*/
+                let html = "<option>선택해주세요</option>";
+                let regions = data.data;
+                /*]]>*/
+                for(let i=0; i<regions.length; i++){
+                    html+= "<option value="+regions[i]+">"+ regions[i]+"</option>";
+                }
+                document.getElementById("region2").innerHTML= html;
+                document.getElementById("region3").innerHTML= "<option>지역 소분류</option>";
+            }).catch(error => alert(error));
+        }
+    });
+
+    document.getElementById("region2").addEventListener("change", function() {
+        region2 = String(this.value);
+        /*<![CDATA[*/
+        let url = "http://localhost:8080/region/depth?regionDepth1="+region1+"&regionDepth2="+region2;
+        /*]]>*/
+        if (this.value !== "") {
+            fetch(url,{
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                method : 'GET',
+            }).then(function(response) {
+                return response.json();
+            }).then(function(data) {
+                /*<![CDATA[*/
+                let html = "<option>선택해주세요</option>";
+                let regions = data.data;
+                /*]]>*/
+                for(let i=0; i<regions.length; i++){
+                    html+= "<option value="+regions[i].id+">"+regions[i].regionDepth3+"</option>";
+                }
+                document.getElementById("region3").innerHTML= html;
+            }).catch(error => alert(error));
+        }
+    });
+
+    // check form
+    function checkForm(){
+        /*<![CDATA[*/
+        let sub_1 = subject1;
+        let sub_2 = document.getElementById("subject2").value;
+        let reg_1 = region1;
+        let reg_2 = region2;
+        let reg_3 = document.getElementById("region3").value;
+        /*]]>*/
+        console.log(sub_1,sub_2,reg_1, reg_2, reg_3);
+        if(sub_1=="" || sub_2==""){
+            alert("카테고리 설정을 해주세요 ");
+        }else if(reg_1=="" || reg_2=="" || reg_3==""){
+            alert("지역 설정을 해주세요 ");
+        }else {
+            /*<![CDATA[*/
+            let user = {
+                subjectId: sub_2,
+                regionId: reg_3,
+            };
+            /*]]>*/
+            console.log(JSON.stringify(user));
+            updateProfile(user);
+        }
+    }
+
+    function updateProfile(user) {
+        fetch("http://localhost:8080/user/updateProfile",{
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            method : 'POST',
+            body : JSON.stringify(user),
+        }).then(function(response) {
+            console.log(response);
+            return response.json();
+        }).then(function (result) {
+            if (result.ok) window.href.location = "http://localhost:8080/";
+            else return;
+        }).catch(error => alert(error));
+    }
+</script>
+</html>

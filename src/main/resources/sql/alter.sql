@@ -29,3 +29,6 @@ alter table region add longitude varchar(50) null comment '경도';
 SET foreign_key_checks = 0;
 TRUNCATE TABLE region
 SET foreign_key_checks = 1;
+
+/*----------------2020.12.19---------------------*/
+alter table user add subject_id bigint null comment '유저 관심 카테고리';

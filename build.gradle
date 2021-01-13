@@ -69,6 +69,11 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-websocket')
 	compile('org.webjars:sockjs-client:1.1.2')
 
+	// chatting 용 redis 라이브러리
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+	//embedded-redis
+	compile group: 'it.ozimov', name: 'embedded-redis', version: '0.7.2'
+	
 }
 
 test {

@@ -1,5 +1,7 @@
 package com.bootproj.pmcweb.Mapper;
 
+import com.bootproj.pmcweb.Common.Request.StudyCreateRequest;
+import com.bootproj.pmcweb.Common.Response.StudyApiResponse;
 import com.bootproj.pmcweb.Config.DatabaseConfiguration;
 import com.bootproj.pmcweb.Domain.enumclass.StudyStatus;
 import org.junit.jupiter.api.*;
@@ -14,6 +16,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @ExtendWith(SpringExtension.class) //Junit4의 Runwith과 같은 기능을 하는 Junit5 어노테이션
 @SpringBootTest(classes = {Study.class, DatabaseConfiguration.class})
@@ -37,7 +40,7 @@ public class StudyMapperTest {
     @Test
     @Order(1)
     public void insertStudy() throws ParseException {
-        Study testStudy = new Study();
+        StudyCreateRequest testStudy = new StudyCreateRequest();
         String title = "study mapper test study";
         String description = "this is description";
         Date startDate = new SimpleDateFormat("yyyy-mm-dd").parse("2020-10-11");
@@ -63,8 +66,8 @@ public class StudyMapperTest {
     @Order(2)
     public void getDetail(){
         Long findId = 3L;
-        Study test = studyMapper.getStudyDetail(findId);
-        assertThat(test.getId().equals(findId));
+        Optional<Study> test = studyMapper.getStudyDetail(findId);
+        assertThat(test.get().getId().equals(findId));
     }
 
     @Test
@@ -75,10 +78,18 @@ public class StudyMapperTest {
         String close = StudyStatus.CLOSE.getTitle();
         studyMapper.putStudyStatus(studyId, del);
 
-        Study test = studyMapper.getStudyDetail(studyId);
-        assertThat(test.getStatus().equals(del));
+        Optional<Study> test = studyMapper.getStudyDetail(studyId);
+        assertThat(test.get().getStatus().equals(del));
 
 //      studyMapper.putStudyStatus(studyId, open);
 //      studyMapper.putStudyStatus(studyId, close);
+    }
+
+    @Test
+    void getStudyInfoDetail(){
+        Long studyId = 3L;
+        StudyApiResponse response = studyMapper.getStudyInfoDetail(studyId);
+        Optional<Study> study = studyMapper.getStudyDetail(studyId);
+        assertThat(response.getId().equals(study.get().getId()));
     }
 }

@@ -25,4 +25,8 @@ public interface AccountMapper {
     public void updateUserPassword(Map<String, String> map);
 
     public void updateUserAttachment(Map<String, String> map);
+
+    public void updateUserSubjectId(Map<String, String> map);
+
+    public void updateUserRegionId(Map<String, String> map);
 }
