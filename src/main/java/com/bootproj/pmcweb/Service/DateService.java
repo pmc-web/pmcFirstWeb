@@ -10,4 +10,5 @@ public interface DateService {
     public Dates getDateById(Long id);
     public Dates updateDates(Dates dates);
     public Boolean deleteDates(Long id);
+    public List<Dates> getRecentDates(Long id, Integer count);
 }

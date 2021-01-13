@@ -37,6 +37,6 @@ public class StudyApiResponse {
     private Long subjectId;
     @JsonProperty("regionId")
     private Long regionId;
-    private Long adminId; // 스터디장
+    private String adminName; // 스터디장
     private String attachmentPath;
 }

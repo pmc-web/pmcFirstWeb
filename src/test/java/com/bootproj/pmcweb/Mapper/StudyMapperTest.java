@@ -4,6 +4,7 @@ import com.bootproj.pmcweb.Common.Request.StudyCreateRequest;
 import com.bootproj.pmcweb.Common.Response.StudyApiResponse;
 import com.bootproj.pmcweb.Config.DatabaseConfiguration;
 import com.bootproj.pmcweb.Domain.enumclass.StudyStatus;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @ExtendWith(SpringExtension.class) //Junit4의 Runwith과 같은 기능을 하는 Junit5 어노테이션
 @SpringBootTest(classes = {Study.class, DatabaseConfiguration.class})
 //@SpringBootTest(classes = PmcwebApplication.class) // Junit5 기준 Application Context사용할 때 사용
@@ -40,7 +42,7 @@ public class StudyMapperTest {
     @Test
     @Order(1)
     public void insertStudy() throws ParseException {
-        StudyCreateRequest testStudy = new StudyCreateRequest();
+        Study testStudy = new Study();
         String title = "study mapper test study";
         String description = "this is description";
         Date startDate = new SimpleDateFormat("yyyy-mm-dd").parse("2020-10-11");
@@ -54,9 +56,8 @@ public class StudyMapperTest {
         testStudy.setSubjectId(subjectId);
         testStudy.setRegionId(regionId);
         try {
-            Integer isSuccess = studyMapper.insertStudy(testStudy);
+            studyMapper.insertStudy(testStudy);
             assertThat(testStudy.getId()!=null);
-            assertThat(isSuccess == 1);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -88,8 +89,9 @@ public class StudyMapperTest {
     @Test
     void getStudyInfoDetail(){
         Long studyId = 3L;
-        StudyApiResponse response = studyMapper.getStudyInfoDetail(studyId);
+        StudyApiResponse response = studyMapper.getStudyInfoDetail(studyId).get();
         Optional<Study> study = studyMapper.getStudyDetail(studyId);
+        log.info("studyApi Response : {}" , response);
         assertThat(response.getId().equals(study.get().getId()));
     }
 }

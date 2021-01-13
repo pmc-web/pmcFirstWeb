@@ -14,4 +14,6 @@ public class Region {
     private String regionDepth1;
     private String regionDepth2;
     private String regionDepth3;
+    private String latitude;
+    private String longitude;
 }

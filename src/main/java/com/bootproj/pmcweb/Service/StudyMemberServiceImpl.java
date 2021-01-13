@@ -5,6 +5,8 @@ import com.bootproj.pmcweb.Mapper.StudyMemberMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class StudyMemberServiceImpl implements StudyMemberService {
@@ -28,5 +30,10 @@ public class StudyMemberServiceImpl implements StudyMemberService {
     @Override
     public String getMemberRole(Long studyId, Long userId) {
         return studyMemberMapper.getMemberRole(studyId, userId);
+    }
+
+    @Override
+    public List<StudyMember> getStudyMembers(Long studyId) {
+        return studyMemberMapper.selectStudyMembers(studyId);
     }
 }

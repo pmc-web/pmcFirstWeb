@@ -43,4 +43,9 @@ public class DateServiceImpl implements DateService{
         if(result==0) return false;
         return true;
     }
+
+    @Override
+    public List<Dates> getRecentDates(Long id, Integer count) {
+        return dateMapper.selectRecentDates(id, count);
+    }
 }

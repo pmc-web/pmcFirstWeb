@@ -35,7 +35,7 @@ public class StudyServiceTest {
 
     @Test
     void createStudy() throws ParseException {
-        StudyCreateRequest testStudy = new StudyCreateRequest();
+        Study testStudy = new Study();
         String title = "study mapper test study";
         String description = "this is description";
         Date startDate = new SimpleDateFormat("yyyy-mm-dd").parse("2020-10-11");
@@ -49,8 +49,8 @@ public class StudyServiceTest {
         testStudy.setSubjectId(subjectId);
         testStudy.setRegionId(regionId);
 
-        Long result = studyServiceImpl.createStudy(testStudy);
-        assertThat(result!=0L);
+        studyServiceImpl.createStudy(testStudy);
+        assertThat(testStudy.getId()!=null);
 
     }
 
