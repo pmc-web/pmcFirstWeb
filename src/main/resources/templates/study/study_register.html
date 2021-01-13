@@ -6,8 +6,7 @@
     <th:block th:replace="/layout/navbar.html :: fragment-navbar"/>
     <!-- Theme style -->
     <link rel="stylesheet" th:href="@{/vendor/adminlte/adminlte.min.css}">
-    <!-- daterange picker -->
-    <link rel="stylesheet" th:href="@{/vendor/daterangepicker/daterangepicker.css}">
+    <link rel="stylesheet" th:href="@{/vendor/summernote/dist/summernote-bs4.min.css}">
     <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
 </head>
 <body>
@@ -38,35 +37,55 @@
                             </div>
                         </div>
                     </div>
+                    <!-- select -->
+                    <label>카테고리</label>
                     <div class="row">
                         <div class="col-sm-6">
-                            <!-- textarea -->
                             <div class="form-group">
-                                <label>설명</label>
-                                <textarea class="form-control" rows="3" placeholder="Description"
-                                          id="description"></textarea>
+                                <select class="form-control" id="subject1">
+                                    <option value="" selected>선택해주세요</option>
+                                    <option th:each="item : ${subjects}" th:value="${item}"
+                                            th:text="${item}"></option>
+                                </select>
                             </div>
                         </div>
                         <div class="col-sm-6">
-                            <!-- select -->
                             <div class="form-group">
-                                <label>카테고리</label>
-                                <div class="form-group">
-                                    <select class="form-control" id="subject1">
-                                        <option value="" selected>선택해주세요</option>
-                                        <option th:each="item : ${subjects}" th:value="${item}"
-                                                th:text="${item}"></option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <select class="form-control" id="subject2">
-                                        <option value="" selected>선택해주세요</option>
-                                    </select>
-                                </div>
-
+                                <select class="form-control" id="subject2">
+                                    <option value="" selected>선택해주세요</option>
+                                </select>
                             </div>
                         </div>
                     </div>
+
+                    <!-- textarea -->
+                    <div class="form-group">
+                        <label>간단한 소개</label>
+                        <textarea class="form-control" rows="1" placeholder="Description"
+                                  id="description"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="fullDescription">상세 소개</label>
+                        <textarea id="fullDescription" rows="4" type="textarea" class="editor form-control"
+                                  placeholder="스터디를 자세히 설명해 주세요." aria-describedby="fullDescriptionHelp" required></textarea>
+                        <small id="fullDescriptionHelp" class="form-text text-muted">
+                            스터디의 목표, 일정, 진행 방식, 사용할 교재 또는 인터넷 강좌 그리고 모집중인 스터디원 등 스터디에 대해 자세히 적어 주세요.
+                        </small>
+                        <small class="invalid-feedback">상세 소개를 입력하세요.</small>
+                    </div>
+
+<!--                    <div class="form-group">-->
+<!--                        <label for="fullDescription">상세 소개</label>-->
+<!--                        <textarea id="fullDescription" type="textarea" th:field="*{fullDescription}" class="editor form-control"-->
+<!--                                  placeholder="스터디를 자세히 설명해 주세요." aria-describedby="fullDescriptionHelp" required></textarea>-->
+<!--                        <small id="fullDescriptionHelp" class="form-text text-muted">-->
+<!--                            스터디의 목표, 일정, 진행 방식, 사용할 교재 또는 인터넷 강좌 그리고 모집중인 스터디원 등 스터디에 대해 자세히 적어 주세요.-->
+<!--                        </small>-->
+<!--                        <small class="invalid-feedback">상세 소개를 입력하세요.</small>-->
+<!--                        <small class="form-text text-danger" th:if="${#fields.hasErrors('fullDescription')}" th:errors="*{fullDescription}">FullDescription Error</small>-->
+<!--                    </div>-->
+
                     <div class="form-group">
                         <div class="row">
                             <div class="col-sm-6">
@@ -134,7 +153,7 @@
                         </div>
 
                         <!-- File -->
-                        <label for="exampleInputFile">첨부파일</label>
+                        <label for="exampleInputFile">메인 이미지</label>
                         <div class="input-group">
                             <div class="custom-file">
                                 <input type="file" class="custom-file-input" id="exampleInputFile">
@@ -162,285 +181,6 @@
 
 <script th:src="@{/vendor/jquery/jquery.js}"></script>
 <script th:src="@{/vendor/jquery-ui/jquery-ui.js}"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-<script>
-    $("#startDate").datepicker();
-    $("#endDate").datepicker();
-</script>
-<script>
-    /*<![CDATA[*/
-    const xhr = new XMLHttpRequest();
-    let subject1 = "";
-    let region1 = "";
-    let region2 = "";
-    /*]]>*/
-
-    // file
-    let inputFile = null;
-
-    // subject1
-    document.getElementById("subject1").addEventListener("change", function() {
-        subject1 = String(this.value);
-        /*<![CDATA[*/
-        let url = "http://localhost:8080/subject?subjectDepth1="+subject1;
-        /*]]>*/
-        if (this.value !== "") {
-            fetch(url,{
-                method : 'GET',
-            }).then(function(response) {
-                return response.json();
-            }).then(function(data) {
-                /*<![CDATA[*/
-                let html = "<option>선택해주세요</option>";
-                let subjects = data.data;
-                /*]]>*/
-                for(let i=0; i<subjects.length; i++){
-                    html+= "<option value="+subjects[i].id+">"+ subjects[i].subjectDepth2+"</option>";
-                }
-                document.getElementById("subject2").innerHTML= html;
-            }).catch(error => alert(error));
-        }
-    });
-
-    document.getElementById("region1").addEventListener("change", function() {
-        region1 = String(this.value);
-        /*<![CDATA[*/
-        let url = "http://localhost:8080/region?regionDepth1="+region1;
-        /*]]>*/
-        if (this.value !== "") {
-            fetch(url,{
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                method : 'GET',
-            }).then(function(response) {
-                return response.json();
-            }).then(function(data) {
-                /*<![CDATA[*/
-                let html = "<option>지역 중분류2</option>";
-                let regions = data.data;
-                /*]]>*/
-                for(let i=0; i<regions.length; i++){
-                    html+= "<option value="+regions[i]+">"+ regions[i]+"</option>";
-                }
-                document.getElementById("region2").innerHTML= html;
-                document.getElementById("region3").innerHTML= "<option>지역 소분류</option>";
-            }).catch(error => alert(error));
-        }
-    });
-
-    document.getElementById("region2").addEventListener("change", function() {
-        region2 = String(this.value);
-        /*<![CDATA[*/
-        let url = "http://localhost:8080/region/depth?regionDepth1="+region1+"&regionDepth2="+region2;
-        /*]]>*/
-        if (this.value !== "") {
-            fetch(url,{
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                method : 'GET',
-            }).then(function(response) {
-                return response.json();
-            }).then(function(data) {
-                /*<![CDATA[*/
-                let html = "<option>지역 소분류</option>";
-                let regions = data.data;
-                /*]]>*/
-                for(let i=0; i<regions.length; i++){
-                    html+= "<option value="+regions[i].id+">"+regions[i].regionDepth3+"</option>";
-                }
-                document.getElementById("region3").innerHTML= html;
-            }).catch(error => alert(error));
-        }
-    });
-
-    // check form
-    function checkForm(){
-        /*<![CDATA[*/
-        let cal_start = document.querySelector("#startDate").value;
-        let cal_end = document.querySelector("#endDate").value;
-        let title = document.querySelector("#title").value;
-        let description = document.querySelector("#description").value;
-        let sub_1 = subject1;
-        let sub_2 = document.getElementById("subject2").value;
-        let reg_1 = region1;
-        let reg_2 = region2;
-        let reg_3 = document.getElementById("region3").value;
-        let start = new Date(cal_start);
-        let end = new Date(cal_end);
-        /*]]>*/
-        console.log(start ,end);
-        console.log(cal_start, cal_end,title,description ,sub_1,sub_2,reg_1, reg_2, reg_3);
-        if(start>end || cal_start==="" || cal_start=== ""){
-            alert(" 날짜를 다시 설정 해 주세요");
-        }
-        else if(title=="") {
-            alert("스터디 이름을 입력하세요");
-        }else if(description==""){
-            alert("설명을 입력해 주세요");
-        }else if(sub_1=="" || sub_2==""){
-            alert("카테고리 설정을 해주세요 ");
-        }else if(reg_1=="" || reg_2=="" || reg_3==""){
-            alert("지역 설정을 해주세요 ");
-        }else {
-            // alert("스터디를 생성 ");
-            /*<![CDATA[*/
-            let study = {
-                title : title,
-                description : description,
-                startDate : moment(start).format("YYYY-MM-DD"),
-                endDate: moment(end).format("YYYY-MM-DD"),
-                evaluation : 0,
-                type : 0, //무료 스터디
-                subjectId: sub_2,
-                regionId: reg_3,
-                status: 1, //모집 중
-                // image: inputFile == null ?inputFile : inputFile.files[0]
-            };
-            /*]]>*/
-            makeStudy(study);
-        }
-    }
-
-
-    function makeStudy(study) {
-        fetch("http://localhost:8080/study",{
-            headers: {
-                //'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-                 'Content-Type': 'application/json',
-            },
-            method : 'POST',
-            // body: study
-             body : JSON.stringify(study),
-        }).then(function(response) {
-            if (response.status >= 200 && response.status <= 299) {
-                return response.json();
-            } else {
-                throw Error(response.statusText); // error를 던져야 catch 에서 받음
-            }
-        }).then(function(data) {
-            console.log(data);
-            console.log(data.data);
-            if (inputFile != null) {
-                makeStudyImage(data.data.id);
-            } else {
-                alert("스터디를 생성했습니다");
-                window.location.href = "http://localhost:8080/";
-            }
-        }).catch(error => {
-            console.error(error);
-            alert("스터디 생성에 실패했습니다");
-        });
-    }
-
-    function makeStudyImage(studyId){
-            console.log(inputFile);
-            let formData = new FormData();
-            formData.append("file", inputFile.files[0]);
-            formData.append("type", "MAIN_IMAGE");
-            $.ajax({
-                url: '/attachment/study/' + studyId,
-                data: formData,
-                dataType:'text',
-                processData: false,
-                contentType: false,
-                type: 'POST',
-                success: function(data){
-                    alert("스터디를 생성했습니다");
-                    window.location.href = "http://localhost:8080/";
-                },
-                error: function(request,status,error){
-                    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-                }
-            })
-    }
-    $(document).ready(function () {
-        let fileTarget = $('.custom-file-input .upload-hidden');
-        fileTarget.on('change', function () { // 값이 변경되면
-            let input = $(this),
-                label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
-            input.trigger('fileselect', [label]);
-        });
-
-        $('.custom-file-input :file').on('fileselect', function (event, label) {
-
-            let input = $(this).parents('.input-group').find(':text'),
-                log = label;
-
-            if (input.length) {
-                input.val(log);
-            } else {
-                if (log) alert(log);
-            }
-
-        });
-
-        $("#exampleInputFile").change(function () {
-            // readURL(this);
-            inputFile = this;
-            console.log(inputFile.files[0]);
-        });
-
-    });
-
-    function readURL(input) {
-        let isImage = true;
-        if (input.files && input.files[0]) {
-            if (isImage) {
-                // 스터디 사진 저장 컨트롤러 호출
-                let file = input.files[0];
-                console.log(file)
-                let formData = new FormData();
-                formData.append("type", "MAIN_IMAGE");
-                formData.append("file", file);
-
-                $.ajax({
-                    url: '/attachment/study/3',
-                    data: formData,
-                    dataType: 'text',
-                    processData: false,
-                    contentType: false,
-                    type: 'POST',
-                    success: function (data) {
-                        alert("스터디 이미지가 업로드 되었습니다.")
-                    },
-                    error: function (request, status, error) {
-                        alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-                    }
-                })
-            }
-
-            function checkImageType(fileName) {
-                let pattern = /jpg$|gif$|png$|jpeg$/i;
-                return fileName.match(pattern);
-            }
-
-
-            function getOriginalName(fileName) {
-                if (checkImageType(fileName)) {
-                    return;
-                }
-                let idx = fileName.indexOf("_") + 1;
-                return fileName.substr(idx);
-
-            }
-
-
-            function getImageLink(fileName) {
-
-                if (!checkImageType(fileName)) {
-                    return;
-                }
-                let front = fileName.substr(0, 12);
-                let end = fileName.substr(14);
-
-                return front + end;
-
-            }
-        }
-    }
-</script>
+<th:block th:replace="/study/study_register_script.html :: study-register-script"></th:block>
 </body>
 </html>
