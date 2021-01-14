@@ -15,5 +15,5 @@ public interface StudyService {
     public Optional<Study> getStudyDetail(Long studyId);
     public Optional<StudyApiResponse> getStudyInfo(Long studyId);
     public Optional<Study> putStudyStatus(Long studyId, String status);
-    List<String> getAllList();
+    List<Study> getAllList();
 }

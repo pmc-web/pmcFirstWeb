@@ -115,9 +115,9 @@ public class StudyController {
     }
 
     // 지도에서 데이터 보여주기 위한 스터디 조회
-    @GetMapping
+    @GetMapping("/mapData")
     public ResponseEntity<Header> getStudyAllList(@AuthenticationPrincipal User user){
-        List<String> studyAllList = studyService.getAllList();
+        List<Study> studyAllList = studyService.getAllList();
         return new ResponseEntity(Header.OK(studyAllList),HttpStatus.OK);
     }
 }

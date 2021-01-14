@@ -49,7 +49,7 @@ public class StudyServiceImpl implements StudyService {
     }
 
     @Override
-    public List<String> getAllList() {
+    public List<Study> getAllList() {
         return studyMapper.getStudyAllList();
     }
 

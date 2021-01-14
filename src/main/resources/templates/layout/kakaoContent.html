@@ -26,11 +26,24 @@
         </div>
         <div id="current">현재 위치</div>
         <div id="map" style="width:100%; height:820px;"></div>
-<!--        <script type="application/javascript" th:src="@{/js/kakaodata.js}"/>-->
-        <script th:inline="javascript">
-           // 수정위치
-        </script>
-        <script type="application/javascript">
+        <script>
+            var mapData = [];
+
+            $.ajax({
+                url: '/study/mapData',
+                data: '',
+                dataType: 'json',
+                async: false,
+                contentType: false,
+                type: 'GET',
+                success: function (data) {
+                    mapData = data.data;
+                },
+                error: function (request, status, error) {
+                    alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+                }
+            });
+
             var mapOptions = {
                 center: new naver.maps.LatLng(37.3595704, 127.105399),
                 zoom: 10
@@ -41,8 +54,8 @@
             var markerList = [];
             var infowindowList = [];
 
-            for (var i in data){
-                var target = data[i];
+            for (var i in mapData){
+                var target = mapData[i];
                 var latlng = new naver.maps.LatLng(target.latitude, target.longitude);
                 marker = new naver.maps.Marker({
                     map : map,
@@ -55,7 +68,9 @@
 
                 var content = `<div class='infowindow_wrap'>
                   <div class='infowindow_title'>${target.title}</div>
-                  <div class='infowindow_content'>${target.description}</div>
+                  <div class='infowindow_content'>내용 : ${target.description}</div>
+                  <div class='infowindow_date'>시작날짜 : ${target.startDate}</div>
+                  <div class='infowindow_date'>종료날짜 : ${target.endDate}</div>
                 </div>`
 
                 var infowindow = new naver.maps.InfoWindow({
