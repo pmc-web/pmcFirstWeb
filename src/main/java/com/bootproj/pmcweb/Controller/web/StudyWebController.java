@@ -60,12 +60,19 @@ public class StudyWebController {
             List<StudyMember> studyMembers = studyMemberService.getStudyMembers(studyDetail.getId());
             List<Dates> schedules = dateService.getRecentDates(studyDetail.getId(), 3); // 최근 3개 일정
 
+            // 내 이름 들고 오기
+            String userName = "";
+            if(user != null ) {
+                Account myAccount = accountService.getUserByEmail(user.getUsername());
+                userName = myAccount.getName();
+            }
             log.info("{} {}", studyMembers, schedules);
             view.addObject("study", studyDetail);
             view.addObject("region", region);
             view.addObject("subject", subject);
             view.addObject("studyMembers", studyMembers);
             view.addObject("schedules", schedules);
+            view.addObject("userName", userName);
 
             String userRole = MemberRole.GUEST.getTitle();
             if (user != null) {

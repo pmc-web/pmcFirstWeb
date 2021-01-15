@@ -174,12 +174,14 @@
                 </div>
             </div>
 
-            <div class="card my-4">
-                <h5 class="card-header">스터디 채팅방</h5>
-                <div class="card-body">
-                    <button class="btn btn-primary" th:onclick="createRoom()">참여하기</button>
+            <th:block th:if ="${userName}!=''">
+                <div class="card my-4">
+                    <h5 class="card-header">스터디 채팅방</h5>
+                    <div class="card-body">
+                        <button class="btn btn-primary" id="chat" th:onclick="createRoom()" th:value="${userName}">참여하기</button>
+                    </div>
                 </div>
-            </div>
+            </th:block>
 
         </div>
 
