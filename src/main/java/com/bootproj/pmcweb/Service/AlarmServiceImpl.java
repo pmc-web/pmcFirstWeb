@@ -5,6 +5,7 @@ import com.bootproj.pmcweb.Domain.Alarm;
 import com.bootproj.pmcweb.Domain.enumclass.AlarmStatus;
 import com.bootproj.pmcweb.Domain.enumclass.AlarmType;
 import com.bootproj.pmcweb.Mapper.AlarmMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,10 +13,10 @@ import java.util.Date;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class AlarmServiceImpl implements AlarmService {
 
-    @Autowired
-    AlarmMapper alarmMapper;
+    private final AlarmMapper alarmMapper;
 
     @Override
     public Alarm insert(Alarm alarm) {

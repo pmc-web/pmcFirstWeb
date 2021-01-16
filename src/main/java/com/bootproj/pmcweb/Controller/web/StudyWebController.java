@@ -1,5 +1,6 @@
 package com.bootproj.pmcweb.Controller.web;
 
+import com.bootproj.pmcweb.Common.Exception.ForbiddenException;
 import com.bootproj.pmcweb.Common.Response.StudyApiResponse;
 import com.bootproj.pmcweb.Domain.Account;
 import com.bootproj.pmcweb.Domain.Region;
@@ -10,6 +11,8 @@ import com.bootproj.pmcweb.Service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -44,6 +47,7 @@ public class StudyWebController {
 
     @GetMapping("/study/register")
     public ModelAndView getCategory(@AuthenticationPrincipal User user) {
+        if (user==null) throw new ForbiddenException();
         Account account = accountService.getUserByEmail(user.getUsername());
         List<String> regions = regionService.getRegionDepth1();
         List<String> subjects = subjectService.getSubjectDepth1();

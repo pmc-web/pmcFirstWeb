@@ -9,6 +9,7 @@ import com.bootproj.pmcweb.Mapper.AttachmentMapper;
 import com.bootproj.pmcweb.Mapper.StudyMaterialMapper;
 import com.bootproj.pmcweb.Common.Exception.FileDeleteException;
 import com.bootproj.pmcweb.Common.Exception.FileSaveException;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -23,19 +24,16 @@ import java.util.*;
 
 @Log4j2
 @Service
+@RequiredArgsConstructor
 public class AttachmentServiceImpl implements AttachmentService{
 
-    @Autowired
-    private Environment env;
+    private final Environment env;
 
-    @Autowired
-    private AttachmentMapper attachmentMapper;
+    private final AttachmentMapper attachmentMapper;
 
-    @Autowired
-    private AccountMapper accountMapper;
+    private final AccountMapper accountMapper;
 
-    @Autowired
-    private StudyMaterialMapper studyMaterialMapper;
+    private final StudyMaterialMapper studyMaterialMapper;
 
     @Override
     public Optional<Attachment> getAttachment(Long attachmentId) {

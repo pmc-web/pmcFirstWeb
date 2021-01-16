@@ -13,6 +13,7 @@ import com.bootproj.pmcweb.Domain.Study;
 import com.bootproj.pmcweb.Service.AccountSecurityService;
 import com.bootproj.pmcweb.Service.AccountService;
 import com.bootproj.pmcweb.Service.AttachmentService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,17 +33,15 @@ import java.util.Map;
 import java.util.Optional;
 
 @Slf4j
-@Controller // Rest Controller는 response 바디를 가지고, Controller는 가지지 않음.
+@Controller
+@RequiredArgsConstructor
 public class AccountController {
 
-    @Autowired
-    private AccountService accountService;
+    private final AccountService accountService;
 
-    @Autowired
-    private AccountSecurityService accountSecurityService;
+    private final AccountSecurityService accountSecurityService;
 
-    @Autowired
-    private AttachmentService attachmentService;
+    private final AttachmentService attachmentService;
 
     /**
      * REST API
