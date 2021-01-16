@@ -125,4 +125,11 @@ public class StudyController {
         }
         return studyApiResponses;
     }
+
+    // 지도에서 데이터 보여주기 위한 스터디 조회
+    @GetMapping("/mapData")
+    public ResponseEntity<Header> getStudyAllList(@AuthenticationPrincipal User user){
+        List<Study> studyAllList = studyService.getAllList();
+        return new ResponseEntity(Header.OK(studyAllList),HttpStatus.OK);
+    }
 }

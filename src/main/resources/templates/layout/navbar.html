@@ -11,7 +11,7 @@
                 </button>
                 <!-- search -->
                 <span class="nav-item pl-3">
-                    <input class="form-control" type="text" placeholder="Search" aria-label="Search">
+                    <input class="form-control" type="text" placeholder="Search" aria-label="Search" id="searchInput" value="">
                 </span>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto">
@@ -58,5 +58,28 @@
                 </div>
             </div>
         </nav>
+        <script>
+            $("#searchInput").keydown(function(e){
+               let searchData;
+               if(e.keyCode === 13){
+                   // alert($("#searchInput").val());
+                   searchData = $("#searchInput").val();
+
+                   $.ajax({
+                       url: '/search/word',
+                       data: searchData,
+                       dataType: 'json',
+                       contentType: false,
+                       type: 'GET',
+                       success: function (data) {
+                           alert("검색 되었습니다.");
+                       },
+                       error: function (request, status, error) {
+                           alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+                       }
+                   })
+               }
+            });
+        </script>
     </th:block>
 </html>
