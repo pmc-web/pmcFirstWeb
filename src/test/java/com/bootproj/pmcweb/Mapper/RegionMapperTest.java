@@ -1,6 +1,7 @@
 package com.bootproj.pmcweb.Mapper;
 
 import com.bootproj.pmcweb.Config.DatabaseConfiguration;
+import com.bootproj.pmcweb.Domain.Region;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -42,5 +43,11 @@ class RegionMapperTest {
     void selectRegionDepth3() {
         List<Map> result = regionMapper.selectRegionDepth3(regionDepth1, regionDepth2);
         Assertions.assertThat(result.size()>0);
+    }
+
+    @Test
+    void getRegionById(){
+        Region region = regionMapper.selectRegionById(1L).get();
+        Assertions.assertThat(region.getId().equals(1L));
     }
 }

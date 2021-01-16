@@ -12,4 +12,5 @@ public interface DateMapper {
     public Dates getDate(Long id);
     public Integer updateDate(Dates dates);
     public Integer deleteDate(Long id);
+    public List<Dates> selectRecentDates(Long studyId, Integer count);
 }

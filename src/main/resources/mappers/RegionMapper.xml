@@ -15,4 +15,7 @@
         SELECT region_depth3 AS regionDepth3, id from region
         WHERE region_depth1=#{regionDepth1} AND region_depth2=#{regionDepth2}
     </select>
+    <select id="selectRegionById" resultType="com.bootproj.pmcweb.Domain.Region">
+        SELECT * FROM region where id = #{id};
+    </select>
 </mapper>

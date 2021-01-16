@@ -35,9 +35,12 @@
         }
 
         function enterRoom(roomId, roomName) {
+            let userName = document.getElementById("chat").value;
             localStorage.setItem('wschat.roomId',roomId);
             localStorage.setItem('wschat.roomName',roomName);
+            localStorage.setItem('wschat.userName', userName);
             location.href="/chat/room/enter/"+roomId;
+
         }
     </script>
 </th:block>

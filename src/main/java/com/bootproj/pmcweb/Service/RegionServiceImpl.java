@@ -31,4 +31,9 @@ public class RegionServiceImpl implements RegionService {
     public List<Map> getRegionDepth3(String regionDepth1, String regionDepth2) {
         return regionMapper.selectRegionDepth3(regionDepth1, regionDepth2);
     }
+
+    @Override
+    public Optional<Region> getRegionById(Long id) {
+        return regionMapper.selectRegionById(id);
+    }
 }

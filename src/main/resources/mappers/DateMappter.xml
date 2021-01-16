@@ -25,10 +25,10 @@
     <select id="getDatesList" resultType="com.bootproj.pmcweb.Domain.Dates">
         select * from date
         <where>
-            <if test="studyId!=null"> study_id = #{studyId}</if>
-            <if test="year !=null"> and YEAR(date) = #{year}</if>
-            <if test="month !=null"> and MONTH(date) = #{month}</if>
-            <if test="day !=null"> and DAY(date) = #{day}</if>
+            <if test="studyId!=null">study_id = #{studyId}</if>
+            <if test="year !=null">and YEAR(date) = #{year}</if>
+            <if test="month !=null">and MONTH(date) = #{month}</if>
+            <if test="day !=null">and DAY(date) = #{day}</if>
         </where>
     </select>
     <select id="getDate" resultType="com.bootproj.pmcweb.Domain.Dates">
@@ -38,4 +38,11 @@
     <delete id="deleteDate">
         delete from date where id = #{id};
     </delete>
+
+    <select id="selectRecentDates" resultType="com.bootproj.pmcweb.Domain.Dates">
+        SELECT * FROM date
+        where study_id=#{studyId}
+        order by date desc
+        limit ${count}
+    </select>
 </mapper>

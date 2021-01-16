@@ -1,5 +1,6 @@
 package com.bootproj.pmcweb.Service;
 
+import com.bootproj.pmcweb.Domain.Subject;
 import com.bootproj.pmcweb.Mapper.SubjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,5 +23,10 @@ public class SubjectServiceImpl implements SubjectService {
     @Override
     public List<Map> getSubjectDepth2(String subjectDepth1) {
         return subjectMapper.selectSubjectDepth2(subjectDepth1);
+    }
+
+    @Override
+    public Optional<Subject> getSubjectById(Long id) {
+        return subjectMapper.selectSubjectById(id);
     }
 }

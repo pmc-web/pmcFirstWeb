@@ -2,10 +2,7 @@ package com.bootproj.pmcweb.Controller.web;
 
 import com.bootproj.pmcweb.Common.Exception.ForbiddenException;
 import com.bootproj.pmcweb.Common.Response.StudyApiResponse;
-import com.bootproj.pmcweb.Domain.Account;
-import com.bootproj.pmcweb.Domain.Region;
-import com.bootproj.pmcweb.Domain.Study;
-import com.bootproj.pmcweb.Domain.Subject;
+import com.bootproj.pmcweb.Domain.*;
 import com.bootproj.pmcweb.Domain.enumclass.MemberRole;
 import com.bootproj.pmcweb.Service.*;
 import lombok.RequiredArgsConstructor;
@@ -23,9 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.swing.text.html.Option;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
 
 
 @Slf4j
@@ -35,11 +30,10 @@ public class StudyWebController {
 
     private final RegionService regionService;
     private final SubjectService subjectService;
+    private final AccountService accountService;
     private final StudyMemberService studyMemberService;
     private final StudyService studyService;
-
-    @Autowired
-    private AccountService accountService;
+    private final DateService dateService;
 //    @GetMapping("/study/register")
 //    public String getStudyRegister(){
 //        return "study/study_register";
@@ -59,22 +53,39 @@ public class StudyWebController {
     }
 
     @GetMapping("/study/detail")
-    public ModelAndView getDetail(@AuthenticationPrincipal User user, @RequestParam(value = "id")Long id)throws Exception{
-            ModelAndView adminView = new ModelAndView("study/study_detail");
-            ModelAndView normalView = new ModelAndView("study/study_detail");
+    public ModelAndView getDetail(@AuthenticationPrincipal User user, @RequestParam(value = "id") Long id) throws Exception {
+        ModelAndView view = new ModelAndView("study/study_detail");
         try {
+            // TODO : review 이렇게 여러 서비스에서 불러도 될까
             StudyApiResponse studyDetail = studyService.getStudyInfo(id).orElseThrow(() -> new NoSuchElementException());
 
-            adminView.addObject("study", studyDetail);
-            normalView.addObject("study", studyDetail);
+            Region region = regionService.getRegionById(studyDetail.getRegionId()).orElseThrow(() -> new NoSuchElementException());
+            Subject subject = subjectService.getSubjectById(id).orElseThrow(() -> new NoSuchElementException());
+            List<StudyMember> studyMembers = studyMemberService.getStudyMembers(studyDetail.getId());
+            List<Dates> schedules = dateService.getRecentDates(studyDetail.getId(), 3); // 최근 3개 일정
 
-            if (user == null) return normalView;
-            Account account = accountService.getUserByEmail(user.getUsername());
-            String role = studyMemberService.getMemberRole(id, account.getId());
+            // 내 이름 들고 오기
+            String userName = "";
+            if(user != null ) {
+                Account myAccount = accountService.getUserByEmail(user.getUsername());
+                userName = myAccount.getName();
+            }
+            log.info("{} {}", studyMembers, schedules);
+            view.addObject("study", studyDetail);
+            view.addObject("region", region);
+            view.addObject("subject", subject);
+            view.addObject("studyMembers", studyMembers);
+            view.addObject("schedules", schedules);
+            view.addObject("userName", userName);
 
-            if (MemberRole.ADMIN.getTitle().equals(role)) return adminView;
-            return normalView;
-        }catch (Exception e) {
+            String userRole = MemberRole.GUEST.getTitle();
+            if (user != null) {
+                Account account = accountService.getUserByEmail(user.getUsername());
+                userRole = studyMemberService.getMemberRole(id, account.getId());
+            }
+            view.addObject("userRole", userRole);
+            return view;
+        } catch (Exception e) {
             throw new Exception(e.getMessage());
         }
     }

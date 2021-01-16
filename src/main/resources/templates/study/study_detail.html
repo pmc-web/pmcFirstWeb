@@ -19,10 +19,9 @@
             <p>Posted on </p><p th:text="${study.getInstTime()}"></p>
 
             <hr>
-
-            <!-- Preview Image -->
-            <th:block th:if="${study.getAttachmentId()}!=null">
-                <img class="img-fluid rounded" src="http://placehold.it/900x300" alt="">
+             Preview Image
+            <th:block th:if="${study.getAttachmentPath()}!=null">
+                <img class="img-fluid rounded" src="/img/study/${study.getId()}/${study.getAttachmentPath()}" alt="">
             </th:block>
 
             <hr>
@@ -84,7 +83,7 @@
             <div class="card my-4">
                 <h5 class="card-header">Host</h5>
                 <div class="card-body">
-                    <a href="#">Host Name</a>
+                    <a href="#" th:text="${study.getAdminName()}"></a>
                 </div>
             </div>
 
@@ -96,7 +95,8 @@
                         <div class="col-lg-12">
                             <ul class="list-unstyled mb-0">
                                 <li>
-                                    <a href="#">Web Design</a>
+                                    <a href="#" th:text="${subject.getSubjectDepth1()}"></a>
+                                    <a href="#" th:text="${subject.getSubjectDepth2()}"></a>
                                 </li>
                             </ul>
                         </div>
@@ -112,7 +112,7 @@
                         <div class="col-lg-4">
                             <ul class="list-unstyled mb-0">
                                 <li>
-                                    <a href="#">서울특별시</a>
+                                    <a href="#" th:text="${region.getRegionDepth1()}"></a>
                                 </li>
                             </ul>
                         </div>
@@ -120,7 +120,7 @@
                         <div class="col-lg-4">
                             <ul class="list-unstyled mb-0">
                                 <li>
-                                    <a href="#">강북구</a>
+                                    <a href="#" th:text="${region.getRegionDepth2()}"></a>
                                 </li>
                             </ul>
                         </div>
@@ -128,7 +128,7 @@
                         <div class="col-lg-4">
                             <ul class="list-unstyled mb-0">
                                 <li>
-                                    <a href="#">성북동</a>
+                                    <a href="#" th:text="${region.getRegionDepth3()}" ></a>
                                 </li>
                             </ul>
                         </div>
@@ -142,8 +142,11 @@
                 <div class="card-body">
                     <form>
                         <div class="form-group">
-                            [스터디 정기 모임] 2020.12.19 토요일<br>
-                            (참여멤버: 3명)
+                            <th:block th:each="item : ${schedules}">
+                                <p th:text="${item.getDescription()}" />
+                            </th:block>
+<!--                            [스터디 정기 모임] 2020.12.19 토요일<br>-->
+<!--                            (참여멤버: 3명)-->
                         </div>
                         <button type="submit" class="btn btn-primary">참여하기</button>
                     </form>
@@ -161,17 +164,24 @@
                             Member2<br>
                             Member3
                         </div>
-                        <button type="submit" class="btn btn-primary">가입하기</button>
+                        <th:block th:if="${userRole.equals('ADMIN') }">
+                            <button type="submit" class="btn btn-primary">관리하기</button>
+                        </th:block>
+                        <th:block th:unless="${userRole.equals('ADMIN') }">
+                            <button type="submit" class="btn btn-primary">가입하기</button>
+                        </th:block>
                     </form>
                 </div>
             </div>
 
-            <div class="card my-4">
-                <h5 class="card-header">스터디 채팅방</h5>
-                <div class="card-body">
-                    <button class="btn btn-primary" th:onclick="createRoom()">참여하기</button>
+            <th:block th:if ="${userName}!=''">
+                <div class="card my-4">
+                    <h5 class="card-header">스터디 채팅방</h5>
+                    <div class="card-body">
+                        <button class="btn btn-primary" id="chat" th:onclick="createRoom()" th:value="${userName}">참여하기</button>
+                    </div>
                 </div>
-            </div>
+            </th:block>
 
         </div>
 
