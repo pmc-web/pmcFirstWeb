@@ -250,8 +250,6 @@ public class AttachmentServiceImpl implements AttachmentService{
             File file = new File(path);
             if (file.exists()){
                 file.delete();
-            } else {
-                throw new FileDeleteException("기존 파일이 존재하지 않습니다.");
             }
         } catch (Exception e){
             throw new FileDeleteException(e.getMessage());

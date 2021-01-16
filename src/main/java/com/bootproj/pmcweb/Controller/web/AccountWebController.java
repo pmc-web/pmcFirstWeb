@@ -81,8 +81,7 @@ public class AccountWebController {
         Optional<Attachment> attachment = attachmentService.getProfile(user.getUsername());
         attachment.ifPresentOrElse(
                 (att) -> {
-                    mv.addObject("profileImagePath", "/img/profile/" + account.getId() + "/" + att.getName());
-                    log.info("/img/profile/" + account.getId() + "/" + att.getName());
+                    mv.addObject("profileImagePath", "/out/img/" + att.getPath());
                 },
                 () -> {
                     mv.addObject("profileImagePath", "/img/moim.jpg");

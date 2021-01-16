@@ -105,7 +105,7 @@ public class StudyController {
                     .regionId(study.getRegionId())
                     .build();
             attachmentService.getStudyMainImage(study.getId()).ifPresent(attachment -> {
-                studyApiResponse.setAttachmentPath(attachment.getName());
+                studyApiResponse.setAttachmentPath(attachment.getPath());
             });
             studyApiResponses.add(studyApiResponse);
         }

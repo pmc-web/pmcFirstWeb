@@ -1,0 +1,132 @@
+{
+  "name": "summernote",
+  "description": "Super simple WYSIWYG editor",
+  "version": "0.8.18",
+  "license": "MIT",
+  "keywords": [
+    "editor",
+    "WYSIWYG"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/summernote/summernote.git"
+  },
+  "author": {
+    "name": "hackerwins",
+    "email": "<susukang98@gmail.com"
+  },
+  "main": "dist/summernote.js",
+  "scripts": {
+    "dev": "eslint config && webpack-dev-server --config=./config/webpack.config.dev.js --open --progress",
+    "prebuild": "node ./config/build-fonts.js",
+    "build": "webpack --mode=production --config=./config/webpack.config.production.js --progress",
+    "lint": "eslint src/js plugin lang test config",
+    "test": "karma start karma.conf.js --single-run",
+    "test:grep": "karma run karma.conf.js -- --grep",
+    "test:watch": "karma start karma.conf.js",
+    "test:ci": "karma start karma.ci.conf.js --single-run",
+    "test:sauce": "karma start karma.saucelabs.conf.js --single-run",
+    "test:debug": "karma start karma.debug.conf.js"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn lint",
+      "pre-push": "yarn lint && yarn run test"
+    }
+  },
+  "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/plugin-external-helpers": "^7.8.3",
+    "@babel/preset-env": "^7.9.5",
+    "autoprefixer": "^9.7.6",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-eslint": "^10.1.0",
+    "babel-loader": "^8.1.0",
+    "babel-plugin-module-resolver": "^4.0.0",
+    "bootstrap": "^4.4.1",
+    "chai": "^4.2.0",
+    "chai-spies": "^1.0.0",
+    "chromedriver": "^81.0.0",
+    "clean-webpack-plugin": "^3.0.0",
+    "concurrently": "^5.0.2",
+    "copy-webpack-plugin": "^5.1.1",
+    "css-loader": "^3.5.2",
+    "cssnano": "^4.1.10",
+    "eslint": "^6.8.0",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-loader": "^4.0.0",
+    "eslint-plugin-chai-friendly": "^0.5.0",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "file-loader": "^6.0.0",
+    "html-loader": "^1.1.0",
+    "html-webpack-plugin": "^4.2.0",
+    "husky": "^4.2.5",
+    "jquery": "^3.5.0",
+    "karma": "^5.0.2",
+    "karma-chrome-launcher": "^3.1.0",
+    "karma-coverage": "^2.0.2",
+    "karma-coveralls": "^2.1.0",
+    "karma-detect-browsers": "^2.3.3",
+    "karma-firefox-launcher": "^1.2.0",
+    "karma-ie-launcher": "^1.0.0",
+    "karma-mocha": "^2.0.0",
+    "karma-opera-launcher": "^1.0.0",
+    "karma-safari-launcher": "^1.0.0",
+    "karma-sauce-launcher": "^1.2.0",
+    "karma-webpack": "^4.0.2",
+    "less": "^3.11.1",
+    "less-loader": "^5.0.0",
+    "mini-css-extract-plugin": "^0.9.0",
+    "mocha": "^7.1.1",
+    "optimize-css-assets-webpack-plugin": "^5.0.3",
+    "popper.js": "^1.16.1",
+    "postcss-loader": "^3.0.0",
+    "sass": "^1.26.3",
+    "sass-loader": "^8.0.2",
+    "serve-static": "^1.14.1",
+    "string-replace-loader": "^2.3.0",
+    "style-loader": "^1.1.4",
+    "terser-webpack-plugin": "^2.3.5",
+    "uglify-js": "^3.9.1",
+    "url-loader": "^4.1.0",
+    "webfont": "^9.0.0",
+    "webpack": "^4.42.1",
+    "webpack-bundle-analyzer": "^3.7.0",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.10.3",
+    "zip-webpack-plugin": "^3.0.0"
+  },
+  "dependencies": {},
+  "licenseText": "The MIT License (MIT)\n\nCopyright (c) 2015~ Summernote Team (https://github.com/orgs/summernote/people)\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in\nall copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN\nTHE SOFTWARE.\n",
+  "_id": "summernote@0.8.18",
+  "dist": {
+    "shasum": "be5c368b1c92de8a05039a9976157bdea7aae386",
+    "integrity": "sha512-VlwBaNm9vSYMYXvO2f3UCUmY0Gm8jxLcBn+D08aX3pKs4x2vAoyQ4DcDQ6D+PchQiLrf86AGQVfVu56F4aP3ug==",
+    "tarball": "https://registry.npmjs.org/summernote/-/summernote-0.8.18.tgz",
+    "fileCount": 431,
+    "unpackedSize": 8148430,
+    "npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.4\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJexXE6CRA9TVsSAnZWagAAhRcP/Apv8A/NXe9aTVT9rvjT\n0ORORHkaXnLS5fGYtvOw/H8rmpj4qMKTnf37kwcWAXYtDXPTwkF7UXI7wYWB\nAvIrzu7so0a33LqGuRpnM3muz1BzCkgfYDtlu35qcnnQFgSz9aI+vXiFeIUA\nqO/FOLGb5I1dT4AChbkSUTbUgmDelkpoUWqjrtYI4+m/PzU7aoGDFlB5kqj9\nMk1Mpg4WsMH1o7+sFflaK+LzphEKtXoEGlPy7ijyQk9RqsPmGJy+wtFKpHNo\nYxkWE9w8r9nkf9keo3bKcmlF1qXTe73RaR+zpipJwJ2nIVJDZQ9ty+1/7+NL\nGd9XILD4Gs2dZtl+z7/0MZiKaYrWOV8punREkZOwfKJVvJAevpzS2Jw3uvBn\nHVrB4crCDTmXbhB7Wt1dvIOt59yRKmTAVTUnleaAgMlx3V9xw58Of2JdCD/V\nIBIlm4aSWdRGSTlCTw+dzrg4RSyBTy5a2GTHfFWO502gJiCQFst9H6tW13ze\nCeyEXtUpuPQIfA0Fs3gsck6VU/cRq3i1ZnJ5dEc4MsdeJJwCDtEta7gD7+Ma\n5+ZkqwCQRKKVoLUK5XPh/w1c4NaIaFR9lgSFiOfOiLY3523RT/hhbMfziM2V\nOa80CYLqfBprIL4eCJXWeFGDyunQawiIW3ZZ7QG+Arj1Z3KMm6A7jk5fTgfX\nDGIQ\r\n=1MNL\r\n-----END PGP SIGNATURE-----\r\n"
+  },
+  "maintainers": [
+    {
+      "name": "hackerwins",
+      "email": "susukang98@gmail.com"
+    }
+  ],
+  "_npmUser": {
+    "name": "lqez",
+    "email": "ez.amiryo@gmail.com"
+  },
+  "directories": {},
+  "_npmOperationalInternal": {
+    "host": "s3://npm-registry-packages",
+    "tmp": "tmp/summernote_0.8.18_1589997882048_0.824463650228906"
+  },
+  "_hasShrinkwrap": false,
+  "_shasum": "be5c368b1c92de8a05039a9976157bdea7aae386",
+  "_resolved": "https://registry.npmjs.org/summernote/-/summernote-0.8.18.tgz",
+  "_from": "summernote@>=0.8.16 <0.9.0"
+}
