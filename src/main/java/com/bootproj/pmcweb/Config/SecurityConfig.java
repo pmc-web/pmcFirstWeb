@@ -1,7 +1,9 @@
 package com.bootproj.pmcweb.Config;
 
 import com.bootproj.pmcweb.Common.Request.LoginFailHandler;
+import com.bootproj.pmcweb.Service.AccountSecurityService;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -11,17 +13,19 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
-    }
+    private final AccountSecurityService accountSecurityService;
+    private final DataSource dataSource;
 
     public void configure(WebSecurity web) throws Exception
     {
@@ -53,10 +57,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .invalidateHttpSession(true)
             .deleteCookies("JSESSIONID")
             .permitAll();
+
+        http.rememberMe()
+                .userDetailsService(accountSecurityService)
+                .tokenRepository(tokenRepository());
+
         http.sessionManagement()
                 .maximumSessions(1)
                 .maxSessionsPreventsLogin(false);
 
+    }
+
+    @Bean
+    public PersistentTokenRepository tokenRepository(){
+        JdbcTokenRepositoryImpl jdbcTokenRepository = new JdbcTokenRepositoryImpl();
+        jdbcTokenRepository.setDataSource(dataSource);
+        return jdbcTokenRepository;
     }
 
     @Bean

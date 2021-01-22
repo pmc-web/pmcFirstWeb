@@ -19,16 +19,14 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 import java.util.HashMap;
 import java.util.Map;
 
-@NoArgsConstructor
+@RequiredArgsConstructor
 @Log4j2
 @Component
 @Profile("!stomp")
 public class AlarmWebSocketHandler extends TextWebSocketHandler {
-    @Autowired
-    AlarmService alarmService;
 
-    @Autowired
-    AccountService accountService;
+    private final AlarmService alarmService;
+    private final AccountService accountService;
 
     public static Map<String, WebSocketSession> sessions = new HashMap<>();
 

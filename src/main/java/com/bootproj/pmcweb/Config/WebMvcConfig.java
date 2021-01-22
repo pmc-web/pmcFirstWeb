@@ -2,8 +2,11 @@ package com.bootproj.pmcweb.Config;
 
 import com.bootproj.pmcweb.Common.Intercepter.LoggingInterceptor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -18,6 +21,10 @@ public class WebMvcConfig implements WebMvcConfigurer {
     private final String LINUX_MAC = "/";
     private final String OUT_IMAGE =  "/out/img/";
 
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+    }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
