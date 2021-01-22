@@ -2,6 +2,7 @@ package com.bootproj.pmcweb.Controller.web;
 
 import com.bootproj.pmcweb.Common.Exception.ForbiddenException;
 import com.bootproj.pmcweb.Common.Response.StudyApiResponse;
+import com.bootproj.pmcweb.Common.Response.StudyMemberApiResponse;
 import com.bootproj.pmcweb.Domain.*;
 import com.bootproj.pmcweb.Domain.enumclass.MemberRole;
 import com.bootproj.pmcweb.Service.*;
@@ -60,7 +61,7 @@ public class StudyWebController {
 
             Region region = regionService.getRegionById(studyDetail.getRegionId()).orElseThrow(() -> new NoSuchElementException());
             Subject subject = subjectService.getSubjectById(studyDetail.getSubjectId()).orElseThrow(() -> new NoSuchElementException());
-            List<StudyMember> studyMembers = studyMemberService.getStudyMembers(studyDetail.getId());
+            List<StudyMemberApiResponse> studyMembers = studyMemberService.getStudyMembers(studyDetail.getId());
             List<Dates> schedules = dateService.getRecentDates(studyDetail.getId(), 3); // 최근 3개 일정
 
             // 내 이름 들고 오기

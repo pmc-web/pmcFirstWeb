@@ -156,13 +156,13 @@
 
             <!-- Side Widget -->
             <div class="card my-4">
-                <h5 class="card-header">Member (3명)</h5>
+                <h5 class="card-header">Member (<th:block th:text="${studyMembers.size()}"></th:block> 명)</h5>
                 <div class="card-body">
                     <form>
                         <div class="form-group">
-                            Member1<br>
-                            Member2<br>
-                            Member3
+                            <th:block th:each="item: ${studyMembers}" th:text="${item.getUserName()}">
+                                <br>
+                            </th:block>
                         </div>
                         <th:block th:if="${userRole.equals('ADMIN') }">
                             <button type="submit" class="btn btn-primary">관리하기</button>
