@@ -56,11 +56,10 @@ public class StudyWebController {
     public ModelAndView getDetail(@AuthenticationPrincipal User user, @RequestParam(value = "id") Long id) throws Exception {
         ModelAndView view = new ModelAndView("study/study_detail");
         try {
-            // TODO : review 이렇게 여러 서비스에서 불러도 될까
             StudyApiResponse studyDetail = studyService.getStudyInfo(id).orElseThrow(() -> new NoSuchElementException());
 
             Region region = regionService.getRegionById(studyDetail.getRegionId()).orElseThrow(() -> new NoSuchElementException());
-            Subject subject = subjectService.getSubjectById(id).orElseThrow(() -> new NoSuchElementException());
+            Subject subject = subjectService.getSubjectById(studyDetail.getSubjectId()).orElseThrow(() -> new NoSuchElementException());
             List<StudyMember> studyMembers = studyMemberService.getStudyMembers(studyDetail.getId());
             List<Dates> schedules = dateService.getRecentDates(studyDetail.getId(), 3); // 최근 3개 일정
 
@@ -70,7 +69,7 @@ public class StudyWebController {
                 Account myAccount = accountService.getUserByEmail(user.getUsername());
                 userName = myAccount.getName();
             }
-            log.info("{} {}", studyMembers, schedules);
+
             view.addObject("study", studyDetail);
             view.addObject("region", region);
             view.addObject("subject", subject);
