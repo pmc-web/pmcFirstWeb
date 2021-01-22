@@ -7,9 +7,9 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" type="text/css" rel="stylesheet">
 
     <th:block layout:fragment="css"><link th:href="@{/css/chatting.css}" rel="stylesheet"></th:block>
-    <th:block th:replace="/layout/common.html :: fragment-common"/>
+    <th:block th:replace="layout/common.html :: fragment-common"/>
     <!-- navbar -->
-    <th:block th:replace="/layout/navbar.html :: fragment-navbar"/>
+    <th:block th:replace="layout/navbar.html :: fragment-navbar"/>
     <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
 
 </head>

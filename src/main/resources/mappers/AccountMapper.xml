@@ -5,16 +5,16 @@
 <mapper namespace="com.bootproj.pmcweb.Mapper.AccountMapper">
 
     <select id="getUserList" resultType="com.bootproj.pmcweb.Domain.Account">
-        select * from User
+        select * from user
     </select>
 
     <select id="getUserById" resultType="com.bootproj.pmcweb.Domain.Account">
-        select * from User
+        select * from user
         where id = #{id}
     </select>
 
     <select id="getUserByEmail" resultType="com.bootproj.pmcweb.Domain.Account">
-        select * from User
+        select * from user
         where email = #{email}
     </select>
 
@@ -22,41 +22,41 @@
         <!--        <selectKey keyProperty="id" resultType="long" order="BEFORE">-->
         <!--            select CAST(RANDOM()*1000000 as BIGINT) a from SYSIBM.SYSDUMMY1-->
         <!--        </selectKey>-->
-        insert into User (email,password,inst_time,status,name,role)
+        insert into user (email,password,inst_time,status,name,role)
         values (#{email},#{password},NOW(),#{status},#{name},#{role})
     </insert>
 
     <delete id="deleteUser">
-        delete from User where id = #{id}
+        delete from user where id = #{id}
     </delete>
 
     <update id="updateUserAuthKey" parameterType="map">
-        update User set auth_key = #{authKey}
+        update user set auth_key = #{authKey}
         where email = #{email};
     </update>
 
     <update id="updateUserStatus" parameterType="map">
-        update User set status = #{status}
+        update user set status = #{status}
         where email = #{email};
     </update>
 
     <update id="updateUserPassword" parameterType="map">
-        update User set password = #{password}
+        update user set password = #{password}
         where email = #{email};
     </update>
 
     <update id="updateUserAttachment" parameterType="map">
-        update User set attachment_id = #{attachmentId}
+        update user set attachment_id = #{attachmentId}
         where email = #{email};
     </update>
 
     <update id="updateUserSubjectId" parameterType="map">
-        update User set subject_id = #{subjectId}
+        update user set subject_id = #{subjectId}
         where email = #{email};
     </update>
 
     <update id="updateUserRegionId" parameterType="map">
-        update User set region_id = #{regionId}
+        update user set region_id = #{regionId}
         where email = #{email};
     </update>
 
