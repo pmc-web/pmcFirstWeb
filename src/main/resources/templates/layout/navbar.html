@@ -60,26 +60,27 @@
         </nav>
         <script>
             $("#searchInput").keydown(function(e){
-               let searchData;
+               let inputData;
                if(e.keyCode === 13){
-                   // alert($("#searchInput").val());
-                   searchData = $("#searchInput").val();
-
-                   $.ajax({
-                       url: '/search/word',
-                       data: searchData,
-                       dataType: 'json',
-                       contentType: false,
-                       type: 'GET',
-                       success: function (data) {
-                           alert("검색 되었습니다.");
-                       },
-                       error: function (request, status, error) {
-                           alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-                       }
-                   })
+                   inputData = $("#searchInput").val();
+                   searchFunc(inputData);
                }
             });
+
+            function searchFunc(inputData){
+                $.ajax({
+                    url: '/search/word',
+                    data: inputData,
+                    dataType: 'json',
+                    type: 'POST',
+                    success: function (data) {
+                        alert("검색 되었습니다.");
+                    },
+                    error: function (request, status, error) {
+                        alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+                    }
+                })
+            }
         </script>
     </th:block>
 </html>

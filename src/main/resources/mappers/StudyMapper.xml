@@ -50,4 +50,11 @@
         UPDATE study SET status=#{status} where id = #{id};
 </update>
 
+<select id="getSearchList" parameterType="String" resultType="com.bootproj.pmcweb.Domain.Study">
+    select *
+    from study
+    where title like #{word}
+    or	description like #{word}
+</select>
+
 </mapper>
