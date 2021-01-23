@@ -36,15 +36,16 @@
                 /*<![CDATA[*/
                 let parent = document.querySelector("#popular-study");
                 let html = parent.innerHTML;
+                let len = data.length > 3 ? 3: data.length;
                 /*]]>*/
-                for(let i=0; i<3; i++){
+                for(let i=0; i<len; i++){
                     html += "<div class=\"col-lg-4 mb-4\" id="+ data[i].id + ">";
                     html += "<div class=\"card h-100\">";
                     html += "<h4 class=\"card-header\">" + data[i].title + "</h4>";
                     html += "<div class=\"card-body\">";
                     html += "<p class=\"card-text\">" + data[i].description + "</p>";
                     html += "</div><div class=\"card-footer\">"
-                            +"<a class=\"btn btn-primary\" href=\"/study/detail?id=\""+data[i].id+">자세히</a></div> </div></div>";
+                            +"<a class=\"btn btn-primary\" href=\"/study/detail?id="+data[i].id+"\">자세히</a></div> </div></div>";
                         // "<a th:href=\"\""+data[i].id+"class=\"btn btn-primary\">자세히</a></div></div></div>";
                     //TODO : 타임 리프 문법 적용 안됨 ...
                 }

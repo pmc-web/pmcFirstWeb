@@ -20,8 +20,11 @@
     <select id="getMemberRole" parameterType="long" resultType="string">
         SELECT role FROM study_member where study_id=#{studyId} and user_id=#{userId};
     </select>
-    <select id="selectStudyMembers" resultType="com.bootproj.pmcweb.Domain.StudyMember">
-        SELECT * FROM study_member where study_id=#{studyId};
+    <select id="selectStudyMembers" resultType="com.bootproj.pmcweb.Common.Response.StudyMemberApiResponse">
+        SELECT study_member.*, user.name as user_name FROM study_member
+        inner join user
+        on user_id = user.id
+        where study_id= ${studyId};
     </select>
 
 </mapper>
