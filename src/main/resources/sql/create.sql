@@ -1,7 +1,7 @@
 -- -----------------------------------------------------
 -- Schema study
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `study` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci ;
+CREATE SCHEMA IF NOT EXISTS `study` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci ;
 
 -- -----------------------------------------------------
 -- Table `study`.`attchment`study
@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS `study`.`attachment` (
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci
+COLLATE = utf8mb4_general_ci
 COMMENT = '자료 테이블';
 
 
@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `study`.`subject` (
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci
+COLLATE = utf8mb4_general_ci
 COMMENT = '주제 테이블';
 
 
@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS `study`.`region` (
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci
+COLLATE = utf8mb4_general_ci
 COMMENT = '지역 테이블';
 
 
@@ -75,7 +75,7 @@ CREATE TABLE IF NOT EXISTS `study`.`study` (
   )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci
+COLLATE = utf8mb4_general_ci
 COMMENT = '스터디 테이블';
 
 -- -----------------------------------------------------
@@ -91,6 +91,8 @@ CREATE TABLE IF NOT EXISTS `study`.`study_material` (
   FOREIGN KEY (`study_id`) REFERENCES study(id)
   )
 ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_general_ci
 COMMENT = '스터디 자료 매핑 테이블';
 
 -- -----------------------------------------------------
@@ -115,7 +117,7 @@ CREATE TABLE IF NOT EXISTS `study`.`user` (
   )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+COLLATE = utf8mb4_general_ci;
 
 
 -- -----------------------------------------------------
@@ -132,7 +134,7 @@ CREATE TABLE IF NOT EXISTS `study`.`date` (
   )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci
+COLLATE = utf8mb4_general_ci
 COMMENT = '일정 테이블';
 
 
@@ -154,7 +156,7 @@ CREATE TABLE IF NOT EXISTS `study`.`alarm` (
 
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci
+COLLATE = utf8mb4_general_ci
 COMMENT = '알람 테이블 (오른쪽 상단에 뜨는 알람을 저장하는 테이블)';
 
 
@@ -172,7 +174,7 @@ CREATE TABLE IF NOT EXISTS `study`.`favorite` (
   )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci
+COLLATE = utf8mb4_general_ci
 COMMENT = '즐겨찾기 테이블';
 
 
@@ -192,7 +194,7 @@ CREATE TABLE IF NOT EXISTS `study`.`message` (
   )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+COLLATE = utf8mb4_general_ci;
 
 
 -- -----------------------------------------------------
@@ -210,7 +212,7 @@ CREATE TABLE IF NOT EXISTS `study`.`study_member` (
   )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci
+COLLATE = utf8mb4_general_ci
 COMMENT = '스터디와 유저의 매핑 테이블';
 
 CREATE TABLE IF NOT EXISTS `study`.`persistent_logins` (

@@ -2,8 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
-    <th:block th:replace="/layout/common.html :: fragment-common"/>
-    <th:block th:replace="/layout/navbar.html :: fragment-navbar"/>
+    <th:block th:replace="layout/common.html :: fragment-common"/>
+    <th:block th:replace="layout/navbar.html :: fragment-navbar"/>
     <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
 </head>
 <body>
@@ -156,13 +156,13 @@
 
             <!-- Side Widget -->
             <div class="card my-4">
-                <h5 class="card-header">Member (3명)</h5>
+                <h5 class="card-header">Member (<th:block th:text="${studyMembers.size()}"></th:block> 명)</h5>
                 <div class="card-body">
                     <form>
                         <div class="form-group">
-                            Member1<br>
-                            Member2<br>
-                            Member3
+                            <th:block th:each="item: ${studyMembers}" th:text="${item.getUserName()}">
+                                <br>
+                            </th:block>
                         </div>
                         <th:block th:if="${userRole.equals('ADMIN') }">
                             <button type="submit" class="btn btn-primary">관리하기</button>
@@ -190,6 +190,6 @@
 
 </div>
 <!-- /.container -->
-<th:block th:replace="/study/study_detail_script.html :: fragment-study_detail"></th:block>
+<th:block th:replace="study/study_detail_script.html :: fragment-study_detail"></th:block>
 </body>
 </html>

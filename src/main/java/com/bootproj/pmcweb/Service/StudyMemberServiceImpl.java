@@ -1,5 +1,6 @@
 package com.bootproj.pmcweb.Service;
 
+import com.bootproj.pmcweb.Common.Response.StudyMemberApiResponse;
 import com.bootproj.pmcweb.Domain.StudyMember;
 import com.bootproj.pmcweb.Mapper.StudyMemberMapper;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +34,7 @@ public class StudyMemberServiceImpl implements StudyMemberService {
     }
 
     @Override
-    public List<StudyMember> getStudyMembers(Long studyId) {
+    public List<StudyMemberApiResponse> getStudyMembers(Long studyId) {
         return studyMemberMapper.selectStudyMembers(studyId);
     }
 }

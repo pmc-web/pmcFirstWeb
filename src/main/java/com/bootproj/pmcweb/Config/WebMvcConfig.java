@@ -41,7 +41,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
                     .addResourceLocations("file:///");
         } else if (env.getProperty(PROFILE_PATH_PROPERTY).startsWith(LINUX_MAC)){
             registry.addResourceHandler(OUT_IMAGE + "**")
-                    .addResourceLocations("file:/");
+                    .addResourceLocations("file:");
         }
 
     }
