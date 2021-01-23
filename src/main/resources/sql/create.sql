@@ -214,3 +214,11 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_general_ci
 COMMENT = '스터디와 유저의 매핑 테이블';
+
+CREATE TABLE IF NOT EXISTS `study`.`persistent_logins` (
+    `username` VARCHAR(64) NOT NULL,
+    `series` VARCHAR(64) PRIMARY KEY,
+    `token` VARCHAR(64) NOT NULL,
+    `last_used` TIMESTAMP NOT NULL
+)
+COMMENT = '스프링 시큐리티 로그인 기억하기 테이블';
