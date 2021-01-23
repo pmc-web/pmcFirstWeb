@@ -24,4 +24,6 @@ public interface StudyMapper {
     public void putStudyStatus(@Param("id")Long studyId, @Param("status")String status);
 
     List<Study> getStudyAllList();
+
+    List<Study> getSearchList(String word);
 }

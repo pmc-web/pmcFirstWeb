@@ -37,7 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .authorizeRequests()
             // 페이지 권한 설정
             .antMatchers("/admin/**").hasRole("ADMIN")
-            .antMatchers("/","/user/signup", "/user/login", "/user/sendSignUpEmail", "/user/signUpConfirm","/study/**","/ws-stomp/**","/chat/**", "/out/img/**").permitAll()
+            .antMatchers("/","/user/signup", "/user/login", "/user/sendSignUpEmail", "/user/signUpConfirm","/study/**","/ws-stomp/**","/chat/**", "/out/img/**","/search/**").permitAll()
             .anyRequest().authenticated()
             .and()
             .formLogin()

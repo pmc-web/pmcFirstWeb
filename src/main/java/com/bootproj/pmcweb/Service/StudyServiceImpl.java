@@ -53,4 +53,9 @@ public class StudyServiceImpl implements StudyService {
         return studyMapper.getStudyAllList();
     }
 
+    @Override
+    public List<Study> getSearchList(String word) {
+        return studyMapper.getSearchList(word);
+    }
+
 }
