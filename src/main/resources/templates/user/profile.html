@@ -2,13 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
-    <th:block th:replace="/layout/common.html :: fragment-common"/>
+    <th:block th:replace="layout/common.html :: fragment-common"/>
     <th:block layout:fragment="css"><link th:href="@{/css/image-upload.css}" rel="stylesheet"></th:block>
     <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
 </head>
 <body>
 <!-- navbar -->
-<nav th:replace="/layout/navbar.html :: fragment-navbar"></nav>
+<nav th:replace="layout/navbar.html :: fragment-navbar"></nav>
 <!-- main -->
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">

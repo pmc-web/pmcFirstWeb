@@ -1,25 +1,25 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <th:block th:replace="/layout/common.html :: fragment-common"/>
+    <th:block th:replace="layout/common.html :: fragment-common"/>
     <!-- navbar -->
-    <th:block th:replace="/layout/navbar.html :: fragment-navbar"/>
+    <th:block th:replace="layout/navbar.html :: fragment-navbar"/>
     <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
 </head>
 <body>
     <div th:if="${content} == 1">
         <!-- main -->
         <div class="container" style="max-width:100%; padding-right: 0px; padding-left: 0px;">
-            <th:block th:replace="/layout/kakaoContent.html :: fragment-kakaoContent"/>
+            <th:block th:replace="layout/kakaoContent.html :: fragment-kakaoContent"/>
         </div>
     </div>
     <div th:unless="${content} == 1">
         <!-- header -->
-        <th:block th:replace="/layout/header.html :: fragment-header"/>
+        <th:block th:replace="layout/header.html :: fragment-header"/>
         <div class="container">
-            <th:block th:replace="/layout/defaultContent.html :: fragment-defaultContent"/>
+            <th:block th:replace="layout/defaultContent.html :: fragment-defaultContent"/>
         </div>
     </div>
     <!-- footer -->
-    <th:block th:replace="/layout/footer.html :: fragment-footer"/>
+    <th:block th:replace="layout/footer.html :: fragment-footer"/>
 </html>
