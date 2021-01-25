@@ -149,6 +149,9 @@
 <!--                            (참여멤버: 3명)-->
                         </div>
                         <button type="submit" class="btn btn-primary">참여하기</button>
+                        <th:block th:if="${userRole.equals('ADMIN') }">
+                            <button type="submit" class="btn btn-primary">일정추가</button>
+                        </th:block>
                     </form>
                 </div>
             </div>

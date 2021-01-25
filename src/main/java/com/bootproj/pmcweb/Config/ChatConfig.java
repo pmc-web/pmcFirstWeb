@@ -1,5 +1,6 @@
 package com.bootproj.pmcweb.Config;
 
+import com.bootproj.pmcweb.Common.WebSocket.StompHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.ChannelRegistration;
@@ -12,7 +13,7 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 @Configuration
 @EnableWebSocketMessageBroker
 public class ChatConfig implements WebSocketMessageBrokerConfigurer {
-//    private final StompHandler stompHandler;
+    private final StompHandler stompHandler;
     // 클라이언트가 메시지를 구독할 endpoint 정의
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
@@ -30,6 +31,6 @@ public class ChatConfig implements WebSocketMessageBrokerConfigurer {
     }
     @Override
     public void configureClientInboundChannel(ChannelRegistration registration) {
-//        registration.interceptors(stompHandler);
+        registration.interceptors(stompHandler); // 인터셉터 설정
     }
 }

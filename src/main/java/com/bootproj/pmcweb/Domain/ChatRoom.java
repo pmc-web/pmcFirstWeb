@@ -15,6 +15,7 @@ public class ChatRoom implements Serializable {
 
     private String roomId;
     private String studyId;
+    private long userCount;
 
     public static ChatRoom create(String studyId) {
         ChatRoom chatRoom = new ChatRoom();

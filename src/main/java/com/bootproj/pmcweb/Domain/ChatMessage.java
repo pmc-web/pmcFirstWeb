@@ -9,6 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+@Builder
 public class ChatMessage {
     private MessageType type;
     private String sender;
@@ -17,4 +18,5 @@ public class ChatMessage {
     private String roomId; // uid
     @JsonProperty("roomName")
     private String roomName; // studyId
+    private long userCount; // 채팅방 인원수
 }
