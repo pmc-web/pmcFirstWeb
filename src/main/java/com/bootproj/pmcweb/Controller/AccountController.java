@@ -51,7 +51,7 @@ public class AccountController {
     @DeleteMapping("/user/{id}")
     public String deleteUser(@PathVariable Long id){
         accountService.deleteUser(id);
-        return "user/login";
+        return "/user/login";
     }
 
     @GetMapping("/user/{id}")

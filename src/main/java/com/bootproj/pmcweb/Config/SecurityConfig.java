@@ -23,37 +23,36 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
-    public void configure(WebSecurity web) throws Exception {
+    public void configure(WebSecurity web) throws Exception
+    {
         // static 디렉터리 하위 목록은 무시
         // csrf에 의해서 보호하지 않음
-        web.ignoring().antMatchers("/css/**", "/img/**", "/vendor/**", "/js/**");
+        web.ignoring().antMatchers("/css/**", "/img/**","/vendor/**","/js/**");
     }
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    protected void configure(HttpSecurity http) throws Exception{
         http
-                .csrf().disable()
-                // socketJS는 기본적으로 HTML iframe 요소를 통한 전송을 허용하지 않도록 설정되는데 이를 해제한다
-                .headers().frameOptions().sameOrigin().and()
-                .authorizeRequests()
-                // 페이지 권한 설정
-                .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/", "/user/signup", "/user/login", "/user/sendSignUpEmail", "/user/signUpConfirm", "/study/**", "/out/img/**").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .formLogin()
-                .loginPage("/user/login")
-                .defaultSuccessUrl("/")
-                .failureHandler(failureHandler())
+            .csrf().disable()
+            .authorizeRequests()
+            // 페이지 권한 설정
+            .antMatchers("/admin/**").hasRole("ADMIN")
+            .antMatchers("/","/user/signup", "/user/login", "/user/sendSignUpEmail", "/user/signUpConfirm","/study/**","/ws-stomp/**","/chat/**", "/out/img/**").permitAll()
+            .anyRequest().authenticated()
+            .and()
+            .formLogin()
+            .loginPage("/user/login")
+            .defaultSuccessUrl("/")
+            .failureHandler(failureHandler())
 //            .successHandler(successHandler())
-                .permitAll()
-                .and() // 로그아웃 설정
-                .logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))
-                .logoutSuccessUrl("/")
-                .invalidateHttpSession(true)
-                .deleteCookies("JSESSIONID")
-                .permitAll();
+            .permitAll()
+            .and() // 로그아웃 설정
+            .logout()
+            .logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))
+            .logoutSuccessUrl("/")
+            .invalidateHttpSession(true)
+            .deleteCookies("JSESSIONID")
+            .permitAll();
         http.sessionManagement()
                 .maximumSessions(1)
                 .maxSessionsPreventsLogin(false);

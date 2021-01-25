@@ -2,8 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
-    <th:block th:replace="/layout/common.html :: fragment-common"/>
-    <th:block th:replace="/layout/navbar.html :: fragment-navbar"/>
+    <th:block th:replace="layout/common.html :: fragment-common"/>
+    <th:block th:replace="layout/navbar.html :: fragment-navbar"/>
     <!-- Theme style -->
     <link rel="stylesheet" th:href="@{/vendor/adminlte/adminlte.min.css}">
     <link rel="stylesheet" th:href="@{/vendor/summernote/dist/summernote-bs4.min.css}">
@@ -181,6 +181,6 @@
 
 <script th:src="@{/vendor/jquery/jquery.js}"></script>
 <script th:src="@{/vendor/jquery-ui/jquery-ui.js}"></script>
-<th:block th:replace="/study/study_register_script.html :: study-register-script"></th:block>
+<th:block th:replace="study/study_register_script.html :: study-register-script"></th:block>
 </body>
 </html>

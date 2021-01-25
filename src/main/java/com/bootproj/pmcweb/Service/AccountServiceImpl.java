@@ -10,7 +10,6 @@ import com.bootproj.pmcweb.Common.Exception.SendEmailException;
 import com.bootproj.pmcweb.Common.ResultCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
