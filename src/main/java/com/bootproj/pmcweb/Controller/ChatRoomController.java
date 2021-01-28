@@ -50,6 +50,7 @@ public class ChatRoomController {
     public ChatRoom createRoom(@RequestBody String studyId) {
         return chatRoomRepository.createChatRoom(studyId);
     }
+
     // 채팅방 입장 화면
     @GetMapping("/room/enter/{roomId}")
     public String roomDetail(Model model, @PathVariable String roomId) {

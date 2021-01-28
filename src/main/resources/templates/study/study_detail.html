@@ -181,7 +181,7 @@
                 <div class="card my-4">
                     <h5 class="card-header">스터디 채팅방</h5>
                     <div class="card-body">
-                        <button class="btn btn-primary" id="chat" th:onclick="createRoom()" th:value="${userName}">참여하기</button>
+                        <button class="btn btn-primary" id="chat" th:onclick="enterRoom(${study.getId()})" th:value="${userName}">참여하기</button>
                     </div>
                 </div>
             </th:block>
