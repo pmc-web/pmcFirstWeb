@@ -68,18 +68,18 @@
             });
 
             function searchFunc(inputData){
-                $.ajax({
-                    url: '/search/word',
-                    data: inputData,
-                    dataType: 'json',
-                    type: 'POST',
-                    success: function (data) {
-                        alert("검색 되었습니다.");
-                    },
-                    error: function (request, status, error) {
-                        alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-                    }
-                })
+                let url = "http://localhost:8080/study?inputData="+inputData;
+                    fetch(url,{
+                        method : 'GET',
+                    }).then(function(response) {
+                        if(response.status >= 200 && response.status <= 299){
+                            return response.json();
+                        }else{
+                            throw Error(response.statusText);
+                        }
+                    }).then(function(data) {
+                        console.log(data.data);
+                    }).catch(error => alert(error));
             }
         </script>
     </th:block>

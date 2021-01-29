@@ -22,9 +22,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Slf4j
 @RequestMapping("/study")
@@ -52,10 +50,18 @@ public class StudyController {
      @RequestParam(required = false, value = "date")String date,
      @RequestParam(required = false, value = "title")String title,
      @RequestParam(required = false, value = "location")String location,
-     @RequestParam(required = false, value = "author")String author) throws Exception{
+     @RequestParam(required = false, value = "author")String author,
+     @RequestParam(required = false, value = "inputData")String word) throws Exception{
         try {
             if(page == null) page = 1;
-            List<Study> list = studyService.getStudyList(page); // TODO : ~
+            Map<String, Object> paramMap = new HashMap<>();
+            paramMap.put("page", page);
+            if(word != null && word != ""){
+                paramMap.put("word", word);
+            }
+            //List<Study> list = studyService.getStudyList(page); // TODO : ~
+            List<Study> list = studyService.getStudyList(paramMap);
+
             return new ResponseEntity(Header.OK(getStudyApiResponse(list)),HttpStatus.OK);
         }catch (Exception e){
             log.warn(e.getMessage());
