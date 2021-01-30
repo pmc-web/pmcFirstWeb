@@ -76,13 +76,12 @@
                         <!-- /.card-header -->
                         <div class="card-body">
                             <strong><i class="fas fa-map-marker-alt mr-1"></i> 지역</strong>
-                            <p class="text-muted">강남구</p>
+                            <p class="text-muted" th:text="${region}">지역을 선택해주세요.</p>
                             <hr>
                             <strong><i class="fas fa-pencil-alt mr-1"></i> 관심사</strong>
 
                             <p class="text-muted">
-                                <span class="tag tag-danger">백엔드 개발</span>
-                                <span class="tag tag-success">알고리즘</span>
+                                <span class="tag tag-danger" th:text="${subject}">관심사를 선택해주세요.</span>
                             </p>
                             <hr>
                         </div>
@@ -91,6 +90,7 @@
                         <a href="#" class="btn btn-primary btn-block" th:href="@{/user/changePassword}"><b>비밀번호 변경하기</b></a>
                         <!--                        <button id ="btn-user-delete" class="btn btn-primary btn-block"><b>탈퇴하기</b></button>-->
                         <!--                        <a id ="btn-user-delete" href="#" class="btn btn-primary btn-block" th:href="@{/user/{loginUserId}(loginUserId=${loginUserId})}" data-confirm="탈퇴하시겠습니까?" data-method="delete" rel="nofollow"><b>탈퇴하기</b></a>-->
+                        <a href="#" class="btn btn-primary btn-block" th:href="@{/user/register/profile}"><b>회원 정보 변경하기</b></a>
                         <button id ="btn-user-delete" class="btn btn-primary btn-block" th:onclick="deleteUser([[${loginUserId}]])"><b>탈퇴하기</b></button>
                     </div>
                     <!-- /.card -->
