@@ -3,6 +3,7 @@ package com.bootproj.pmcweb.Controller.web;
 import com.bootproj.pmcweb.Common.Exception.NoMatchingAcountException;
 import com.bootproj.pmcweb.Domain.Account;
 import com.bootproj.pmcweb.Domain.Attachment;
+import com.bootproj.pmcweb.Domain.Subject;
 import com.bootproj.pmcweb.Service.AccountService;
 import com.bootproj.pmcweb.Service.AttachmentService;
 import com.bootproj.pmcweb.Service.RegionService;
@@ -86,6 +87,23 @@ public class AccountWebController {
                 () -> {
                     mv.addObject("profileImagePath", "/img/moim.jpg");
                     log.info("/img/moim.jpg");
+                }
+        );
+        subjectService.getSubjectById(account.getSubjectId()).ifPresentOrElse(
+                (subject -> {
+                    mv.addObject("subject", subject.getSubjectDepth1() + " " + subject.getSubjectDepth2());
+                }),
+                () -> {
+                    mv.addObject("subject", "관심사를 선택해주세요.");
+                }
+
+        );
+        regionService.getRegionById(account.getRegionId()).ifPresentOrElse(
+                (region -> {
+                    mv.addObject("region", region.getRegionDepth1() + " " + region.getRegionDepth2() + " "  + region.getRegionDepth3());
+                }),
+                () -> {
+                    mv.addObject("region", "지역을 선택해주세요.");
                 }
         );
 
