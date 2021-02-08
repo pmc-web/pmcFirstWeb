@@ -3,9 +3,18 @@
                 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bootproj.pmcweb.Mapper.StudyMapper">
-<select id="getStudyList" resultType="com.bootproj.pmcweb.Domain.Study">
-        SELECT * FROM study
-        ORDER BY id DESC limit #{limit} offset #{offset}
+<!--<select id="getStudyList" resultType="com.bootproj.pmcweb.Domain.Study">-->
+<!--        SELECT * FROM study-->
+<!--        ORDER BY id DESC limit #{limit} offset #{offset}-->
+<!--</select>-->
+
+<select id="getStudyList" parameterType="hashMap" resultType="com.bootproj.pmcweb.Domain.Study">
+    SELECT * FROM study
+    <if test="word !=null and word !=''">
+        where title like concat('%', #{word}, '%')
+        or	description like concat('%', #{word}, '%')
+    </if>
+    ORDER BY id DESC limit #{limit} offset #{offset}
 </select>
 
 <select id="getStudyAllList" resultType="com.bootproj.pmcweb.Domain.Study">
@@ -50,11 +59,11 @@
         UPDATE study SET status=#{status} where id = #{id};
 </update>
 
-<select id="getSearchList" parameterType="String" resultType="com.bootproj.pmcweb.Domain.Study">
-    select *
-    from study
-    where title like #{word}
-    or	description like #{word}
-</select>
+<!--<select id="getSearchList" parameterType="String" resultType="com.bootproj.pmcweb.Domain.Study">-->
+<!--    select *-->
+<!--    from study-->
+<!--    where title like concat('%', #{word}, '%')-->
+<!--    or	description like concat('%', #{word}, '%')-->
+<!--</select>-->
 
 </mapper>
