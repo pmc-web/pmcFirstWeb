@@ -10,6 +10,7 @@ import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 @RequiredArgsConstructor
 @Service
@@ -29,6 +30,11 @@ public class ChatRoomRepository {
     // 모든 채팅방 조회
     public List<ChatRoom> findAllRoom() {
         return hashOpsChatRoom.values(CHAT_ROOMS);
+    }
+    // 스터디 아이디로 채팅방 조회
+    public ChatRoom findRoomByStudyId(String studyId){
+        hashOpsChatRoom.values(CHAT_ROOMS).stream().forEach(chatRoom -> System.out.println(chatRoom.getRoomId()+" , "+chatRoom.getStudyId()));
+        return hashOpsChatRoom.values(CHAT_ROOMS).stream().filter(chatRoom -> chatRoom.getStudyId().equals(studyId)).findFirst().get();
     }
 
     // 특정 채팅방 조회

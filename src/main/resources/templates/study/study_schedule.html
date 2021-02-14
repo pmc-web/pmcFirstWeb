@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <th:block th:replace="layout/common.html :: fragment-common"/>
+    <th:block th:replace="layout/navbar.html :: fragment-navbar"/>
+    <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</head>
+<body>
+<div class="container">
+
+</div>
+<!-- /.container -->
+<th:block th:replace="study/study_detail_script.html :: fragment-study_detail"></th:block>
+</body>
+</html>

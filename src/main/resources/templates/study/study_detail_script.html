@@ -1,25 +1,96 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <th:block th:fragment="fragment-study_detail">
-    <script th:inline="javascript">
-        let chatrooms = [];
+    <script>
+        $("#startDate").datepicker();
 
-        function findAllRoom() {
-            fetch("/chat/rooms",{
-                method: 'GET',
-            }).then(response =>{
-                if(Object.prototype.toString.call(response.data)==="[object Array]")
-                    chatrooms = response.data;
-            });
+    </script>
+    <script th:inline="javascript">
+
+        $('#myModal').on('shown.bs.modal', function (e) {
+            $('#startDate').css('z-index', 1500);
+        });
+
+
+        /* <![CDATA[ */
+        const myModal = document.getElementById('myModal');
+        const myInput = document.getElementById('myInput');
+        const joinChat = document.getElementById('joinChat');
+        const joinStudy = document.getElementById('joinStudy');
+        let studyId = document.getElementById('studyInfo').getAttribute('value');
+        /* ]]> */
+        myModal.addEventListener('shown.mdb.modal', () => {
+            myInput.focus()
+        });
+
+        function joinChatting() {
+            console.log("채팅", studyId);
+            // 채팅방 생성되어 있는지 확인하고 없으면 생성
+            fetch("/chat/room", {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                method: 'POST',
+                body: parseInt(studyId),
+            }).then(response => {
+                if (response.status >= 200 && response.status <= 299) {
+                    return response.json();
+                } else {
+                    throw Error(response.statusText);
+                }
+            }).then(response => {
+                console.log('Success: .json-> ', JSON.stringify(response), response, response.room_id);
+                roomId = response.room_id;
+                localStorage.setItem('wschat.roomId', response.room_id);
+                localStorage.setItem('wschat.roomName', studyId);
+                // // 조인
+                fetch("/chat/room?studyId=" + studyId, {
+                    method: 'GET',
+                }).then(response => {
+                    if (response.status == 200) {
+                        return response.json();
+                    }
+                }).then(response => {
+                    console.log('Success:', JSON.stringify(response), response, response.room_id);
+                    location.href="/chat/room/enter/"+response.room_id;
+                });
+
+            }).catch(error => alert(error));
         }
+
+        function joinStudyEvent() {
+            console.log("스터디 참여하기");
+            let data = {
+                userId: 6, // useId 말고 email 보내는 걸로 수정해야됨
+                studyId: studyId
+            };
+            fetch("/studyMember", {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                method: 'POST',
+                body: data,
+            }).then(response => {
+                if (response.status >= 200 && response.status <= 299) {
+                    return response.json();
+                } else {
+                    throw Error(response.statusText);
+                }
+            }).then(function (data) {
+                console.log(data);
+            }).catch(error => alert(error));
+        }
+
+        joinStudy.addEventListener('click', function () {
+        });
 
         function enterRoom(roomName) {
             // 채팅방 연결
-            let userName = document.getElementById("chat").value;
+            let userName = document.getElementById("joinChat").value;
             // localStorage.setItem('wschat.roomId',roomId);
-            localStorage.setItem('wschat.roomName',roomName);
+            localStorage.setItem('wschat.roomName', roomName);
             localStorage.setItem('wschat.userName', userName);
-            location.href="/chat/room/enter/"+roomId;
+            location.href = "/chat/room/enter/" + roomId;
         }
     </script>
 </th:block>

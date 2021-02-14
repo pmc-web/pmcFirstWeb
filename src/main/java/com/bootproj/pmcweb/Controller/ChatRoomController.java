@@ -36,12 +36,11 @@ public class ChatRoomController {
         return ChatInfo.builder().token(jwtTokenProvider.generateToken(name)).build();
     }
 
-    // 모든 채팅방 목록 반환
-    @GetMapping("/rooms")
+    // 채팅방 찾기
+    @GetMapping("/room")
     @ResponseBody
-    public List<ChatRoom> room() {
-        List<ChatRoom> chatRooms = chatRoomRepository.findAllRoom();
-        chatRooms.stream().forEach(room -> room.setUserCount(chatRoomRepository.getUserCount(room.getRoomId())));
+    public ChatRoom room(@RequestParam String studyId) {
+        ChatRoom chatRooms = chatRoomRepository.findRoomByStudyId(studyId);
         return chatRooms;
     }
     // 채팅방 생성

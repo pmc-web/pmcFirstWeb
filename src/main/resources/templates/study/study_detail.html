@@ -5,6 +5,8 @@
     <th:block th:replace="layout/common.html :: fragment-common"/>
     <th:block th:replace="layout/navbar.html :: fragment-navbar"/>
     <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
 </head>
 <body>
 <!-- Page Content -->
@@ -16,10 +18,11 @@
             <h1 class="mt-4" id="studyInfo" th:value="${study.getId()}" th:text="${study.getTitle()}"></h1>
             <hr>
             <!-- Date/Time -->
-            <p>Posted on </p><p th:text="${study.getInstTime()}"></p>
+            <p>Posted on </p>
+            <p th:text="${study.getInstTime()}"></p>
 
             <hr>
-             Preview Image
+            Preview Image
             <th:block th:if="${study.getAttachmentPath()}!=null">
                 <img class="img-fluid rounded" src="/img/study/${study.getId()}/${study.getAttachmentPath()}" alt="">
             </th:block>
@@ -128,7 +131,7 @@
                         <div class="col-lg-4">
                             <ul class="list-unstyled mb-0">
                                 <li>
-                                    <a href="#" th:text="${region.getRegionDepth3()}" ></a>
+                                    <a href="#" th:text="${region.getRegionDepth3()}"></a>
                                 </li>
                             </ul>
                         </div>
@@ -140,26 +143,73 @@
             <div class="card my-4">
                 <h5 class="card-header">스케줄</h5>
                 <div class="card-body">
-                    <form>
+<!--                    <form>-->
                         <div class="form-group">
                             <th:block th:each="item : ${schedules}">
-                                <p th:text="${item.getDescription()}" />
+                                <p th:text="${item.getDescription()}"/>
                             </th:block>
-<!--                            [스터디 정기 모임] 2020.12.19 토요일<br>-->
-<!--                            (참여멤버: 3명)-->
+                            <!--                            [스터디 정기 모임] 2020.12.19 토요일<br>-->
+                            <!--                            (참여멤버: 3명)-->
                         </div>
-                        <button type="submit" class="btn btn-primary">참여하기</button>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                        일정추가
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">일정 추가하기</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form>
+<!--                                        <div class="form-group">-->
+<!--                                            <input type="text" id="datePicker" class="form-control" value="">-->
+<!--                                        </div>-->
+                                        <div class="form-group">
+                                            <label>날짜</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <i class="far fa-calendar-alt"></i>
+                                                    </span>
+                                                </div>
+                                                <input type="text" class="form-control float-right" id="startDate">
+                                            </div>
+                                            <!-- /.input group -->
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="message-text" class="col-form-label">스터디 내용</label>
+                                            <textarea class="form-control" id="message-text"></textarea>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+                                    <button type="submit" class="btn btn-primary" id="addSchedule">일정 추가하기</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                         <th:block th:if="${userRole.equals('ADMIN') }">
-                            <button type="submit" class="btn btn-primary">일정추가</button>
+<!--                            <button type="submit" class="btn btn-primary">일정추가</button>-->
                         </th:block>
-                    </form>
+<!--                    </form>-->
                 </div>
             </div>
 
 
             <!-- Side Widget -->
             <div class="card my-4">
-                <h5 class="card-header">Member (<th:block th:text="${studyMembers.size()}"></th:block> 명)</h5>
+                <h5 class="card-header">Member (
+                    <th:block th:text="${studyMembers.size()}"></th:block>
+                    명)
+                </h5>
                 <div class="card-body">
                     <form>
                         <div class="form-group">
@@ -168,20 +218,22 @@
                             </th:block>
                         </div>
                         <th:block th:if="${userRole.equals('ADMIN') }">
-                            <button type="submit" class="btn btn-primary">관리하기</button>
+                            <button class="btn btn-primary">관리하기</button>
                         </th:block>
                         <th:block th:unless="${userRole.equals('ADMIN') }">
-                            <button type="submit" class="btn btn-primary">가입하기</button>
+                            <button class="btn btn-primary" id="joinStudy" onclick="joinStudyEvent()">가입하기</button>
                         </th:block>
                     </form>
                 </div>
             </div>
 
-            <th:block th:if ="${userName}!=''">
+            <th:block th:if="${userName}!=''">
                 <div class="card my-4">
                     <h5 class="card-header">스터디 채팅방</h5>
                     <div class="card-body">
-                        <button class="btn btn-primary" id="chat" th:onclick="enterRoom(${study.getId()})" th:value="${userName}">참여하기</button>
+                        <button class="btn btn-primary" id="joinChat" onclick="joinChatting()">
+                            참여하기
+                        </button>
                     </div>
                 </div>
             </th:block>
@@ -193,6 +245,8 @@
 
 </div>
 <!-- /.container -->
+<script th:src="@{/vendor/jquery/jquery.js}"></script>
+<script th:src="@{/vendor/jquery-ui/jquery-ui.js}"></script>
 <th:block th:replace="study/study_detail_script.html :: fragment-study_detail"></th:block>
 </body>
 </html>

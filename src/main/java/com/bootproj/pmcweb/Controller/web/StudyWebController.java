@@ -90,4 +90,9 @@ public class StudyWebController {
         }
     }
 
+
+    @GetMapping("/study/schedule")
+    public String scheduleManagement(@AuthenticationPrincipal User user){
+        return "study/study_schedule";
+    }
 }
